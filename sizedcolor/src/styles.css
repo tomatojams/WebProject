@@ -1,0 +1,24 @@
+body {
+  font-family: sans-serif;
+  background-color: #1abc9c;
+}
+
+.sizeUnder {
+  background-color: #1abc9c;
+}
+
+.size600 {
+  background-color: #3498db;
+}
+
+.size800 {
+  background-color: #9b59b6;
+}
+
+.size1000 {
+  background-color: #f39c12;
+}
+
+.size1200 {
+  background-color: #e74c3c;
+}

@@ -15,11 +15,11 @@ function onLoginSubmit(event) {
     paintGreeting(str_value);
 }
 
-function handleLinkClick(event) {
-    event.preventDefault();
-    console.dir(event);
+// function handleLinkClick(event) {
+//     event.preventDefault();
+//     console.dir(event);
 
-}
+// }
 function paintGreeting(str_value) {
     
 

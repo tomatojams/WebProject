@@ -22,7 +22,7 @@ const superEventHandler = {
         document.body.classList.add("sizeUnder");
       }
     }
-  }
+  },
 };
 
 window.addEventListener("resize", superEventHandler.resize);

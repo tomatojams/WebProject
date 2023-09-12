@@ -7,24 +7,27 @@ const victory = document.querySelector("#victory");
 let userNumber = 0;
 let limitValue = 0;
 
-console.log(limitForm);
-
 function setLimit(event) {
-  limitValue = parseInt(limitForm.value);
+  limitValue = parseInt(limitForm.value, 10);
 }
 
 function setNumber(event) {
   event.preventDefault();
 
-  userNumber = parseInt(userInput.value);
-  const comNumber = Math.floor(Math.random() * (limitValue + 1));
-  game.innerText =
-    "your number is " + userNumber + ", com numerical is " + comNumber;
-
-  if (userNumber === comNumber) {
-    victory.innerText = "Your won!";
+  if (parseInt(userInput.value, 10) > limitValue) {
+    game.innerText = "the number should be between 0 and " + limitValue;
+    victory.innerText = "Enter new number";
   } else {
-    victory.innerText = "Your lost!";
+    userNumber = parseInt(userInput.value, 10);
+    const comNumber = Math.floor(Math.random() * (limitValue + 1));
+    game.innerText =
+      "your number is " + userNumber + ", computer number is " + comNumber;
+
+    if (userNumber === comNumber) {
+      victory.innerText = "Your won!";
+    } else {
+      victory.innerText = "Your lost!";
+    }
   }
 }
 

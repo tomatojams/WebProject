@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+var cors = require("cors");
+app.use(cors()); // 모든 요청에 대해서 허용
 
 app.get("/", (req, res) => {
   res.send("Hello World");
@@ -28,7 +30,7 @@ app.get("/user/:id", (req, res) => {
   const p = req.params;
   console.log(p);
 
-  res.send({ 'message': 'Hello, JavaScript'});
+  res.send({ message: "Hello, JavaScript" });
 });
 
 //POST 방식
@@ -48,6 +50,8 @@ app.get("/sound/:name", (req, res) => {
     res.json({ sound: "멍멍" });
   } else if (name === "cat") {
     res.json({ sound: "야옹" });
+  } else {
+    res.json({ sound: "알수없음" });
   }
 });
 

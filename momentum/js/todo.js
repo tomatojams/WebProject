@@ -8,11 +8,13 @@ const TODO_KEY = "todos";
 let toDos = [];
 
 function saveToDos() {
-  localStorage.setItem(TODO_KEY, JSON.stringify(toDos)); // 스트링으로 변환해서 저장
+  localStorage.setItem(TODO_KEY, JSON.stringify(toDos)); // 어떤 자바스크립트 오브젝트도 json 형태의 스트링으로 변환해서 저장
+  // <-> JSON.parse
 }
 
 function deleteToDo(event) {
-  const li = event.target.parentElement; // target is button and it's parent is li
+  const li = event.target.parentElement; // 중요 target = button, parentElement = li
+  //console.log(event.target.parentElement.innerText); 어느엘리먼트가 부모인지 내부 메세지로 확인가능
   li.remove();
 }
 
@@ -42,7 +44,10 @@ toDoForm.addEventListener("submit", handleToDoSubmit);
 
 const savedToDos = localStorage.getItem(TODO_KEY);
 if (savedToDos !== null) {
-  const parsedToDos = JSON.parse(savedToDos);
+  const parsedToDos = JSON.parse(savedToDos); // json 형태의 스트링을 자바스크립트 리스트 오브젝트로 변환
   toDos = parsedToDos;
-  parsedToDos.forEach((item)=> painToDo(item)); // 하나하나의 엘리먼트를 패러미터를 자동으로 전달해줌
+  parsedToDos.forEach((item) => painToDo(item)); // 하나하나의 엘리먼트를 패러미터를 자동으로 전달해줌
+  //parsedToDos.forEach(painToDo); 인자를 자동으로 전달하기때문에 이렇게 해도 똑같음
+  // 익명함수쓰는 방식  paintToDo(item)은 함수자체가 아니라 그냥 라인
+  
 }

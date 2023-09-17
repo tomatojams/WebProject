@@ -31,3 +31,5 @@ function changeColor() {
 changeColor();
 
 button.addEventListener("click", changeColor);
+
+

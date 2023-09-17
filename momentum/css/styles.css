@@ -1,3 +1,58 @@
 .hidden{
     display: none;
 }
+/* 추가된 스타일 */
+#login-form {
+    background-color: transparent; /* 로그인 폼 배경 투명하게 설정 */
+    border: none; /* 테두리 제거 */
+    margin: 0; /* 여백 제거 */
+    padding: 0; /* 안쪽 여백 제거 */
+  }
+  
+  #login-form input {
+    border: none; /* 입력 필드 테두리 제거 */
+    border-bottom: 1px solid white; /* 입력 필드 바닥 선 그리기 */
+    background-color: transparent; /* 입력 필드 배경 투명하게 설정 */
+    color: white; /* 입력 텍스트 색상을 흰색으로 설정 */
+    outline: none; /* 포커스 시 테두리 제거 */
+  }
+  
+  #clock {
+    font-size: 80px; /* 원하는 크기로 설정 */
+    font-weight: bold; /* 글꼴 굵기 설정 */
+  }
+  /* 추가된 스타일 */
+/* 추가된 스타일 */
+#quote {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    text-align: center;
+  }
+  /* 추가된 스타일 */
+/* 수정된 스타일 */
+#todo-form {
+    background-color: transparent; /* 배경 투명하게 설정 */
+    border: none; /* 테두리 제거 */
+    margin: 0; /* 여백 제거 */
+    padding: 0; /* 안쪽 여백 제거 */
+  }
+  
+ /* 수정된 스타일 */
+#todo-form input {
+    border: none; /* 입력 필드 테두리 제거 */
+    border-bottom: 1px solid white; /* 입력 필드 바닥 선 그리기 */
+    background-color: transparent; /* 입력 필드 배경 투명하게 설정 */
+    color: white; /* 입력 텍스트 색상을 흰색으로 설정 */
+    cursor: text; /* 커서를 텍스트 형태로 설정 */
+    outline: none; /* 포커스 시 테두리 제거 */
+    width: 100%; /* 입력 창 가로 폭을 100%로 설정하여 부모 요소 너비에 맞춤 */
+    font-size: 18px; /* 원하는 글꼴 크기로 설정 */
+  }
+  
+  #todo-form input::placeholder {
+    color: white; /* placeholder 텍스트 색상을 흰색으로 설정 */
+  }
+

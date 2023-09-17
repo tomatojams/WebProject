@@ -1,33 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/styles.css" />
-    <style>
-      /* 추가된 스타일 */
-      body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-      }
-  
-      #clock,
-      #login-form,
-      #greeting,
-      #todo-form,
-      #todo-list,
-      #quote {
-        margin: 10px;
-        color: white;
-      }
-      
-  
-      /* 기존 스타일 유지 */
-    </style>
     <title>Document</title>
   </head>
   <body>
@@ -37,17 +13,20 @@
         required
         maxlength="15"
         type="text"
-        placeholder="what is your name"
-      />
+        placeholder="what is your name" />
       <input type="submit" value="Log In" />
     </form>
+
     <h1 id="greeting" class="hidden"></h1>
+
     <form id="todo-form">
-      <label for="todo-input" style="color: white; text-align: center; display: block;">What is your main focus</label>
+      <label
+        for="todo-input"
+        style="color: white; text-align: center; display: block"
+        >What is your main focus</label
+      >
       <input id="todo-input" type="text" required />
     </form>
-    
-    
 
     <ul id="todo-list"></ul>
 
@@ -57,9 +36,9 @@
     </div>
     <script src="js/todo.js"></script>
     <script src="js/greetings.js"></script>
-    <script src="js/app.js"></script>
     <script src="js/quotes.js"></script>
     <script src="js/background.js"></script>
     <script src="js/clock.js"></script>
+    <script src="js/weather.js"></script>
   </body>
 </html>

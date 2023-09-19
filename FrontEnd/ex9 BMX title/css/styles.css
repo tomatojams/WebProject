@@ -14,9 +14,19 @@ div > p {
 
 nav {
   text-align: center;
+  
 }
 nav > p {
+  
   font-weight: bold;
   display: inline-block;
-  width:100px;
+  /* margin-right: 5px;
+  margin-left:5px ; */
+
+}
+
+nav >a {
+  display: inline-block;
+  font-size: 1rem;
+  width: 90px;
 }

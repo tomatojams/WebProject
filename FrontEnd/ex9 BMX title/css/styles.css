@@ -1,32 +1,56 @@
 a {
   color: black;
-  font-size: 50px;
-  font-weight: bold;
-  text-align: center;
-  display: block;
   text-decoration: none;
 }
-div > p {
-  font-size: 50px;
-  font-weight: bold;
 
-}
-
-nav {
+div {
   text-align: center;
-  
 }
-nav > p {
-  
+
+div a {
+  font-size: 70px;
   font-weight: bold;
-  display: inline-block;
-  /* margin-right: 5px;
-  margin-left:5px ; */
-
+  letter-spacing: -0.3rem;
 }
 
-nav >a {
+section {
+  text-align: center;
+}
+
+section nav {
+  text-align: center;
   display: inline-block;
+  width: 120px;
+
+  /* border: 1px solid black; */
+}
+
+section p {
+  display: inline;
+}
+
+section > nav > a {
+  display: block;
+  /* 링크를 좌우로 가득채우기위해 */
   font-size: 1rem;
-  width: 90px;
+
+  font-weight: bold;
+  /* text-align: center; */
+  /* padding-top: 50px; */
+  /* line-height: 0.1rem; */
+}
+
+section > nav:hover > a {
+  color: #ff0000;
+  text-decoration-line: underline;
+}
+
+#spacing{
+  height: 20px;
+}
+
+img{
+  
+  object-fit: cover;
+  /* 고유비율은 지키면서 자름 */
 }

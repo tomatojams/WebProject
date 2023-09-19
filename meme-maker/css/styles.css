@@ -1,3 +1,22 @@
-body{
-    background-color: tomato;
+
+canvas{
+    
+    border:5px solid black;
 }
+
+body{
+    display:flex;
+    justify-content:center;
+align-items:center;
+
+}
+
+/*
+width: <canvas> 요소의 너비를 800픽셀로 설정합니다.
+height: <canvas> 요소의 높이를 800픽셀로 설정합니다.
+border: 1픽셀 너비의 검은색 테두리를 <canvas> 요소 주위에 생성합니다.
+body 규칙:
+
+display: flex 값을 사용하여 <body> 요소의 내용을 가로 방향으로 정렬합니다.
+justify-content: 가로 정렬을 수행하는데, center 값은 내용을 가로 방향으로 가운데 정렬합니다.
+align -items: 세로 정렬을 수행하는데, center 값은 내용을 세로 방향으로 가운데 정렬합니다. */

@@ -1,0 +1,22 @@
+a {
+  color: black;
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+}
+div > p {
+  font-size: 50px;
+  font-weight: bold;
+
+}
+
+nav {
+  text-align: center;
+}
+nav > p {
+  font-weight: bold;
+  display: inline-block;
+  width:100px;
+}

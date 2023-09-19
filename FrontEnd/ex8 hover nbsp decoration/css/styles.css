@@ -1,0 +1,31 @@
+div {
+  width: 100px;
+  height: 100px;
+  background-color: tomato;
+  transition: width 800ms, background-color 2s;
+  border: 2px solid black;
+}
+
+section {
+  background-color: black;
+  text-align: center;
+}
+
+section > div {
+  width: 100px;
+  height: 100px;
+  background-color: tomato;
+  transition: width 800ms, background-color 2s;
+  border: 2px solid black;
+  display: inline-block;
+  /* 인라인과 다르게 블록을가짐 */
+}
+
+div:hover {
+  width: 500px;
+  background-color: red;
+  transition: width 800ms, background-color 2s;
+}
+article > a {
+  text-decoration: none;
+}

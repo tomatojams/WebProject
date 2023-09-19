@@ -1,0 +1,33 @@
+section {
+  border: 1px solid black;
+  text-align: center;
+}
+
+section > div {
+  width: 10%;
+  height: 100px;
+  background-color: pink;
+  display: inline-block;
+}
+
+section > div:first-child {
+  background-color: gold;
+}
+/* child는 div중에서가 아니라 section의 세번째를 말한다 */
+section > div:nth-of-type(4) {
+  background-color: gold;
+}
+/* of type은 div중에서를 말한다 */
+
+section > div:nth-last-of-type(4) {
+  background-color: gold;
+}
+section > div:nth-child(3) {
+  background-color: gold;
+}
+section > div:nth-last-child(3) {
+  background-color: gold;
+}
+section > div:last-child {
+  background-color: gold;
+}

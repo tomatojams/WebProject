@@ -1,0 +1,15 @@
+section > a {
+  background-color: white;
+  border: 1px solid green;
+  color: tomato;
+}
+
+a {
+  color: pink;
+}
+
+a {
+  color: blue;
+}
+
+/* > 는 자식 띄어쓰기는 후손*/

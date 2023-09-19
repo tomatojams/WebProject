@@ -1,0 +1,15 @@
+div {
+  background-color: red;
+  height: 50px;
+}
+
+section {
+  background-color: green;
+  height: 50px;
+  display: block;
+}
+
+article {
+  background-color: blue;
+  height: 50px;
+}

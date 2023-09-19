@@ -1,0 +1,24 @@
+div,
+section,
+nav {
+  font-size: 2rem;
+  border: 1px dotted red;
+}
+
+section{
+    text-align: center;
+}
+
+nav{
+    text-align: right;
+}
+
+nav > article{
+    width: 100px;
+    height: 100px;
+    background-color: pink;
+    /* article같은 블럭요소들은 부모의 얼라인에 영향받지 않음 */
+    display: inline;
+    /* inline으로 설정하면 부모가 글자로 취급함 */
+}
+

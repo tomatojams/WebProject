@@ -1,0 +1,19 @@
+body {
+    background-color: black;
+}
+
+nav {
+    text-align: center;
+}
+nav div {
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 20%;
+    display: inline-block;
+}
+
+div:first-child,
+div:hover {
+    background-color: white;
+}

@@ -1,0 +1,28 @@
+div,
+section,
+article {
+    padding: 50px;
+    margin: 50px;
+    border: 10px solid black !important;
+}
+
+div {
+    color: green;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    /* inherit */
+    /* 텍스트요소는 상속 */
+    background-color: pink;
+    width: 700px;
+    height: 500px;
+}
+
+div > section {
+    border: 10px solid red !important;
+    color: gold;
+}
+
+div > section > article {
+    border: 10px solid blue !important;
+}

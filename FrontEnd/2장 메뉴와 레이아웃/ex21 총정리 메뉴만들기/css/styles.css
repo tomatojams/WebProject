@@ -1,0 +1,28 @@
+section {
+    text-align: center;
+}
+
+section > nav {
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: black;
+    display: inline-block;
+    padding: 0 10px;
+    /*위아래 패딩이 없으므로 내부블록이 위아래로 꽉차고 좌우로는 여유를 가짐 */
+}
+section > nav > div {
+    display: inline-block;
+}
+
+section > nav > div > a {
+    text-decoration: none;
+    color: inherit;
+    padding: 20 5px;
+    display: block;
+    /* 이경우 패딩은 내부의 글짜와 블럭 사이의 간격을 말한다. */
+    /* 부모가 inline-block 일때 자식이 block이면 부모의 크기를 따라 꽉채움. */
+}
+section > nav > div > a:hover {
+    color: white;
+    background-color: black;
+}

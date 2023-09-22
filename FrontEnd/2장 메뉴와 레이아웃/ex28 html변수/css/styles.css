@@ -1,0 +1,17 @@
+.header {
+    margin-top: 50px;
+    height: 100px;
+    border: 5px solid pink;
+}
+
+:root {
+    --site-width: 500px;
+}
+
+.header-1{
+    width:var(--site-width)
+}
+
+.header-2{
+    width:calc(var(--site-width) - 200px);
+}

@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    text-align: center;
+
+    /*바디에는 마진이 있어서 잡아줘야함*/
+}
+
+div{
+    width: 30%;
+    height: 100px;
+    background-color: pink;
+    display: inline-block;
+}
+
+.a{
+    background-color: saddlebrown;
+}
+.b {
+    background-color: green;
+}
+
+div.a.b{
+    background-color: yellow;
+}
+/* .a.b를 붙여쓰면 두개의 클래스를 동시에 가진대상 */
+

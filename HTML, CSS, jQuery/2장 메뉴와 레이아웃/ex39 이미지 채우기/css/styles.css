@@ -1,0 +1,9 @@
+.box-1 {
+    border: 5px solid black;
+}
+.img-box > img {
+    width: 100%;
+    display: block;
+}
+
+/* 글자 요소를 부모요소의 크기에 맞게 채움 */

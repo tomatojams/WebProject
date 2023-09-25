@@ -1,0 +1,7 @@
+nav > *{
+
+    border: 10px solid red;
+    font-size: 5rem;
+    margin: 10px;
+    transition: font-size 1s, background-color 1s;
+}

@@ -10,9 +10,13 @@ body {
     width: 200px;
     height: 200px;
     margin: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15),
+    0 1px 3px rgba(0,0,0,0.3);
+    transition: border-radius 0.3s ease-in-out;
+
 }
 
 .card:hover{
-    box-shadow: 5px 5px 38px #888888,
+    box-shadow: 0px 14px 28px #888888,
     0px 10px 10px rgba(0,0,0,0.3);
 }

@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+}
+
+div {
+    height: 50vh;
+    background-color: pink;
+    font-size: 10rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* flex를 쓰면 자식은 block 속성이 사라지므로 자식이 한명인게 좋음
+    따라서 다른 div등을 감싸고 후손은 block속성이 남음 */
+    
+}

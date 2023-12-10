@@ -13,7 +13,7 @@
 Click[here](http://)
 
 | section1 | section2 | section3 |
-| :------: | :------: | :------: |
+| :------: | :------:| :------: |
 |   mail   |  phone   |   note   |
 
 > `print(f'ining')`who is that girl

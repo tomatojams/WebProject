@@ -17,9 +17,9 @@ body {
     display: flex;
     height: 100vh;
     width: 100vw;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center; 
+    flex-direction: row;/* 가로 오른쪽 방향 */
+    justify-content: space-around; /* main-axis*/
+    align-items:center; /* cross-axis  이경우 세로 아래쪽 방향 */
     /* stretch if box has no height*/
-    gap:10px;
+    gap: 10px;
 }

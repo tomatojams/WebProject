@@ -1,25 +1,25 @@
 body {
-    margin: 0;
-    background-color: white;
+  margin: 0;
+  background-color: white;
 }
 .box {
-    width: 150px;
-    height: 150px;
-    color: white;
-    font-size: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: tomato;
+  width: 150px;
+  height: 150px;
+  color: white;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: tomato;
 }
 
 .father {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    gap: 10px;
-    flex-flow: row wrap;
-    justify-content: space-around; /* main-axis*/
-    align-items: center; /* cross-axis  이경우 세로 아래쪽 방향 */
-    /* stretch if box has no height*/
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  gap: 10px;
+  flex-flow: row wrap;
+  justify-content: space-around; /* main-axis*/
+  align-items: center; /* cross-axis  이경우 세로 아래쪽 방향 */
+  /* stretch if box has no height*/
 }

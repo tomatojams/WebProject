@@ -7,7 +7,7 @@ body {
   color: white;
   font-size: 3rem;
   display: flex;
-  flex-wrap: ;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   background-color: tomato;

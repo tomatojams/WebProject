@@ -12,14 +12,27 @@ body {
   align-items: center;
   background-color: tomato;
 }
+.box:nth-child(3) {
+  background-color: violet;
+  order: 2; /* order는 숫자가 작을수록 앞으로 간다. 
+  default 0 */
+}
 
+.box:nth-child(6) {
+  background-color: aqua;
+  order: -1;
+}
 .father {
   display: flex;
   width: 100vw;
   height: 100vh;
-  gap: 10px;
+  column-gap: 5px;
+  row-gap: 30px;
   flex-flow: row wrap;
   justify-content: space-around; /* main-axis*/
   align-items: center; /* cross-axis  이경우 세로 아래쪽 방향 */
   /* stretch if box has no height*/
+  /* 한줄일때 정렬 */
+  align-content: flex-start; /* 멀티라인일때만
+  라인간의 정렬 */
 }

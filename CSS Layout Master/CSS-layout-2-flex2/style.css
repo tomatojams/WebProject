@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  background-color: white;
+}
+.box {
+  height: 200px;
+  color: white;
+  font-size: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: tomato;
+}
+.box:nth-child(1) {
+  background-color: tomato;
+  /* flex-grow: 0; 
+  flex-basis: 300px;
+  flex-shrink: 3; */
+  flex: 0 3 300px
+}
+
+.box:nth-child(2) {
+  background-color: orange;
+  flex-grow: 2;
+  flex-shrink: 0;
+ 
+}
+
+
+.box:last-child {
+  background-color: teal;
+  flex-grow:1;
+  flex-shrink: 1;
+
+}
+
+
+.father {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+ 
+  flex-direction: column;
+
+  justify-content: center; /* main-axis*/
+  align-items: center; /* cross-axis  이경우 세로 아래쪽 방향 */
+  /* stretch if box has no height*/
+  /* 한줄일때 정렬 */
+}

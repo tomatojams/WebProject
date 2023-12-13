@@ -4,17 +4,16 @@ body {
 
 .child:nth-child(4) {
   background-color: aqua;
-  grid-column: 2/ -1;
+  grid-column: b/ d;
 }
 .child:first-child {
-
-  grid-row: 1 / 3;
+  grid-row: e / g;
 }
 
 .father {
   display: grid;
-  grid-template-columns: 100px 200px 50px;
-  grid-template-rows: 200px 100px;
+  grid-template-columns: [a] 100px[b] 200px[c] 50px [d];
+  grid-template-rows: [e] 200px[f] 100px[g];
   gap: 10px;
 }
 .child {

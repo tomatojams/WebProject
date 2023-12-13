@@ -1,0 +1,19 @@
+body {
+  background-color: white;
+}
+
+header {
+  background-color: aqua;
+}
+
+section {
+  background-color: coral;
+}
+
+aside {
+  background-color: forestgreen;
+}
+
+footer {
+  background-color: deeppink;
+}

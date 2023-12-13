@@ -1,75 +1,67 @@
 body {
-    margin: 0;
-    background-color: white;
-    display: flex;
-    justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.text{
-    width: 80px;
-    font-size: 12px;
+.text {
+  width: 80px;
+  font-size: 12px;
 }
-.rbox{
-    width: 550px;
-    height: 200px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    flex-wrap: wrap;
-
+.head_box {
+  width: 550px;
+  height: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
 }
-.lbox{
-    width: 550px;
-    height: 100px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-wrap: wrap;
-
+.head_down_box {
+  width: 550px;
+  height: 100px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
 .paris {
-    font-size: 100px;
-    font-weight: 500;
-    font-family: "Helvetica Neue";
-    
+  font-size: 100px;
+  font-weight: 600;
+  font-family: "Helvetica Neue";
 }
 
 .no6 {
-font-size: 30px;
+  font-size: 30px;
 }
-.blue{
-    background-color: skyblue;
+.blue {
+  background-color: skyblue;
 }
-.gray{
-    background-color: gray;
+.gray {
+  background-color: gray;
 }
-.green{
-    background-color: green;
+.green {
+  background-color: green;
 }
 .box {
-    border-radius: 75px;
-    width: 150px;
-    height: 150px;
-
-    color: white;
-    font-size: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  border-radius: 75px;
+  width: 150px;
+  height: 150px;
+  color: white;
 }
 
-
 .father {
-    display: flex;
-    
-    width: 600px;
-    height: 900px;
-    flex-direction: row;/* 가로 오른쪽 방향 */   
-    flex-wrap: wrap;
-    justify-content: space-around; /* main-axis*/
-    align-items:center; /* cross-axis  이경우 세로 아래쪽 방향 */
-    /* stretch if box has no height*/
-    gap: 10px;
-    background-color: #f0f0f0;
-    /* box-shadow를 사용하여 그림자를 추가합니다. */
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  width: 600px;
+  height: 900px;
+  flex-flow: row wrap;
+  justify-content: space-around; /* main-axis*/
+  align-items: center; /* cross-axis  이경우 세로 아래쪽 방향 */
+  /* stretch if box has no height*/
+  gap: 10px;
+  background-color: #f0f0f0;
+  /* box-shadow를 사용하여 그림자를 추가합니다. */
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
 }

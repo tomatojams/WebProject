@@ -1,0 +1,16 @@
+body{
+  background-color: white;
+}
+.box{
+  /* width: 200px;
+  height: 200px; */
+  background-color: tomato;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content:  ;
+  align-items: center;
+
+}
+.father{
+  display: grid;
+}

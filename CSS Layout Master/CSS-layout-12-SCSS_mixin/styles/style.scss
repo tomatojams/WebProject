@@ -1,0 +1,46 @@
+$breaking-sm: 480px;
+$breaking-md: 768px;
+$breaking-lg: 1024px;
+$breaking-xl: 1200px;
+
+/* mixin으로 선언하고 include로 활용*/
+@mixin smallDevices {
+  @media screen and (min-width: $breaking-sm) {
+    @content;
+  }
+}
+
+@mixin mediumDevices {
+  @media screen and (min-width: $breaking-md) {
+    @content;
+  }
+}
+
+@mixin largeDevices {
+  @media screen and (min-width: $breaking-lg) {
+    @content;
+  }
+}
+
+@mixin xlDevices {
+  @media screen and (min-width: $breaking-xl) {
+    @content;
+  }
+}
+
+body {
+  @include smallDevices {
+    background-color: blue;
+  }
+
+  @include mediumDevices {
+    background-color: red;
+  }
+
+  @include largeDevices {
+    background-color: purple;
+  }
+  @include xlDevices {
+    background-color: pink;
+  }
+}

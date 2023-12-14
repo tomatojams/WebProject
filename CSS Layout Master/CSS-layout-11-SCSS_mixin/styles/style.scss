@@ -1,0 +1,33 @@
+$bgColor: antiquewhite;
+
+body {
+  background-color: $bgColor;
+  padding: 60px;
+}
+
+@mixin alert($bgColor, $borderColor) {
+  background-color: $bgColor;
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px dashed $borderColor;
+  @content;
+}
+
+.sucess {
+  @include alert(green, lightgreen) {
+    font-size: 12px;
+  }
+}
+
+.error {
+  @include alert(tomato, lightblue) {
+    text-decoration: underline;
+  }
+}
+
+.warning {
+  @include alert(yellow, gray) {
+    text-transform: uppercase;
+  }
+}

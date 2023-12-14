@@ -8,6 +8,10 @@ body {
   height: 100vh;
 }
 
+img {
+  width: 165px;
+  height: 200px;
+}
 .phone {
   width: 400px;
   height: 80vh;
@@ -47,7 +51,6 @@ body {
 .cards {
   display: grid;
   grid-template-rows: 1fr 1fr;
-  gap: 3px;
 }
 .cards__card {
   display: grid;
@@ -96,6 +99,7 @@ body {
     border-bottom: 3px solid #1f1414;
   }
   .picture {
+    box-sizing: border-box;
     grid-column: 3/4;
     grid-row: 2/4;
     border: 3px solid #1f1414;

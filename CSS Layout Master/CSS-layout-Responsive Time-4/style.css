@@ -3,7 +3,6 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
-
 }
 
 header {
@@ -11,20 +10,17 @@ header {
   justify-content: center;
   font-size: 1.7rem;
   background-color: white;
-  
 }
 
 .cards {
   display: grid;
   min-height: 100vh;
   grid-template-columns: repeat(auto-fit, 170px);
-  grid-template-rows: repeat(4,220px);
+  grid-template-rows: repeat(4, 220px);
   padding: 10px;
-  
 }
 
-.card{
-
+.card {
   background-color: antiquewhite;
   display: flex;
   flex-direction: column;
@@ -35,50 +31,49 @@ header {
   height: 220px;
   box-sizing: border-box;
 }
-img{
+img {
   width: 170px;
   height: 220px;
 }
 
-.card:nth-child(1){
+.card:nth-child(1) {
   padding: 10px;
-  background-color: #BFBDA7;
+  background-color: #bfbda7;
 }
-.card:nth-child(3){
+.card:nth-child(3) {
   padding: 10px;
-  background-color: #FE4714;
+  background-color: #fe4714;
 }
-.card:nth-child(5){
+.card:nth-child(5) {
   padding: 10px;
-  background-color: #847E96;
+  background-color: #847e96;
 }
-.card:nth-child(6){
+.card:nth-child(6) {
   padding: 10px;
-  background-color: #D0FF71;
+  background-color: #d0ff71;
 }
-.card:nth-child(7){
+.card:nth-child(7) {
   padding: 10px;
   background-color: #993333;
 }
-.card:nth-child(8){
+.card:nth-child(8) {
   padding: 10px;
-  background-color: #3AAAFA;
+  background-color: #3aaafa;
 }
-.card:nth-child(10){
+.card:nth-child(10) {
   padding: 10px;
-  background-color: #41907A;
+  background-color: #41907a;
 }
-.card:nth-child(12){
+.card:nth-child(12) {
   padding: 10px;
-  background-color: #E3C4E5;
+  background-color: #e3c4e5;
 }
-.title{
+.title {
   font-size: 0.9rem;
   font-weight: bold;
   text-align: center;
-
 }
-.foot{
+.foot {
   font-size: 8px;
   font-weight: bold;
   text-align: center;

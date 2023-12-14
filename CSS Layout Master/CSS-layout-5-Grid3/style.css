@@ -1,0 +1,29 @@
+body {
+  background-color: white;
+}
+
+.child:first-child {
+  background-color: khaki;
+  grid-row: span 1;
+}
+.child:nth-child(4) {
+  background-color: aqua;
+  grid-column: 2 / span 2;
+}
+
+.father {
+  display: grid;
+  grid-template-columns: 100px 200px 50px;
+  grid-template-rows: 200px 100px;
+  gap: 10px;
+}
+.child {
+  /* width: 200px;
+  height: 200px; */
+  background-color: tomato;
+  display: flex;
+  color: white;
+  font-size: 28px;
+  justify-content: center;
+  align-items: center;
+}

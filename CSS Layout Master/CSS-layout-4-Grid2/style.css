@@ -1,19 +1,43 @@
 body {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
   background-color: white;
+
+  display: grid;
+  height: 100vh; /* body는 처음에 높이가 없음*/
+  /* grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+
+  grid-template-areas:
+    "header header header header" 
+    "content content content menu" 
+    "content content content menu"
+    "footer footer footer footer"; */
+
+  grid-template:
+    "header header header header" 1fr /* row 크기 */
+    "content content content menu" 1fr
+    "content content content menu" 1fr
+    "footer footer footer footer" 0.5fr/ 1fr 1fr 1fr 1fr; /* column 크기*/
 }
 
 header {
   background-color: aqua;
+  grid-area: header;
 }
 
 section {
   background-color: coral;
+  grid-area: content;
 }
 
 aside {
   background-color: forestgreen;
+  grid-area: menu;
 }
 
 footer {
   background-color: deeppink;
+  grid-area: footer;
 }

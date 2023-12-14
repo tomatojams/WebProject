@@ -8,18 +8,11 @@ body {
   gap: 10px;
   height: 100vh;
   /* grid 템플릿만들기*/
-  grid-template-columns: 1fr max-content 1fr;
-  /* grid-template-columns: 1fr minmax(250px, 1fr) 1fr; */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  /* auto-fill : 여분공간에 최대한 컬럼을 많이 만듬 (비어있는것도)*/
+  /* auto-fit: 여분공간이 있어도 최대한의 컬럼수가 엘리먼트 수 많큼만*/
 }
 .child {
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: tomato;
-}
-
-.child:nth-child(2) {
   padding: 10px;
   display: flex;
   justify-content: center;

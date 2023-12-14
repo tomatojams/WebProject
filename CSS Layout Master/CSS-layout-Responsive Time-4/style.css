@@ -1,57 +1,85 @@
 body {
   background-color: white;
-}
-
-.father {
-  display: grid;
-  min-height: 50vh;
-
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-}
-.child {
-  /* width: 200px;
-  height: 200px; */
-  background-color: tomato;
   display: flex;
-  color: white;
-  font-size: 28px;
-  font-family: "Times New Roman", Times, serif;
-  font-weight: 500;
   justify-content: center;
-  align-items: center;
-}
-.child:nth-child(1) {
-  color: #f44607;
-  font-size: 60px;
-  grid-column: 1 / span 2;
-  grid-row: 1 / span 2;
-  background-color: #dae7de;
-}
-.child:nth-child(2) {
-  font-size: 60px;
-  grid-column: 3 / span 2;
-  grid-row: 1 / span 2;
-  background-color: #008a69;
-}
-.child:nth-child(3) {
-  font-size: 60px;
-  grid-column: 1 / span 2;
-  grid-row: 3 / span 2;
-  background-color: #f44607;
-}
-.child:nth-child(4) {
-  color: #f44607;
-  background-color: #f7abc5;
+  flex-direction: column;
+
 }
 
-.child:nth-child(5) {
-  background-color: #5f5fa9;
+header {
+  display: flex;
+  justify-content: center;
+  font-size: 1.7rem;
+  background-color: white;
+  
 }
-.child:nth-child(6) {
-  color: #f44607;
-  background-color: #ffc128;
+
+.cards {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: repeat(auto-fit, 170px);
+  grid-template-rows: repeat(4,220px);
+  padding: 10px;
+  
 }
-.child:nth-child(7) {
-  background-color: #f97374;
+
+.card{
+
+  background-color: antiquewhite;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 170px;
+  height: 220px;
+  box-sizing: border-box;
+}
+img{
+  width: 170px;
+  height: 220px;
+}
+
+.card:nth-child(1){
+  padding: 10px;
+  background-color: #BFBDA7;
+}
+.card:nth-child(3){
+  padding: 10px;
+  background-color: #FE4714;
+}
+.card:nth-child(5){
+  padding: 10px;
+  background-color: #847E96;
+}
+.card:nth-child(6){
+  padding: 10px;
+  background-color: #D0FF71;
+}
+.card:nth-child(7){
+  padding: 10px;
+  background-color: #993333;
+}
+.card:nth-child(8){
+  padding: 10px;
+  background-color: #3AAAFA;
+}
+.card:nth-child(10){
+  padding: 10px;
+  background-color: #41907A;
+}
+.card:nth-child(12){
+  padding: 10px;
+  background-color: #E3C4E5;
+}
+.title{
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-align: center;
+
+}
+.foot{
+  font-size: 8px;
+  font-weight: bold;
+  text-align: center;
 }

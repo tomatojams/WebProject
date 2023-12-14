@@ -1,0 +1,36 @@
+body {
+  background-color: white;
+}
+
+.father {
+  display: grid;
+  gap: 10px;
+  min-height: 100vh;
+  /* grid 템플릿만들기*/
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(2, 100px);
+  /* 추가생성에 대한 설정*/
+  background-color: lightblue;
+  /* 셀자체를 세로로 정렬하는 방법*/
+  /* 그리드 셀내에서의 정렬방식*/
+  align-content: center;
+  justify-content: end; /* flex와 마찬지로 여러개의 라인이기에 가능 셀도 라인으로봄*/
+  /*위의 두개를 한꺼번에*/
+  place-content: start end;
+}
+.child {
+  width: 50px;
+  height: 50px;
+  background-color: tomato;
+  /*자식속성 정렬*/
+  display: flex;
+  justify-content: center;
+  align-items: center; /* cross축이 1개의 라인이므로*/
+
+  color: white;
+  font-size: 28px;
+  /*자신에 대한 아이템정렬*/
+  align-self: flex-start;
+  justify-self: flex-end;
+  place-self: center;
+}

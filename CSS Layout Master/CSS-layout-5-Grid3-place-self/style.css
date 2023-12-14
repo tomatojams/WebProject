@@ -1,0 +1,42 @@
+body {
+  background-color: white;
+}
+
+.father {
+  display: grid;
+  gap: 10px;
+  min-height: 50vh;
+  /* grid 템플릿만들기*/
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  /* 추가생성에 대한 설정*/
+  grid-auto-rows: 1fr; /* 추가적인 줄이 생길때 디펄트값*/
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column; /* row, column, dense */
+
+  /* 그리드 셀내에서의 정렬방식*/
+  justify-items: center; /*stretch는 width가 없을때 */
+  align-items: center; /*stretch는 heigh가 없을때 */
+  place-items: end end; /* 위 두개를 한번에 크로스축, 메인축 순서*/
+}
+.child {
+  width: 50px;
+  height: 50px;
+  background-color: tomato;
+  color: white;
+  font-size: 28px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.child:nth-child(6) {
+  background-color: teal;
+  /* 차일드 스스로 정렬하기*/
+  align-self: center;
+  justify-self: center;
+  place-self: center center; /* 위 두개를 한번에 크로스축, 메인축 순서*/
+
+  grid-column: span 2;
+}

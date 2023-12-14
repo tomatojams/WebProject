@@ -15,6 +15,8 @@ body {
     "content content content menu"
     "footer footer footer footer"; */
 
+  /* grid-teplate 만들기*/
+
   grid-template:
     "header header header header" 1fr /* row 크기 */
     "content content content menu" 1fr
@@ -24,6 +26,7 @@ body {
 
 header {
   background-color: aqua;
+  /* grid- area로 매칭시켜줌*/
   grid-area: header;
 }
 

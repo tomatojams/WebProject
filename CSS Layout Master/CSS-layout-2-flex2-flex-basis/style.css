@@ -14,9 +14,9 @@ body {
 }
 .box:nth-child(1) {
   background-color: tomato;
-  /* flex-grow: 0; 
+  flex-grow: 0; 
   flex-basis: 300px;
-  flex-shrink: 3; */
+  flex-shrink: 3;
   flex: 0 3 300px
 }
 

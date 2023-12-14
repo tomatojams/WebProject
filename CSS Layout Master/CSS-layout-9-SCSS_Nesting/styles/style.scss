@@ -1,0 +1,41 @@
+$bgColor: antiquewhite;
+
+body {
+  background-color: $bgColor;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+
+  li {
+
+    &:first-child {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    &:nth-child(2) {
+      display: flex;
+      color: aqua;
+    }
+    background-color: tomato;
+    color: white;
+    padding: 10px 5px;
+    border-radius: 7px;
+    &:hover {
+      opacity: 0.8;
+      a {
+        color: gray;
+      }
+    }
+    a {
+      color: white;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+  }
+}

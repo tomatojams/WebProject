@@ -1,0 +1,28 @@
+$bgColor: antiquewhite;
+
+body {
+  background-color: $bgColor;
+  padding: 60px;
+}
+
+%alert {
+  margin: 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px dashed black;
+}
+
+.sucess {
+  @extend %alert;
+  background-color: teal
+}
+
+.error {
+  @extend %alert;
+  background-color: tomato
+}
+
+.warning {
+  @extend %alert;
+  background-color: yellow;
+}

@@ -1,0 +1,123 @@
+@import "./reset.scss";
+
+body {
+  background-color: #dce6d1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.phone {
+  background-color: black;
+  border-radius: 50px;
+  height: 95%;
+  width: 420px;
+  padding: 50px 20px; /* 상하 좌우*/
+  box-sizing: border-box; //  요소의 너비와 높이를 계산하는 방법을 지정
+  // border-box는 테두리와 안쪽 여백의 크기도 요소의 크기로 고려합니다.
+  // 대부분의 경우 이 편이 크기를 조절할 때 쉽습니다.
+}
+
+.header {
+  // overflow-x: scroll;
+  .header__list {
+    display: flex;
+    color: white;
+    gap: 10px;
+    width: max-content; // 줄이 넘어가지 않게 가로로 길게
+    .header__list-item {
+      border: 1px solid rgba($color: #fff, $alpha: 0.5); //scss구문
+      padding: 10px;
+      border-radius: 20px;
+    }
+
+    .header__list-item-inverted {
+      background-color: white;
+      color: black;
+    }
+  }
+}
+
+.cards {
+  margin: 20px 0px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+
+  .cards__card {
+    background-color: white;
+    padding: 10px 10px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 50px;
+
+    .card__title {
+      font-size: 28px;
+    }
+
+    .card__footer {
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        padding: 5px 8px;
+        border-radius: 20px;
+        border: 1px solid rgba($color: #000, $alpha: 0.5);
+      }
+
+      .length {
+        background-color: white;
+      }
+    }
+
+    &:first-child {
+      background-color: #292d33;
+      color: white;
+      border: 1px solid white;
+      .length {
+        color: black;
+      }
+    }
+    &:nth-child(2) {
+      background-color: white;
+      .price {
+        background-color: yellow;
+      }
+    }
+
+    &:nth-child(3) {
+      background-color: #f9fdbc;
+      .price {
+        background-color: #af9cf5;
+      }
+    }
+
+    &:nth-child(4) {
+      background-color: #af9cf5;
+      .price {
+        background-color: yellow;
+      }
+    }
+
+    &:nth-child(5) {
+      background-color: #ffd4d4;
+      .price {
+        background-color: #af9cf5;
+      }
+    }
+
+    &:nth-child(6) {
+      background-color: #cefedc;
+      .price {
+        background-color: yellow;
+      }
+    }
+    &:nth-child(3n) {
+      grid-column: span 2;
+    }
+  }
+}

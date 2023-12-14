@@ -1,0 +1,18 @@
+body {
+  background-color: white;
+  color: white;
+}
+
+.father {
+  display: grid;
+  gap: 10px;
+  height: 100vh;
+  /* grid 템플릿만들기*/
+  grid-template-columns: 1fr max-content 1fr;
+}
+.child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: tomato;
+}

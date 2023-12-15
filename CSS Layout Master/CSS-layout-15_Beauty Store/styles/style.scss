@@ -21,12 +21,12 @@ body {
   box-shadow: 5px 10px 10px rgba(0,0,0,0.3);
 }
 
-header{
+nav{
   display: grid;
   width: 90vw;
   height:50px;
   border: 1px solid $gray;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(5,1fr) 2fr repeat(5,1fr);
   min-width: 1200px;
 
 }

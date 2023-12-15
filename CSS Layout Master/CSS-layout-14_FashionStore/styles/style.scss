@@ -1,34 +1,35 @@
 @import "./reset.scss";
 
+$chocolate: #1f1414;
+
 body {
-  background-color: #1f1414;
+  background-color: #c6caca;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-img {
-  width: 165px;
-  height: 200px;
-}
+
 .phone {
   width: 400px;
-  height: 80vh;
+  height: 95vh;
   background-color: #d7dbdb;
-  border-radius: 10px;
+  border-radius: 15px;
+  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
-.kart {
-  width: 20px;
-  height: 20px;
-}
+
 .header {
   font-weight: 600;
   font-size: 15px;
   padding: 30px 20px 10px 20px;
   display: flex;
   justify-content: space-between;
+  .kart {
+    width: 20px;
+    height: 20px;
+  }
 }
 .total {
   padding: 20px 10px;
@@ -36,7 +37,7 @@ img {
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  background-color: #1f1414;
+  background-color: $chocolate;
   color: white;
   .total__price {
     font-size: 20px;
@@ -49,10 +50,12 @@ img {
 }
 
 .cards {
+  
   display: grid;
   grid-template-rows: 1fr 1fr;
 }
 .cards__card {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr 1.5fr 0.1fr;
   grid-template-rows: 1fr 1.4fr 1.2fr 0.2fr;
@@ -87,24 +90,41 @@ img {
     grid-column: 1/2;
     grid-row: 3/4;
 
-    border-top: 3px solid #1f1414;
-    border-bottom: 3px solid #1f1414;
-    border-right: 3px solid #1f1414;
+    border-top: 3px solid $chocolate;
+    border-bottom: 3px solid $chocolate;
+    border-right: 3px solid $chocolate;
   }
   .qt {
     grid-column: 2/3;
     grid-row: 3/4;
 
-    border-top: 3px solid #1f1414;
-    border-bottom: 3px solid #1f1414;
+    border-top: 3px solid $chocolate;
+    border-bottom: 3px solid $chocolate;
   }
   .picture {
+    position: absolute;
+    right: 10px;
+    bottom: 14px;
+  
+    height: 200px;
     height: 205px;
     box-sizing: border-box;
-    grid-column: 3/4;
-    grid-row: 2/4;
-    border: 3px solid #1f1414;
+    // grid-column: 3/4;
+    // grid-row: 2/4;
+    border: 3px solid $chocolate;
     background-color: #c6caca;
+    img {
+      width: 165px;
+      height: 194px;
+    }
+  }
+  .size,.qt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+    font-size: 15px;
+    font-weight: 400;
   }
   .emt1 {
     grid-column: 4/5;
@@ -114,13 +134,13 @@ img {
     grid-column: 4/5;
     grid-row: 3/4;
 
-    border-top: 3px solid #1f1414;
-    border-bottom: 3px solid #1f1414;
+    border-top: 3px solid $chocolate;
+    border-bottom: 3px solid $chocolate;
   }
   .space {
     grid-column: 1/5;
     grid-row: 4/5;
-    border-bottom: 3px solid #1f1414;
+    border-bottom: 3px solid $chocolate;
     background-color: #c6caca;
   }
 }

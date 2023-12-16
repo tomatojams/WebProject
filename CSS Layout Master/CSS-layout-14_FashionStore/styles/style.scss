@@ -107,7 +107,6 @@ body {
     bottom: 14px;
   
     height: 200px;
-    height: 205px;
     box-sizing: border-box;
     // grid-column: 3/4;
     // grid-row: 2/4;
@@ -115,7 +114,8 @@ body {
     background-color: #c6caca;
     img {
       width: 165px;
-      height: 194px;
+      height: 195px;
+      object-fit: cover;
     }
   }
   .size,.qt {

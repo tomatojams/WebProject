@@ -51,12 +51,14 @@ section:nth-child(1) {
     }
 
     .best {
+      // 부모엘리먼트가 flex로 지정하면 inline도 크기를 가질수있게됨.
       padding: 4px 10px;
       font-size: 10px;
       font-weight: bold;
       border: 1px solid #ffc830;
       background-color: #ffc830;
       border-radius: 10px;
+      place-self: center flex-start;// 배치된 셀내에서 크기가 작을때 세부움직임
     }
   }
   h1 {
@@ -70,6 +72,12 @@ section:nth-child(1) {
 
   img {
     width: 50px;
+  }
+  .foot{
+    padding: 20px;
+    border-top: 1px solid gray;
+    list-style: 3;
+    font-size: 26px;
   }
 }
 section:nth-child(2) {
@@ -126,10 +134,43 @@ section:nth-child(4) {
   background-color: $background;
   border-radius: 10px;
   display: grid;
-  grid-template-rows: 1fr 3fr;
+  grid-template-rows: 1fr 1fr 2fr;
+  gap:2px;
   .band {
+    padding: 5px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
     grid-row: 1/2;
     background-color: #ffc830;
+    border-radius: 10px;
+    span:first-child {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+  .band2 {
+    transform: rotate(10deg);
+    padding: 5px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    grid-row: 2/3;
+    background-color: white;
+    border-radius: 10px;
+  }
+  .band3 {
+    padding: 20px 25px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    font-size: 20px;
+    font-weight: 0;
+    grid-row: 3/5;
+    background-color: $background;
+    color:white;
     border-radius: 10px;
   }
 }

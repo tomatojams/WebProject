@@ -1,0 +1,13 @@
+@import "./reset.scss";
+
+$background: #191919;
+$gridGap: 2px;
+$cellRadius: 15px;
+
+body {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 50px;
+}

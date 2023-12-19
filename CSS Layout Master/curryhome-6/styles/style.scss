@@ -1,3 +1,5 @@
+$border: #fd6b3a;
+$gap: 3px;
 body {
   background-color: yellow;
   height: 100vh;
@@ -6,89 +8,117 @@ body {
 .wrapper {
   display: grid;
   height: 96vh;
-  border: 3px solid orange;
-  gap:3px;
-  background-color: orange;
-  grid-template-columns: 30px 1fr 30px;
+  border: $gap solid $border;
+  gap: $gap;
+  background-color: $border;
+  grid-template-columns: 40px 1fr 40px;
   grid-template-rows: 30px 1fr 30px;
 }
 
 .bar {
-
-    &:first-child,
-    &:last-child {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      background-color: yellow;
-      overflow: hidden;
+  &:first-child,
+  &:last-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: yellow;
+    overflow: hidden;
     grid-column: span 3;
-    background-color: white ;
-      color: orange;
-      font-size: 20px;
-      font-family: "LotteMartDream", sans-serif;
+    background-color: white;
+    color: $border;
+    font-size: 20px;
+    font-family: "LotteMartDream", sans-serif;
+    font-decoration: italic;
 
-      span{
-        text-transform: uppercase;
-        position: absolute;
-        width:max-content;
-      }
-
+    span {
+      text-transform: uppercase;
+      position: absolute;
+      width: max-content;
     }
-   &:nth-child(2) {
-  padding: 0;
-     display: grid;
-     grid-template-row: 4fr 3fr 0.2fr;
-     gap:3px;
-     font-size: 15px;
-     font-family: "LotteMartDream", sans-serif;
-     .cell1 {
-       padding: 10px;
-       grid-row: 1/2;
-       color: white;
-       display: grid;
-       gap: 10px;
-         grid-template-row: 1fr 1fr 1fr;
-
-       span {
-         margin: 0;
-         writing-mode: vertical-rl;
-         text-orientation: upright;
-         text-transform: uppercase;
-       }
-     }
-     .cell2 {
-       padding: 10px;
-       box-sizing: border-box;
-       background-color: white;
-       display: grid;
-       gap: 10px;
-
-       span {
-         padding: 20px 0;
-
-         transform: rotate(180deg);
-         writing-mode: vertical-rl; /* vertical-rl은 세로로 아래에서 위로 */
-
-         white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 설정 */
-         text-transform: uppercase;
-       }
-     }
-     .cell3{
-       box-sizing: border-box;
-       background-color: white;
-      display: flex;
-       flex-wrap: wrap;
-
-      img{
-
-        width:20px;
-        height:20px;
-      }
-     }
-
   }
+  &:nth-child(2) {
+    display: grid;
+    grid-template-row: 5fr 3fr 0.2fr;
+    gap: $gap;
+    font-size: 15px;
+    font-family: "LotteMartDream", sans-serif;
+    .cell1 {
+      box-sizing: border-box;
+      padding: 30px 10px;
+      grid-row: 1/2;
+      color: white;
+      display: grid;
+      gap: 20px;
+      grid-template-row: 1fr 1fr 1fr;
 
+      span {
+        margin: 0;
+        letter-spacing: 3px;
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        text-transform: uppercase;
+      }
+    }
+    .cell2 {
+      padding: 10px;
+      box-sizing: border-box;
+      background-color: white;
+      display: grid;
+      gap: 10px;
+
+      span {
+        padding: 20px 0;
+
+        transform: rotate(180deg);
+        writing-mode: vertical-rl; /* vertical-rl은 세로로 아래에서 위로 */
+        white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 설정 */
+        text-transform: uppercase;
+      }
+    }
+    .cell3 {
+      box-sizing: border-box;
+      background-color: white;
+      display: flex;
+      flex-wrap: wrap;
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+  &:nth-child(4) {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: $gap;
+    span {
+      background-color: #46ab4f;
+      letter-spacing: 3px;
+      padding: 50px 10px;
+      color: white;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      text-transform: uppercase;
+    }
+  }
 }
 
+main {
+  margin: 0;
+  gap: 0;
+  background-color: white;
+  background-image: url("https://cdn.pixabay.com/photo/2023/12/09/21/03/pineapple-8440180_1280.jpg"),
+    url("https://cdn.pixabay.com/photo/2015/07/30/11/05/pineapple-867245_1280.jpg");
+  background-size: 50% 100%, 50% 100%;
+  background-position: left, right;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    color: white;
+    font-size: 80px;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: 1000;
+  }
+}

@@ -14,31 +14,81 @@ body {
 }
 
 .bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  background-color: yellow;
-  overflow: hidden;
+
     &:first-child,
     &:last-child {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      background-color: yellow;
+      overflow: hidden;
     grid-column: span 3;
     background-color: white ;
       color: orange;
       font-size: 20px;
       font-family: "LotteMartDream", sans-serif;
+
+      span{
+        text-transform: uppercase;
+        position: absolute;
+        width:max-content;
+      }
+
     }
    &:nth-child(2) {
-    display: grid;
-    grid-template-row: 4fr 3fr 1fr;
-    font-size: 20px;
-    font-family: "LotteMartDream", sans-serif;
-  }
-  span{
-    position: absolute;
-    width:max-content;
-  }
-  .
-}
+  padding: 0;
+     display: grid;
+     grid-template-row: 4fr 3fr 0.2fr;
+     gap:3px;
+     font-size: 15px;
+     font-family: "LotteMartDream", sans-serif;
+     .cell1 {
+       padding: 10px;
+       grid-row: 1/2;
+       color: white;
+       display: grid;
+       gap: 10px;
+         grid-template-row: 1fr 1fr 1fr;
 
+       span {
+         margin: 0;
+         writing-mode: vertical-rl;
+         text-orientation: upright;
+         text-transform: uppercase;
+       }
+     }
+     .cell2 {
+       padding: 10px;
+       box-sizing: border-box;
+       background-color: white;
+       display: grid;
+       gap: 10px;
+
+       span {
+         padding: 20px 0;
+
+         transform: rotate(180deg);
+         writing-mode: vertical-rl; /* vertical-rl은 세로로 아래에서 위로 */
+
+         white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 설정 */
+         text-transform: uppercase;
+       }
+     }
+     .cell3{
+       box-sizing: border-box;
+       background-color: white;
+      display: flex;
+       flex-wrap: wrap;
+
+      img{
+
+        width:20px;
+        height:20px;
+      }
+     }
+
+  }
+
+}
 

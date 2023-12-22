@@ -5,9 +5,79 @@ $gridGap: 2px;
 $cellRadius: 15px;
 
 body {
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 50px;
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 50px 1fr 50px;
+  grid-template-rows: 50px 1fr 50px;
+
+  .bar {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 18px;
+    text-transform: uppercase;
+    &:first-child,
+    &:last-child {
+      grid-column: span 3;
+    }
+
+    &:not(:first-child,:last-child) {
+      transform: rotateZ(-90deg);
+    }
+  }
+
+  .main{
+    box-sizing: border-box;
+    padding: 0 30px 30px 30px;
+    overflow-y: scroll;
+    height: 100%;
+    border: 2px solid black;
+    .main__nav{
+      display: grid;
+      .main__nav-item {
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid black;
+        text-transform: uppercase;
+        font-size: 22px;
+        font-weight: 600;
+      }
+    }
+    .filter{
+      margin-top: 50px 0px;
+      display: flex;
+      justify-content: space-between;
+      
+      text-transform: uppercase;
+      font-weight: 600  ;
+      .filter__types{
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        color: gray;
+        .filter__name--selected{
+          color: black;
+        }
+      }
+    }
+    .projects{
+      display: grid;
+      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    .project{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-weight: 600;
+
+    
+      img{
+        width: 100%;
+      }
+    }
+    }
+
+  }
 }

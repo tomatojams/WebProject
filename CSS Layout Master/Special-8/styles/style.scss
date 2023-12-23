@@ -18,6 +18,7 @@ body {
   background-color: $background;
 
   .content {
+    
     box-sizing: border-box;
     padding: 10px;
     background-color: #f26e02;
@@ -28,8 +29,7 @@ body {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 100%;
-
+      box-sizing: border-box;
       background-color: #ff0300;
       gap: 2px;
 
@@ -44,15 +44,17 @@ body {
 
         background-color: #ff0300;
         .header {
-          font-size: 14px;
+          font-size: 12px;
           grid-row: span 2;
           background-color: #f26e02;
+
           width: 25px;
           padding: 15px;
           transform: rotate(180deg);
           box-sizing: border-box;
           display: flex;
           justify-self: center;
+          align-items: center;
           writing-mode: vertical-rl;
           color: inherit;
         }
@@ -71,6 +73,7 @@ body {
           }
         }
         .team {
+          font-size: 13px;
           background-color: #f26e02;
           display: flex;
           justify-content: center;
@@ -94,7 +97,8 @@ body {
         }
       }
       .festival__selected {
-        border: 1px solid white !important;
+        float: left;
+        border: 1px solid white;
         box-sizing: border-box;
         color: white;
         background-color: white;
@@ -109,13 +113,16 @@ body {
     }
   }
   .bar {
+    position: relative;
     display: grid;
     grid-template-rows: 1fr 1fr;
     box-sizing: border-box;
     font-size: 20px;
     font-weight: 600;
     justify-content: center;
+    
     span:nth-child(1) {
+      grid-row: 1/2;
       padding: 15px;
       box-sizing: border-box;
       display: flex;
@@ -123,7 +130,9 @@ body {
       writing-mode: vertical-rl;
       background-color: #ff00ff;
     }
+    
     span:nth-child(2) {
+      grid-row: 2/3;
       padding: 15px;
       display: flex;
       justify-self: center;
@@ -131,6 +140,13 @@ body {
       background-color: #1900ff;
       transform: rotate(180deg);
     }
+    img {
+      position:absolute;
+      top: 47.3%;
+      left: -7%;
+      width: 58px;
+    }
+   
   }
   .info {
     background-color: #ff0300;
@@ -138,7 +154,7 @@ body {
     grid-template-rows: 50px 1fr;
 
     .info__bar {
-      font-size: 20px;
+      font-size: 18px;
       height: 50px;
       padding: 5px 10px;
       display: flex;

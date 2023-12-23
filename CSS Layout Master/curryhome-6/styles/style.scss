@@ -2,7 +2,7 @@ $border: #fd6b3a;
 $gap: 3px;
 body {
   background-color: yellow;
-  height: 100vh;
+  height: 95vh;
 }
 
 .wrapper {
@@ -38,15 +38,15 @@ body {
     }
   }
   &:nth-child(2) {
+    box-sizing: border-box;
     display: grid;
-    grid-template-row: 5fr 3fr 0.2fr;
+    grid-template-row: 5fr 3fr 30px;
     gap: $gap;
     font-size: 15px;
     font-family: "LotteMartDream", sans-serif;
     .cell1 {
       box-sizing: border-box;
       padding: 30px 10px;
-      grid-row: 1/2;
       color: white;
       display: grid;
       gap: 20px;
@@ -61,15 +61,15 @@ body {
       }
     }
     .cell2 {
-      padding: 10px;
+      height: 100%;
+      padding:  10px;
       box-sizing: border-box;
       background-color: white;
       display: grid;
       gap: 10px;
-
+      height:100%;
       span {
         padding: 20px 0;
-
         transform: rotate(180deg);
         writing-mode: vertical-rl; /* vertical-rl은 세로로 아래에서 위로 */
         white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 설정 */
@@ -77,10 +77,14 @@ body {
       }
     }
     .cell3 {
+
+      white-space: nowrap;
       box-sizing: border-box;
       background-color: white;
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-end;
       img {
         width: 20px;
         height: 20px;
@@ -104,12 +108,13 @@ body {
 }
 
 main {
+  white-space: break-spaces;
   margin: 0;
   gap: 0;
   background-color: white;
-  background-image: url("https://cdn.pixabay.com/photo/2023/12/09/21/03/pineapple-8440180_1280.jpg"),
-    url("https://cdn.pixabay.com/photo/2015/07/30/11/05/pineapple-867245_1280.jpg");
-  background-size: 50% 100%, 50% 100%;
+  background-image: url("https://cdn.pixabay.com/photo/2016/11/18/13/03/pineapple-1834329_1280.jpg"),
+    url("https://cdn.pixabay.com/photo/2013/02/17/12/24/fruits-82524_1280.jpg");
+  background-size: 50% 101%, 51% 101%; // 공백방지
   background-position: left, right;
   background-repeat: no-repeat;
   display: flex;

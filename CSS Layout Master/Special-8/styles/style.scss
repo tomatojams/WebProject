@@ -25,13 +25,13 @@ body {
     overflow-y: scroll;
 
     .festival_items {
-      padding: 2px;
+      //padding: 2px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      box-sizing: border-box;
-      background-color: #ff0300;
-      gap: 2px;
+      width: 100%;
+      //background-color: #ff0300;
+      //gap: 2px;
 
       .festival {
         gap: 2px;
@@ -41,13 +41,12 @@ body {
         display: grid;
         grid-template-columns: 30px 4fr 150px;
         grid-template-rows: 1fr 1fr;
-
+        border: 2px solid #ff0300;
         background-color: #ff0300;
         .header {
           font-size: 12px;
           grid-row: span 2;
           background-color: #f26e02;
-
           width: 25px;
           padding: 15px;
           transform: rotate(180deg);
@@ -97,12 +96,14 @@ body {
         }
       }
       .festival__selected {
-        float: left;
-        border: 1px solid white;
-        box-sizing: border-box;
+
+        //border: 1px solid white;
+        //box-sizing: border-box;
+        border-color:#fff; //수정
+        z-index: 1;//수정
         color: white;
         background-color: white;
-        padding: 1px;
+        //padding: 1px;
         .description {
           span {
             color: #ff0300;

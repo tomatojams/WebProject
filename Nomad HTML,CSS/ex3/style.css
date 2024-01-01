@@ -1,13 +1,23 @@
 body {
-    margin: 20px 10px;/*magin collapse*/
-    background-color: thistle;
+  margin: 80px 10px; /*magin collapse*/
+  background-color: thistle;
+  padding: 20px;
+  border: 2px solid black;
 }
-h1{
-    margin: 80px; /*border밖의 공간*/
-    padding: 30px; /*#border안의 공간*/
-    display: block;
-    width: 300px;
-    height: 300px;
-    background-color: white;
-    border-radius: 20px;
+h1 {
+  margin: 20px; /*border밖의 공간*/
+  padding: 30px; /*#border안의 공간*/
+  display: block;
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border-radius: 20px;
+}
+div {
+  padding: 20px;
+  margin: 20px;
+  background-color: teal;
+  height: 100px;
+  border: 2px solid black;
+  border-radius: 20px;
 }

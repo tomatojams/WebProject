@@ -45,7 +45,13 @@
       "Click me"
     ); */
 
-    const container = React.createElement("div", null, [Title, Button]);
-    ReactDOM.createRoot(root).render(container); // React element를 HTML로 렌더링
+    // const container = React.createElement("div", null, [Title, Button]);
+    const Container = (
+      <div>
+        {Title} {Button}
+      </div>
+    );
+
+    ReactDOM.createRoot(root).render(Container); // React element를 HTML로 렌더링
   </script>
 </html>

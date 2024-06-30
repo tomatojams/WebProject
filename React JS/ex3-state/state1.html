@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head> </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const root = document.getElementById("root");
+    let count = 0;
+    function countUp() {
+      count++;
+      console.log(count);
+      // 함수 호출때마다 렌더링
+      render();
+    }
+    const Container = () => (
+      // 태그처럼 사용, 대문자로 시작해야 JSX 컴포넌트로 인식
+      <div>
+        <h3>Total cliks: {count}</h3>
+        <button onClick={countUp}>Click me</button>
+      </div>
+    );
+
+    function render() {
+      ReactDOM.createRoot(root).render(<Container />);
+    }
+    render();
+  </script>
+</html>

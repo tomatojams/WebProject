@@ -9,10 +9,10 @@
   <script>
     const root = document.getElementById("root");
     const span = React.createElement(
-      "span",
-      { id: "sexy-span", style: { color: "pink" } },
+      "span", // React는 생성과 동시에 속성과 내용을 지정
+      { id: "sexy-span", style: { color: "pink" } }, //  span을 만들면서 동시에 속성과 내용을 지정가능
       "I'm a sexy span!"
     );
-    ReactDOM.render(span, root);
+    ReactDOM.createRoot(root).render(span);
   </script>
 </html>

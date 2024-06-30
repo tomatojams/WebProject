@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head> </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script>
+    const root = document.getElementById("root"); // ID로 찾기
+    const h3 = React.createElement(
+      "h3",
+      { id: "title", onMouseEnter: () => console.log("Mouse entered") },
+      "Hello, I'm a span"
+    );
+     
+
+    // 리액트 작동방식
+    const btn = React.createElement(
+      "button", // 1. 태그
+      {
+        // 2. props- object 속성 색상, 이벤트, id
+        id: "click-me",
+        onMouseEnter: () => console.log("Mouse entered"),
+        onClick: () => console.log("Button clicked"),
+        style: {
+          backgroundColor: "tomato",
+          color: "white",
+        },
+      },
+      "Click me" // 3. 내용
+    );
+    /* 
+    onclick 은 바닐라 onClick은 리액트
+    */
+    const container = React.createElement("div", null, [h3, btn]);
+    ReactDOM.createRoot(root).render(container); // React element를 HTML로 렌더링
+  </script>
+</html>

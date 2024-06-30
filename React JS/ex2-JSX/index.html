@@ -6,7 +6,9 @@
   </body>
   <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
-  <script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
     const root = document.getElementById("root");
     // JSX 예시
     const Title = (
@@ -20,14 +22,14 @@
       "Hello, I'm a span"
     );*/
     const Button = (
-      <Button
+      <button // button 은 소문자 태그는 소문자임
         style={{
           backgroundColor: "tomato",
           color: "white",
         }}
         onClick={() => console.log("Button clicked")}>
         Click me
-      </Button>
+      </button>
     );
     /*     const btn = React.createElement(
       "button",
@@ -43,7 +45,7 @@
       "Click me"
     ); */
 
-    const container = React.createElement("div", null, [h3, btn]);
+    const container = React.createElement("div", null, [Title, Button]);
     ReactDOM.createRoot(root).render(container); // React element를 HTML로 렌더링
   </script>
 </html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head> </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    function App() {
+      // const [minutes, setMinutes] = React.useState(0);
+      // 초기값을 지정하고 _onChange 함수를 삭제하면 값이 업데이트 되지 않음
+      const [minutes, setMinutes] = React.useState();
+      // input value와 연결해서 스테이트 함수생성
+
+      const _onChange = (event) => {
+        // console.log(event); // 가짜 React 이벤트 객체
+        // console.log(event.target.value); // 실제 input 값
+        setMinutes((minutes) => event.target.value);
+        // useState로 받아와서 업데이트를 해줘야 함
+        // miniutes가 있는 인풋의 이벤트의 밸루
+      };
+
+      const _onReset = () => {
+        setMinutes("");
+      };
+      return (
+        //in JSX don't use for!! or class!! instead use htmlFor!! and className!!
+        <div>
+          <div>
+            <h1>Super Converter</h1>
+            <label htmlFor="minutes">Minutes:</label>
+            <input
+              value={minutes} // ustState와 연결
+              id="minutes"
+              placeholder="Minutes"
+              type="number"
+              onChange={_onChange} // event를 받아서 setMinutes를 호출
+            />
+            <br />
+            <h4> convert {minutes} minutes</h4>
+            <label htmlFor="hours">Hours:</label>
+            <input
+              value={Math.floor(minutes / 60)}
+              id="hours"
+              placeholder="Hours"
+              type="number"
+              disabled
+            />
+          </div>
+          <br />
+          <button onClick={_onReset}>Reset</button>
+        </div>
+      );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.createRoot(root).render(<App />);
+  </script>
+</html>

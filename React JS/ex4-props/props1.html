@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="state6/styles.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      function Btn({ banana, big }) {
+        // Btn(props) 는 오브젝트를 받지만 그중 하나의 요소는 {}로받음
+        console.log(banana, big);
+        return (
+          <button
+            style={{
+              // banana: "",
+              backgroundColor: "tomato",
+              color: "white",
+              padding: "10px",
+              borderRadius: "10px",
+              border: "0",
+              cursor: "pointer",
+              fontSize: big ? "20px" : "10px",
+            }}>
+            {banana}
+          </button>
+        );
+      }
+
+      // props를 사용하는 방법
+      // 태그형식으로 부르는 함수는 속성이 모두 첫번째 인자로 들어간다.
+      function App() {
+        return (
+          <div id="container">
+            <Btn banana="Save Changes" big={true} />
+            <Btn banana="Confirm" big={false} />
+          </div>
+        );
+      }
+
+      const root = document.getElementById("root");
+      ReactDOM.createRoot(root).render(<App />);
+    </script>
+  </body>
+</html>

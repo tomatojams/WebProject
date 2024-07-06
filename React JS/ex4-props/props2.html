@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="state6/styles.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      function Btn({ txt, OnClick}) { 
+        //함수도 인자로 받을수있음 인자를 받을떄는 {}로 받음 
+        // console.log(txt);
+        return (
+          <button
+            style={{
+              // banana: "",
+              backgroundColor: "tomato",
+              color: "white",
+              padding: "10px",
+              borderRadius: "10px",
+              border: "0",
+              cursor: "pointer",
+            }}
+            onClick={OnClick} // 인자를 받은후 {}로 적용
+            >
+            {txt}
+          </button>
+        );
+      }
+      function App() {
+        const [value, setValue] = React.useState("Save Changes");
+        const changeValue = () => {
+          setValue("Revert Changes");
+        };
+        return (
+          <div id="container">
+            <Btn
+              OnClick={changeValue} // 이벤트리스너가 아닌 props임 함수도 전달가능
+              txt={value}
+            />
+            <Btn txt="Confirm" />
+          </div>
+        );
+      }
+
+      const root = document.getElementById("root");
+      ReactDOM.createRoot(root).render(<App />);
+    </script>
+  </body>
+</html>

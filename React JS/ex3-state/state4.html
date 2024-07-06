@@ -12,12 +12,25 @@
     const root = document.getElementById("root");
 
     function App() {
-      // const로 설정해도 되는이유는 객체라서가 아님
-      // counter +1을 함수가 받아서 [counter+1]로 재할당해서임
       const [counter, setCounter] = React.useState(0);
       const onClick = () => {
-        setCounter(counter + 1); // const라서 const+1로 제할당 counter++는 불가 ++counter 불가
-        // App() 함수가 다시 전부 실행되지만 변화하는 부분만 비교해서 다시 렌더링
+        // setCounter(counter + 1); // 원하는 값 계산함.
+        setCounter((counter) => counter + 1); // 현재상태 => 새로운상태 내부가 function
+
+        // 아래가 더 좋은 방법 앞의 값이 현재값이라는것을 명시적으로 알려줌
+
+        //         1. 값으로 여러번
+        // function onClick() {
+        // setCounter(counter + 1);  현재 counter값을 할당
+        // setCounter(counter + 1);
+        // }
+        // 2. 함수로 여러번
+        // function onClick() {
+        // setCounter(current => current+ 1);  현재 counter값에 1을 더한 값을 다시 counter에 할당
+        // setCounter(current => current+ 1);
+        // }
+        // 1번으로 돌렸을 경우에는 setCounter를 몇번을 호출해도 한 번만 실행되는 걸 보실 수 있고(counter가 1만 증가)
+        // 2번으로 돌렸을 경우에는 setCounter가 호출된 만큼 counter가 증가된 걸 볼 수 있습니다.
       };
       console.log("rendered");
       console.log(counter);
@@ -28,7 +41,6 @@
         </div>
       );
     }
-    function render() {}
     ReactDOM.createRoot(root).render(<App />);
   </script>
 </html>

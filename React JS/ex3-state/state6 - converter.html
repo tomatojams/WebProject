@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="state6/styles.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      function MinutesToHours() {
+        // amount, flipped 상태 변수 선언 및 초기화
+        const [amount, setAmount] = React.useState("");
+        const [flipped, setFlipped] = React.useState(false);
+
+        // 입력 값 변경 핸들러
+        const _onChange = (event) => {
+          setAmount(event.target.value);
+        };
+
+        // 리셋 핸들러
+        const _onReset = () => {
+          setAmount(""); // 0대신 ""로 하면 입력이 편리함
+        };
+
+        // 플립 핸들러 
+        const _onFlip = () => {
+          _onReset();
+          setFlipped((current) => !current);
+        };
+
+        return (
+          <div id="container">
+            <div className="input-group">
+              <label htmlFor="Minute">Minute:</label>
+              <input
+                value={flipped ? amount * 60 : amount}
+                id="amount"
+                placeholder="Minute"
+                type="number"
+                onChange={_onChange}
+                onFocus={() => setAmount("")} // 포커스 시 초기화
+                disabled={flipped === true}
+                className="input-field"
+              />
+
+              <label htmlFor="hours">Hours:</label>
+              <input
+                value={flipped ? amount : Math.floor(amount / 60)}
+                id="hours"
+                placeholder="Hours"
+                type="number"
+                onChange={_onChange}
+                onFocus={() => setAmount("")} // 포커스 시 초기화
+                disabled={!flipped}
+                className="input-field"
+              />
+            </div>
+
+            <div className="buttons">
+              <button onClick={_onReset} className="btn">
+                Reset
+              </button>
+              <button onClick={_onFlip} className="btn">
+                Flip
+              </button>
+            </div>
+          </div>
+        );
+      }
+      function KmToMiles() {
+        const [amount, setAmount] = React.useState("");
+        const [flipped, setFlipped] = React.useState(false);
+
+        // 입력 값 변경 핸들러
+        const _onChange = (event) => {
+          setAmount(event.target.value);
+        };
+
+        // 리셋 핸들러
+        const _onReset = () => {
+          setAmount(""); // 0대신 ""로 하면 입력이 편리함
+        };
+
+        // 플립 핸들러
+        const _onFlip = () => {
+          _onReset();
+          setFlipped((current) => !current);
+        };
+
+        return (
+          <div id="container">
+            <div className="input-group">
+              <label htmlFor="KiloMeter">KiloMeter:</label>
+              <input
+                value={flipped ? amount * 1.609343502101154 : amount}
+                id="KiloMeter"
+                placeholder="KiloMeter"
+                type="number"
+                onChange={_onChange}
+                onFocus={() => setAmount("")} // 포커스 시 초기화
+                disabled={flipped === true}
+                className="input-field"
+              />
+
+              <label htmlFor="Miles">Miles:</label>
+              <input
+                value={flipped ? amount : amount * 0.621371}
+                id="Miles"
+                placeholder="Miles"
+                type="number"
+                onChange={_onChange}
+                onFocus={() => setAmount("")} // 포커스 시 초기화
+                disabled={!flipped}
+                className="input-field"
+              />
+            </div>
+
+            <div className="buttons">
+              <button onClick={_onReset} className="btn">
+                Reset
+              </button>
+              <button onClick={_onFlip} className="btn">
+                Flip
+              </button>
+            </div>
+          </div>
+        );
+      }
+      function App() {
+        const [index, setIndex] = React.useState("0");
+
+        const _onSelect = (event) => {
+          // console.log(event.target.value);
+          setIndex(event.target.value);
+        };
+
+        return (
+          //   다른 함수를 호출해서 사용
+          // 태그는 소문자로 시작해야함
+          <div id="container">
+            <h1>Super Converter</h1>
+            <select
+              className="input-field:focus"
+              id="select"
+              value={index}
+              onChange={_onSelect} // 이벤트 핸들러
+            >
+              <option value="0">Minutes & Hours</option>
+              <option value="1">Km to Miles</option>
+            </select>
+            {index === "0" ? <MinutesToHours /> : null}
+            {index === "1" ? <KmToMiles /> : null}
+          </div>
+        );
+      }
+
+      const root = document.getElementById("root");
+      ReactDOM.createRoot(root).render(<App />);
+    </script>
+  </body>
+</html>

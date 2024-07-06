@@ -10,27 +10,22 @@
 
   <script type="text/babel">
     const root = document.getElementById("root");
-    let count = 0;
-    function countUp() {
-      count++;
-      console.log(count);
-    }
+
     function App() {
-      // const data = React.useState(count);
-      // const counter = data[0];
-      // const modifier = data[1];
-      // const [counter, modifier] = data;
-      const [counter, modifier] = React.useState(count);
-      console.log(counter, modifier);
- 
+      const [counter, setCounter] = React.useState(0);
+      const onClick = () => {
+        setCounter(counter + 1);
+      };
+      console.log("rendered");
+      console.log(counter);
+      // 다시 렌더링 확인
       return (
         <div>
           <h3>Total cliks:{counter}</h3>
-          <button onClick={countUp}>Click me</button>
+          <button onClick={onClick}>Click me</button>
         </div>
       );
     }
-    function render() {}
     ReactDOM.createRoot(root).render(<App />);
   </script>
 </html>

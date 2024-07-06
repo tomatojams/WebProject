@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="state6/styles.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      function Btn({ txt, click }) {
+        console.log(txt, "was rendered");
+        return (
+          <button
+            onClick={click}
+            style={{
+              // banana: "",
+              backgroundColor: "tomato",
+              color: "white",
+              padding: "10px",
+              borderRadius: "10px",
+              border: "0",
+              cursor: "pointer",
+            }}>
+            {txt}
+          </button>
+        );
+      }
+
+      function App() {
+        const [title, setTitle] = React.useState("Before Change");
+        const _change = () => {
+          if (title === "Before Change") setTitle("After Change");
+          else setTitle("Before Change");
+        };
+        return (
+          <div>
+            <Btn click={_change} txt={title} />
+            <Btn txt="Constant" />
+          </div>
+        );
+      }
+      const root = document.getElementById("root");
+      ReactDOM.createRoot(root).render(<App />);
+    </script>
+  </body>
+</html>

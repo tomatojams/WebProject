@@ -10,19 +10,30 @@
 
   <script type="text/babel">
     const root = document.getElementById("root");
-
+    // 바른방법 예시 변경된 부분만 렌더링
     function App() {
       // [변경할 데이타, 변경함수] = React.useState(초기값);
       const [counter, setCounter] = React.useState(0);
-      // 아래와 같지만 리렌더 포함됨
+      // 대체된 코드 + 리렌더링
       // let counter = 0;
       // function countUp() {
-      //   setCounter(counter + 1);
+      //   setCounter(counter + 1); 이부분은 빠졌음.
       // }
 
+      // 배열할당
+      // const data = React.useState(count);
+      // const counter = data[0];
+      // const modifier = data[1];
+      // const [counter, modifier] = data;
+
       const onClick = () => {
+        // 재할당
         // setCounter(9098789);
+        // const로 설정해도 되는이유는 객체라서가 아님
+        // counter +1을 함수가 받아서 [counter+1]로 재할당해서임
         setCounter(counter + 1);
+        // const라서 const+1로 제할당 counter++는 불가 ++counter 불가
+        // App() 함수가 다시 전부 실행되지만 변화하는 부분만 비교해서 다시 렌더링
       };
 
       return (
@@ -32,7 +43,7 @@
         </div>
       );
     }
-    function render() {}
+
     ReactDOM.createRoot(root).render(<App />);
   </script>
 </html>

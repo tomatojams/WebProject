@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
-  <head>
- 
-  </head>
+  <head> </head>
   <body>
     <div id="root"></div>
 
@@ -11,7 +9,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
-      function Btn({ txt, click }) { // 함수의 첫번째 인자인 object로 모든 인자를 받는다
+      function Btn({ txt, click }) {
         console.log(txt, "was rendered");
         return (
           <button
@@ -29,17 +27,21 @@
           </button>
         );
       }
-
+      // 변화가 없는 객체는 다시 렌더링하지 않는다.
+      const MemorizeBtn = React.memo(Btn);
       function App() {
         const [title, setTitle] = React.useState("Before Change");
         const _change = () => {
           if (title === "Before Change") setTitle("After Change");
           else setTitle("Before Change");
         };
+
+        // 부모객체에 변화가 생기면 자식객체는 모두 다시 렌더링된다.
+        // React.memo를 사용하면 변화가 없는 객체는 다시 렌더링하지 않는다.
         return (
           <div>
-            <Btn click={_change} txt={title} />
-            <Btn txt="Constant" />
+            <MemorizeBtn click={_change} txt={title} />
+            <MemorizeBtn txt="Constant" />
           </div>
         );
       }

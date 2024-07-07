@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" href="state6/styles.css" />
-  </head>
+  <head> </head>
   <body>
     <div id="root"></div>
 
@@ -11,9 +9,10 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
-      function Btn({ banana, big }) {
+      function Btn(props) {
+        // 함수의 첫번째 인자인 object로 모든 인자를 받는다
         // Btn(props) 는 오브젝트를 받지만 그중 하나의 요소는 {}로받음
-        console.log(banana, big);
+        console.log(props.banana, props.big);
         return (
           <button
             style={{
@@ -24,9 +23,9 @@
               borderRadius: "10px",
               border: "0",
               cursor: "pointer",
-              fontSize: big ? "20px" : "10px",
+              fontSize: props.big ? "20px" : "10px",
             }}>
-            {banana}
+            {props.banana}
           </button>
         );
       }

@@ -20,16 +20,17 @@ function saveToDos() {
 // 삭제버튼을 누르면 해당 리스트를 삭제
 // 어떤 리스트에서 이벤트가 일어났는지 알려면 event.target을 사용
 // 부모엘리먼트인 리스트를 알수있음  parentElement
-// 그래서 부모엘리먼트 삭제
+// 그래서 부모엘리먼트 삭제 -> 자식이 x 버튼
 // 중요 target = button, parentElement = li
 //console.log(event.target.parentElement.innerText); 어느엘리먼트가 부모인지 내부 메세지로 확인가능
 
 function deleteToDo(event) {
   const li = event.target.parentElement;
 
+  
   toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
   // li.id는 html id 라서 숫자가 아니라 스트링
-  // filter안에서 함수를 부르거나 익명함수로 작성
+  // filter는 조건에 만족하는 항목으로만 새로운 배열을 만듬
   //filter하 하나하나의 엘리먼트마다 함수를 호출하기때문에 엘리먼트에 대응하는 리턴함수를 써줌
 
   saveToDos();

@@ -15,7 +15,11 @@ function Hello() {
 
 export default function App() {
   const [showing, setShowing] = useState(false);
-  const onClick = () => setShowing((prev) => !prev);
+  const onClick = () => {
+    
+    console.log("hello");
+    setShowing((prev) => !prev);
+  };
   return (
     <>
       <button onClick={onClick}>{showing ? "Hide" : "Show"}</button>

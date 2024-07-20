@@ -2,12 +2,12 @@ body {
   height: 100vh;
   margin: 20px;
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: column;
   /*    inline-block의 문제를 해결 */
   justify-content: space-evenly;
   /*   stretch는 높이가 없어야 한다. 자식개체의 높이 삭제 */
   align-items: stretch;
-  flex-wrap: wrap-reverse;
+  flex-wrap: wrap;
 }
 div {
   display: flex;

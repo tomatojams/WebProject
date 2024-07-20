@@ -1,0 +1,57 @@
+/* p span 모든 자식 p>span 정확히 자식 p+span 바로다음 p~span 건너뛰어도 다음*/
+
+/* 모든  자식속성을 찾아서 부여*/
+p span {
+  color: teal;
+}
+
+/* div 아래 모든 후손 span*/
+div span {
+  font-weight: 600;
+}
+
+/* 바로 아래의 정확한 자식만 부여*/
+div > span {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  text-decoration: underline;
+}
+
+/* p 다음에 있는 span을 선택   p전에 있는것은 선택안되고 다음에 있는*/
+p + span {
+  background-color: beige;
+  text-decoration: none;
+}
+
+/* +는 바로다음 ~ 바로 옆에 있지 않아도 됨 */
+p ~ span {
+  background-color: beige;
+  text-decoration: none;
+}
+/* p span 후손모두  p > span 바로 아래 후손 p + span 바로 다음 */
+
+body {
+  height: 1000vh;
+  margin: 50px;
+  display: flex;
+}
+
+div {
+  width: 200px;
+  height: 200px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: wheat;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+span {
+  height: 30px;
+  color: tomato;
+  background-color: yellowgreen;
+}

@@ -1,0 +1,45 @@
+
+/* :first-child, :nth-child(even, 2n+1) */
+
+body {
+  height: 1000vh;
+  margin: 50px;
+  display: flex;
+}
+
+div {
+  width: 200px;
+  height: 200px;
+  background-color: wheat;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+span {
+  height: 50px;
+}
+
+div:last-child {
+  background-color: teal;
+}
+
+div:first-child {
+  background-color: tomato;
+}
+
+/*아이디를 부여하는것보다 더 좋은방법 html코드를 건들지 않음*/
+
+span:nth-child(2),
+span:nth-child(3) {
+  background-color: yellowgreen;
+}
+
+span:nth-child(even) {
+  background-color: yellowgreen;
+}
+
+span:nth-child(3n) {
+  /*n=0부터 시작*/
+  background-color: aqua;
+}

@@ -1,0 +1,20 @@
+body {
+  margin: 20px;
+  height: 1000vh;
+}
+
+#different {
+  /* 하나만 추가해도 배치위치에서 벗어나 상위 레이어를 가지게된다. z=1 */
+  top: 5px;
+  left: 100px;
+  background-color: bisque;
+  width: 150px;
+  height: 150px;
+  position: fixed;
+}
+div {
+  width: 200px;
+  height: 200px;
+  color: white;
+  background-color: teal;
+}

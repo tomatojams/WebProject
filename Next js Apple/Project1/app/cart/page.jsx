@@ -1,9 +1,8 @@
 import { age, name } from "./data.jsx";
-import Hello from "./hello.jsx";
+
 export default function Cart() {
   return (
     <div>
-      <Hello />
       <h4 className="title">Cart</h4>
 
       <CartItem />

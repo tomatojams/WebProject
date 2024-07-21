@@ -1,0 +1,32 @@
+/* 칼라지정방법 # 칼라 rgb 칼라 rgba (투명도 추가) 칼라*/
+/* 변수지정 :root에 --**-** 형식으로 지정한다 */
+:root {
+  --main-color: #fcce00;
+  --backgourn-color: rgba(100, 180, 0, 0.1);
+}
+
+p {
+  color: var(--main-color);
+  background-color: var(--backgourn-color);
+}
+
+body {
+  height: 1000vh;
+  margin: 50px;
+}
+p::selection {
+  color: white;
+  background-color: yellowgreen;
+}
+/*첫글짜만*/
+p::first-letter {
+  color: white;
+  font-size: 30px;
+  background-color: yellowgreen;
+}
+/*첫번째 줄만*/
+p::first-line {
+  color: white;
+  font-size: 18px;
+  background-color: cadetblue;
+}

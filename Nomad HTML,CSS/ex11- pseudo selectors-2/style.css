@@ -3,18 +3,48 @@
 /* ~= value에 name이 들어간 것들 띄어쓰기가 되어야함*/
 /* *= 띄어쓰기 불포함 */
 /* $= 끝나는단어 ex .org  ^= 시작하는 단어 */
-body {
-  height: 1000vh;
-  margin: 50px;
+
+/* focus-within 자식요소가 포커스일때*/
+button ~ form:focus-within {
+  border: 1px solid pink;
+}
+/*combinator 부모와 자식을 결함해서 조건에 맞는 속성부여*/
+form:hover input:focus {
+  background-color: pink;
+  border-color: 1px solid grey;
+}
+/* 스타일링 psedo 셀렉터*/
+
+input::placeholder {
+  font-style: italic;
+  background-color: bisque;
 }
 
-input {
-  width: 300px;
-  font-size: 15px;
-  padding: 5px;
-  border: 1px solid grey;
+/* 셀렉트 할때만 적용됨*/
+p::selection {
+  color: white;
+  background-color: yellowgreen;
+}
+/*첫글짜만*/
+p::first-letter {
+  color: white;
+  font-size: 30px;
+  background-color: yellowgreen;
+}
+/*첫번째 줄만*/
+p::first-line {
+  color: white;
+  font-size: 18px;
+  background-color: cadetblue;
 }
 
+/* ankor의 및줄없애기는 visited가 아니라 ankor 자체에서 해야한다*/
+a {
+  text-decoration: none;
+}
+a:visited {
+  color: violet;
+}
 /* attribute 특성으로 고르려면 : 를 붙이면 된다.*/
 input:required {
   border: 1px solid tomato;
@@ -45,13 +75,6 @@ button:hover {
 button:focus {
   color: blanchedalmond;
 }
-/* ankor의 및줄없애기는 visited가 아니라 ankor 자체에서 해야한다*/
-a {
-  text-decoration: none;
-}
-a:visited {
-  color: violet;
-}
 
 a:hover {
   color: teal;
@@ -72,12 +95,14 @@ button ~ form {
   width: 500px;
 }
 
-/* 자식요소가 포커스일때*/
-button ~ form:focus-within {
-  border: 1px solid pink;
+body {
+  height: 1000vh;
+  margin: 50px;
 }
-/* 부모와 자식을 결함해서 조건에 맞는 속성부여*/
-form:hover input:focus {
-  background-color: pink;
-  border-color: 1px solid grey;
+
+input {
+  width: 300px;
+  font-size: 15px;
+  padding: 5px;
+  border: 1px solid grey;
 }

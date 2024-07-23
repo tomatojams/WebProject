@@ -1,7 +1,7 @@
-import { initDbConnection } from "../../../util/databaseMysql";
+import { initDbConnection } from "@/util/databaseMysql";
 
 export default async function Detail(props) {
-  //   let id = props.params.etc;
+  //props는 현재 URL 패러미터를 알려줌
 
   let db = await initDbConnection(); // await 순차적으로 동작하게 강제함
   // const [rows] = await db.query("SELECT * FROM forum.post");

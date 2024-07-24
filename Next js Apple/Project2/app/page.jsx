@@ -24,14 +24,9 @@ export default async function Home() {
 
   return (
     <>
-      <a href="./list">
-        <h4>리스트</h4>
-      </a>
-
       <form action="./api/list" method="GET">
         <button type="submit">DATA GET</button>
       </form>
-      <a href="./join"> 회원가입</a>
     </>
   );
 }

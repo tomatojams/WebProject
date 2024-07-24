@@ -99,11 +99,22 @@ label {
 
   outline: none;
 }
-/* 
-#write-form {
-  width: 80%;
-  padding: 30px;
+
+.navbar {
+  background: white;
+  padding: 20px;
+}
+.navbar a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: black;
+}
+.logo {
+  font-weight: bold;
+}
+
+.twoButton {
   display: flex;
-  justify-content: center;
-  align-items: start;
-} */
+  flex-direction: row;
+  gap: 10px;
+}

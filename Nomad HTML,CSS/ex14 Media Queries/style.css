@@ -1,0 +1,46 @@
+/* 칼라지정방법 # 칼라 rgb 칼라 rgba (투명도 추가) 칼라*/
+/* 변수지정 :root에 --**-** 형식으로 지정한다 */
+:root {
+  --main-color: #fcce00;
+  --backgourn-color: rgba(100, 180, 0, 0.1);
+}
+
+p {
+  color: var(--main-color);
+  background-color: var(--backgourn-color);
+}
+
+body {
+  height: 1000vh;
+  margin: 50px;
+}
+
+div {
+  background-color: teal;
+  width: 200px;
+  height: 200px;
+  transition: ease-in-out 1s;
+}
+@media screen and (min-width: 500px) and (max-width: 750px) and (orientation: portrait) {
+  /* 스크린이 둘 사이에 */
+  div {
+    width: 100px;
+    height: 100px;
+    background-color: tomato;
+  }
+}
+
+@media print {
+  body {
+    background-color: antiquewhite;
+
+    /* 프린트할때 배경이 바뀜 ,프린트에서 배경 그래픽 설정해야함 */
+  }
+}
+
+article {
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+}

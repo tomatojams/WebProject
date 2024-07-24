@@ -1,4 +1,5 @@
 import "./global.css";
+import Link from "next/link";
 
 export const metadata = {
   title: "Next.js",
@@ -8,7 +9,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <div className="navbar">
+          <Link href="/" className="logo">
+            P.Tmind
+          </Link>
+          <Link href="/list">List</Link>
+          <Link href="/join">Join</Link>
+        </div>
+
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,0 +1,156 @@
+/* 칼라지정방법 # 칼라 rgb 칼라 rgba (투명도 추가) 칼라*/
+/* 변수지정 :root에 --**-** 형식으로 지정한다 */
+:root {
+  --main-color: #fcce00;
+  --backgourn-color: rgba(100, 180, 0, 0.1);
+}
+
+p {
+  color: var(--main-color);
+  background-color: var(--backgourn-color);
+}
+
+body {
+  height: 1000vh;
+  margin: 50px;
+}
+
+#big-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 800px;
+  width: 400px;
+  padding-bottom: 30px;
+  border: 3px solid #00c6ad;
+}
+
+.big-box__row {
+  padding: 20px 20px;
+  display: flex;
+  justify-content: space-around;
+  /* border: 1px solid gray;
+  background-color: violet; */
+
+  height: 50px;
+}
+
+.big-box__row:first-child {
+  margin-top: 40px;
+  font-size: 20px;
+  font-weight: 800;
+  justify-content: space-between;
+  height: 30px;
+}
+
+.big-box__row:nth-child(2) {
+  height: 125px;
+}
+
+.big-box__row__img {
+  display: flex;
+  width: 120px;
+  height: 120px;
+  justify-content: center;
+  align-items: center;
+  background-color: #fcce00;
+  border: 2px solid black;
+  border-radius: 15px;
+}
+
+.big-box__row_des {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+.big-box__row_des span:first-child {
+  padding: 0 20px;
+
+  font-size: 38px;
+  font-weight: 800;
+  text-align: start;
+}
+.big-box__row_des span:nth-child(2) {
+  padding: 0 20px;
+
+  font-weight: 800;
+  text-align: start;
+}
+.big-box__row:nth-child(3) {
+  display: flex;
+  justify-content: start;
+  gap: 30px;
+}
+.big-box__row:nth-child(3) div {
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 10px;
+  box-shadow: 0px 5px 0px 0px black;
+}
+.big-box__row:nth-child(3) div:nth-child(1) {
+  padding: 10px 60px;
+}
+.big-box__row:nth-child(3) div:nth-child(2) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.big-box__row:nth-child(3) div:nth-child(3) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.big-box__row-color {
+  padding: 20px 20px;
+  display: flex;
+  justify-content: space-around;
+  /* border: 1px solid gray;
+  background-color: violet; */
+
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  gap: 30px;
+  align-items: center;
+}
+.big-box__row-color div:first-child {
+  padding: 10px;
+
+  border: 2px solid black;
+  border-radius: 10px;
+  width: 35px;
+  height: 35px;
+}
+
+.big-box__row-color div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+}
+.big-box__row-color div:nth-child(2) span:first-child {
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.matrgasi {
+  background-color: #f85a2a;
+}
+
+.attitue {
+  background-color: #ff89bb;
+}
+
+.every {
+  background-color: #1847e5;
+}
+
+.sun {
+  background-color: #00c6ad;
+}

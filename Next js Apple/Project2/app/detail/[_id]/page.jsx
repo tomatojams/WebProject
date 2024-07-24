@@ -19,7 +19,6 @@ export default async function Detail(props) {
       <div className="twoButton">
         <EditButton _id={props.params._id}></EditButton>
         <DeleteButton _id={props.params._id} />
-        <DeleteButton2 _id={props.params._id} />
       </div>
     </div>
   );

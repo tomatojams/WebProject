@@ -1,31 +1,30 @@
+// 서버 컴포넌트로 합쳐도 됨
+//
+
 "use client";
 import styles from "@/app/page.module.css";
-import { useState } from "react";
 
 export default function FormInput({ id, inititle, initext }) {
-  const [title, setTitle] = useState(inititle);
-  const [text, setText] = useState(initext);
   return (
     <form className="postform" onSubmit={handleSubmit}>
       <input
-        onChange={(e) => setTitle(e.target.value)}
         id="title"
         name="title"
         type="text"
         required
-        value={title}
+        defaultValue={inititle}
+        // defaultValue를 쓰면 state를 안써도 수정가능
       />
       <textarea
-        onChange={(e) => setText(e.target.value)}
         id="write-content"
         name="content"
         rows="10"
-        value={text}
+        defaultValue={initext}
         required
       />
       <input type="hidden" name="_id" value={id} />
       <button className={styles.simplebutton} type="submit">
-        글쓰기
+        수정
       </button>
     </form>
   );

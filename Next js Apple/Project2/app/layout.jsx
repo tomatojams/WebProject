@@ -16,6 +16,7 @@ export default function RootLayout({ children }) {
           </Link>
           <Link href="/list">List</Link>
           <Link href="/join">Join</Link>
+          <Link href="/login">Login</Link>
         </div>
 
         {children}

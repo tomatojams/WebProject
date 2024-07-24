@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "author": "",
   "license": "MIT",
@@ -11,6 +13,8 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "csurf": "^1.11.0",
+    "express-mysql-session": "^3.0.3",
+    "express-session": "^1.18.0",
     "mongodb": "^6.8.0",
     "mysql2": "^3.10.3",
     "next": "^14.2.5",

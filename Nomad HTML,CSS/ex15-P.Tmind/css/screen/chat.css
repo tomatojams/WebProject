@@ -1,0 +1,16 @@
+.chat-screen {
+  background-color: #abc1d1;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  justify-content: space-between;
+
+  align-items: center;
+
+  width: 448px;
+  height: 900px;
+  color: #2e363e;
+}

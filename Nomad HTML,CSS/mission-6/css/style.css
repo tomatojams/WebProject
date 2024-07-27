@@ -1,0 +1,148 @@
+/* 칼라지정방법 # 칼라 rgb 칼라 rgba (투명도 추가) 칼라*/
+/* 변수지정 :root에 --**-** 형식으로 지정한다 */
+@import "reset.css";
+@import "variables.css";
+@import "./components/nav-bar.css";
+@import "./components/sign-up.css";
+@import "./components/status.css";
+
+html {
+  height: 800px;
+}
+body {
+  position: relative;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  margin: 50px;
+
+  flex-direction: column;
+  box-sizing: border-box;
+
+  align-items: center;
+  border: 1px solid gray;
+  width: 450px;
+  height: 950px;
+}
+.status-bar {
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+main {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px
+}
+article {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: start;
+}
+article > h1 {
+  font-size: 24px;
+}
+header{
+  display: flex;
+  gap: 30px;
+}
+
+header > img {
+  width: 150px;
+}
+
+span  i {
+  color: orange;
+}
+
+.status-bar__column>span i {
+  color: black;
+}
+
+
+#search i {
+  color: rgba(0,0,0,0.3);
+}
+aside{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+}
+
+aside > span:first-child{
+  font-size: 18px;
+  font-weight: 600;
+}
+aside > span:nth-child(2){
+  color: grey;
+
+}
+
+main>article>h1{
+  font-weight: 600;
+}
+
+.mark span
+ {
+  display: inline-block;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: rgb(236, 232, 232);
+  border-radius: 4px;
+}
+
+.bookmark{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center
+}
+.bookmark> i {
+  color: orange;
+}
+.bookmark span {
+  display: inline-block;
+  padding: 10px;
+  background-color: rgb(236, 232, 232);
+}
+
+section{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 20px;
+}
+
+section>h1{
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.bookshelf{
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.books> img{
+  height: 130px;
+}
+
+footer{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+footer h1{
+  font-size: 20px;
+  font-weight: 600;
+}
+
+article header >img {
+  width: 120px;
+}
+
+article{
+  gap: 30px;
+}

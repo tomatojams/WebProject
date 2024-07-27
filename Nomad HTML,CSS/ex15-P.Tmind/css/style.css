@@ -1,0 +1,45 @@
+/* 칼라지정방법 # 칼라 rgb 칼라 rgba (투명도 추가) 칼라*/
+/* 변수지정 :root에 --**-** 형식으로 지정한다 */
+@import "reset.css";
+@import "variables.css";
+@import "./components/top-status.css";
+@import "./components/bottom-nav-bar.css";
+@import "./components/screen-header.css";
+@import "./components/user-component.css";
+@import "./components/badge.css";
+@import "./components/alt-screen-header.css";
+@import "./screen/home.css";
+@import "./screen/friends.css";
+@import "./screen/find.css";
+@import "./screen/chat.css";
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+  margin: 50px;
+ 
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  justify-content: space-between;
+
+  align-items: center;
+  border: 1px solid #2e363e;
+  width: 450px;
+  height: 900px;
+  color: #2e363e;
+}
+
+main {
+  height: 100%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 15px;
+}
+
+a {
+  color: #2e363e;
+}

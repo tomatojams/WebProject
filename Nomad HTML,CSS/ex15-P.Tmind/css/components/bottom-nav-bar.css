@@ -1,0 +1,29 @@
+.nav {
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 26px 30px;
+  background-color: rgba(0, 0, 0, 0.05);
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.nav_ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.nav_a {
+  /*아래가 absoluter를 쓰기위해*/
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: start;
+}
+
+.nav_notification {
+  position: absolute;
+  bottom: 4px;
+  right: -8px;
+}

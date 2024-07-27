@@ -1,0 +1,58 @@
+.nav {
+  width: 90%;
+
+  padding: 26px 30px;
+  margin-bottom: 30px;
+  background-color: rgba(0, 0, 0, 0.05);
+  height: 80px;
+  box-sizing: border-box;
+  border: 1px solid;
+  display: flex;
+  border-radius: 90px;
+  background-color: black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.nav_ul {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav_a {
+  /*아래가 absoluter를 쓰기위해*/
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: start;
+}
+
+.nav_notification {
+  position: absolute;
+  bottom: 4px;
+  right: -8px;
+}
+
+.nav_btn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.nav_btn span:first-child {
+  color: grey;
+}
+.nav_btn span:nth-child(2) {
+  color: white;
+  font-weight: 600;
+}
+
+.nav_btn2 {
+  color: white;
+  font-size: 25px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}

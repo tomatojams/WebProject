@@ -1,0 +1,11 @@
+.nav {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+.nav_ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

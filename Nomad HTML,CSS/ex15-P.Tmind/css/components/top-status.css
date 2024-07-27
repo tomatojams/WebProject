@@ -1,0 +1,33 @@
+
+.status-bar {
+    height: 40px;
+    width: 400px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    box-sizing: border-box;
+  }
+  
+  .status-bar__column {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    /* border: 1px solid gray;
+    background-color: violet; */
+  
+    height: 30px;
+  }
+  .status-bar__column:nth-child(2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .status-bar__column:nth-child(3) {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+  
+  .status-bar__column__span_svg {
+    width: 18px;
+  }

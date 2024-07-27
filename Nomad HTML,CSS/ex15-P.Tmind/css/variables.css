@@ -1,0 +1,9 @@
+:root {
+  --main-color: #a47df3;
+  --backgourn-color: rgba(100, 180, 0, 0.1);
+  --horizontal-space: 25px;
+  --main-border: 1px solid rgba(0, 0, 0, 0.2);
+  --main-padding: 20px;
+  --font-color: #2e363e;
+  --font-grey: rgba(0, 0, 0, 0.4);
+}

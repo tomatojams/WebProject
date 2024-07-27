@@ -9,7 +9,7 @@
   </head>
   <body class="chat-body">
     <section class="chat-screen">
-      <div class="status-bar">
+      <div class="status-bar chat-status">
         <div class="status-bar__column">
           <span>
             <i class="fas fa-wifi"></i>
@@ -28,20 +28,66 @@
 
       <header class="alt-header">
         <div class="alt-header__column">
-          <a href="chats.html"
-            ><span>
-              <i class="fas fa-chevron-left fa-xl"></i> </span
-          ></a>
+          <a href="chats.html"> <i class="fas fa-chevron-left fa-xl"></i> </a>
         </div>
         <div class="alt-header__column">
-          <span class="alt-header__column__setting">Tomatojam Soma</span>
+          <span class="alt-header__column__setting">토마토잼</span>
         </div>
         <div class="alt-header__column alt-header-added">
           <i class="fas fa-search fa-xl"></i>
           <i class="fas fa-bars fa-xl"></i>
         </div>
       </header>
-      <main></main>
+
+      <main class="main-screen main-chat">
+        <div class="chat_timestamp">Tuesday, June 30, 2024</div>
+        <div class="message-row">
+          <img
+            class="income_img"
+            src="https://cdn-icons-png.flaticon.com/128/2146/2146667.png" />
+          <div class="message-row_content">
+            <span class="message-author">토마토잼</span>
+            <div class="message-info">
+              <span class="message-bubble">Hi!</span>
+              <span class="message-time">11:48</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="message-row message-row-own">
+          <div class="message-row_content">
+            <div class="message-info">
+              <span class="message-bubble">Hello, good to see you.</span>
+              <span class="message-time">11:48</span>
+            </div>
+          </div>
+        </div>
+
+  
+        <!-- <div class="message">Message 1</div>
+        <div class="message">Message 2</div>
+        <div class="message">Message 3</div>
+        <div class="message">Message 4</div>
+        <div class="message">Message 5</div> -->
+      </main>
+      <div id="no-mobile">
+        <span>KoKoa Talk</span>
+      </div>
+
+      <form class="reply">
+        <div class="reply-column">
+          <i class="far fa-plus-square fa-2x"></i>
+        </div>
+        <div class="reply-column">
+          <input type="text" placeholder="Write a message" />
+          <div class="icons">
+            <i class="far fa-smile fa-2x"></i
+            ><button class="chat-submit">
+              <i class="fas fa-arrow-up fa-lg"></i>
+            </button>
+          </div>
+        </div>
+      </form>
 
       <script
         src="https://kit.fontawesome.com/0bcff22705.js"

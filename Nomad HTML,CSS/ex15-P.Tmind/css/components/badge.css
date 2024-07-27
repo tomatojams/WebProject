@@ -4,4 +4,27 @@
   padding: 3px 6px;
   background-color: #ff6229;
   border-radius: 50%;
+  animation: rotate 5s ease-in-out infinite;
+}
+.nav_a .badge {
+  animation-delay: 2.5s;
+}
+
+@keyframes rotate {
+  0% {
+    transform: none;
+  }
+  12.5% {
+    transform: translateY(-5px) rotateY(0);
+  }
+  25% {
+    transform: translateY(-5px) rotateY(180deg);
+  }
+  50% {
+    transform: none;
+  }
+
+  100% {
+    transform: none;
+  }
 }

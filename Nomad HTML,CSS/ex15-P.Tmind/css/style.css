@@ -12,12 +12,27 @@
 @import "./screen/friends.css";
 @import "./screen/find.css";
 @import "./screen/chat.css";
+@import "./components/no-mobile.css";
 
+html,
+body {
+  min-width: 450px;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* 부모 요소의 스크롤을 숨김 */
+}
+html {
+  display: flex;
+  justify-content: end;
+  background-color: rgba(0, 0, 0, 0.05);
+}
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  height: 100vh;
+
   margin: 50px;
- 
+
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -28,9 +43,13 @@ body {
   width: 450px;
   height: 900px;
   color: #2e363e;
+  overflow: visible;
+  /* position: relative; */
+  background-color: white;
 }
 
 main {
+  padding-top: 30px;
   height: 100%;
   width: 90%;
   display: flex;
@@ -42,4 +61,30 @@ main {
 
 a {
   color: #2e363e;
+}
+
+#splash-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  /* 상단위치 조정*/
+  width: 100%;
+  height: 100%;
+  background-color: var(--yellow);
+  z-index: 99;
+  animation: hideSplashScreen 3s ease-in-out forwards;
+}
+
+@keyframes hideSplashScreen {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    /* 요소를 마우스에 반응하지 않게 한다.*/
+    visibility: hidden;
+  }
 }

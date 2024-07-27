@@ -1,0 +1,42 @@
+#no-mobile {
+  position: absolute;
+  z-index: -1;
+  height: 898px;
+  width: 100%;
+  top: -1px;
+  left: -300px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 80px;
+}
+
+/* and 다음에 띄어쓰기*/
+@media screen and (max-width:1100px) {
+  #no-mobile {
+    font-size: 60px;
+    left: -250px;
+  }
+}
+
+@media screen and (max-width:900px) {
+    #no-mobile {
+        font-size: 40px;
+
+    }
+  }
+  
+  @media screen and (max-width:800px) {
+    #no-mobile {
+        font-size: 30px;
+  
+    }
+  }
+  
+ @media screen and (max-width:700px) {
+    #no-mobile {
+    display: none;
+    }
+  }
+  

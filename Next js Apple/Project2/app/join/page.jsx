@@ -23,24 +23,32 @@ export default function Join() {
     return <div>Loading...</div>;
   }
   return (
-    <div className="write-post">
-      <h4 className="titleh4">가입</h4>
-      <form className="postform" action="/api/join/newmember" method="POST">
-        <input id="title" name="id" type="text" placeholder="아이디" required />
+    <div id="join-main">
+      <div className="write-post-border">
+        <h4 className="write-post-title">가입</h4>
+        <form className="postform" action="/api/join/newmember" method="POST">
+          <input
+            id="write-title"
+            name="id"
+            type="text"
+            placeholder="아이디"
+            required
+          />
 
-        <input
-          id="write-content"
-          name="password"
-          type="password"
-          placeholder="비번"
-          required
-        />
-        <input type="hidden" name="_csrf" value={csrfToken} />
-        <br />
-        <button className={styles.simplebutton} type="submit">
-          작성완료
-        </button>
-      </form>
+          <input
+            id="write-content"
+            name="password"
+            type="password"
+            placeholder="비번"
+            required
+          />
+          <input type="hidden" name="_csrf" value={csrfToken} />
+          <br />
+          <button className="simplebutton-sm" type="submit">
+            작성완료
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

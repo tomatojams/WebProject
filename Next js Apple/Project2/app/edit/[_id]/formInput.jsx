@@ -2,13 +2,12 @@
 //
 
 "use client";
-import styles from "@/app/page.module.css";
 
 export default function FormInput({ id, inititle, initext }) {
   return (
     <form className="postform" onSubmit={handleSubmit}>
       <input
-        id="title"
+        id="write-title"
         name="title"
         type="text"
         required
@@ -23,7 +22,7 @@ export default function FormInput({ id, inititle, initext }) {
         required
       />
       <input type="hidden" name="_id" value={id} />
-      <button className={styles.simplebutton} type="submit">
+      <button className="simplebutton-sm" type="submit">
         수정
       </button>
     </form>

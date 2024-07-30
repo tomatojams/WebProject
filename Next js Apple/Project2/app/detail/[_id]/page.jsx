@@ -1,7 +1,7 @@
 import { initDbConnection } from "@/util/databaseMysql";
 import EditButton from "./editButton";
 import DeleteButton from "./deleteButton";
-import DeleteButton2 from "./deleteButton2";
+// import DeleteButton2 from "./deleteButton2";
 export default async function Detail(props) {
   //props는 현재 URL 패러미터를 알려줌
 
@@ -13,7 +13,7 @@ export default async function Detail(props) {
   ]);
   //   console.log(row);
   return (
-    <div className="detail">
+    <div className="detail-border">
       <h4>{row[0].title}</h4>
       <p>{row[0].content}</p>
       <div className="twoButton">

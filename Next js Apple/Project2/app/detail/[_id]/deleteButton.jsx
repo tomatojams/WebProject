@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import styles from "@/app/page.module.css";
+
 
 export default function DeleteButton({ _id }) {
   let router = useRouter();
@@ -33,7 +33,7 @@ export default function DeleteButton({ _id }) {
   return (
     <form onSubmit={handleDelete}>
       <input style={{ display: "none" }} name="_id" value={_id} />
-      <button className={styles.simplebutton} type="submit">
+      <button className="simplebutton" type="submit">
         삭제
       </button>
     </form>

@@ -1,5 +1,6 @@
 import { initDbConnection } from "@/util/databaseMysql";
 import styles from "./page.module.css";
+import "./global.css";
 export default async function Home() {
   let dbConnection = await initDbConnection();
 
@@ -9,8 +10,8 @@ export default async function Home() {
   console.log(rows[0]._id);
 
   return (
-    <div className={styles.mainbox}>
-      <article className={styles.box}>
+    <div id="mainbox">
+      <article className="mainbox_logo">
         {/* <span style={{ fontFamily: "Material Symbols Rounded" }}>gesture</span> */}
         <img style={{ width: "150px" }} src="/images/logo/logocool.svg" />
         <span
@@ -27,7 +28,7 @@ export default async function Home() {
       <form action="./api/list" method="GET">
         <button
           style={{ fontFamily: "Satoshi", fontSize: "16px", fontWeight: "600" }}
-          className={styles.simplebutton2}
+          className="simplebutton"
           type="hidden">
           Follow us
         </button>

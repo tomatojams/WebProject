@@ -1,11 +1,12 @@
-import styles from "@/app/page.module.css";
+
+import "@/app/global.css"
 export default function Write() {
   return (
-    <div className="write-post">
-      <h4 className="titleh4">글작성</h4>
+    <div className="write-post-border">
+      <h4 className="write-post-title">글작성</h4>
       <form className="postform" action="/api/post/new" method="POST">
         <input
-          id="title"
+          id="write-title"
           name="title"
           type="text"
           placeholder="제목"
@@ -20,7 +21,7 @@ export default function Write() {
           required
         />
         <br />
-        <button className={styles.simplebutton} type="submit">
+        <button className="simplebutton-sm" type="submit">
           글쓰기
         </button>
       </form>

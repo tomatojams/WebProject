@@ -2,6 +2,7 @@ import { initDbConnection } from "@/util/databaseMysql";
 import WriteButton from "./WriteButton";
 import ListView from "./ListView";
 import styles from "@/app/page.module.css";
+import "@/app/global.css";
 
 // 강제 다이나믹 렌더링
 export const dynamic = "force-dynamic";
@@ -25,9 +26,9 @@ export default async function List() {
   // await fetch("/list", { next: {revalidate:60} });
   // 60초마다 캐슁
   return (
-    <div className="list-bg">
+    <div className="list-border">
       <h3>게시판</h3>
-      <div className={styles.post}>
+      <div className="list-frame">
         <ListView rows={rows} />
       </div>
       <br />

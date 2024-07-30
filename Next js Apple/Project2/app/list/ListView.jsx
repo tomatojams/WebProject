@@ -17,8 +17,8 @@ export default function ListView({ rows }) {
       {rows.map((item, index) => {
         // return 없애면 중괄호도 없애야 함
         return (
-          <div key={index} className={styles.list_item}>
-            <article className={styles.article}>
+          <div key={index} >
+            <article className="list-article ">
               <Link
                 href={
                   // ***다이나믹 라우팅***
@@ -29,7 +29,7 @@ export default function ListView({ rows }) {
 
               <span className={styles.span}>{_timeTodate(item.datetime)}</span>
             </article>
-            <hr className={styles.hr} />
+            <hr className="h-line" />
           </div>
         );
       })}

@@ -1,10 +1,7 @@
 import Movie from "../components/movie";
-import { useEffect,useState } from "react";
-
+import { useEffect, useState } from "react";
 
 export default function Home() {
-    
-    
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
 
@@ -28,14 +25,17 @@ export default function Home() {
     fetch(
       `https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year`
     )
-      .then((response) => response.json())
+      .then((response) => response.json()) // 제이슨 형을 JS 객체로 파싱
       .then((json) => {
+        // 파싱된 데이타로 json 이 아닌 JS 객체임
+        //
+        // console.log(json.data.movies[0]);
         setMovies(json.data.movies);
         setLoading(false); // response 받은 다음에 해야함 외부에 하면 로딩없이 false 세팅이 됨
       });
     // .then((json) => console.log(json.data.movies));
   }, []);
-  console.log(movies);
+  // console.log(movies);
   return (
     <>
       {loading ? (
@@ -47,6 +47,7 @@ export default function Home() {
             : movies.map(
                 (movie) => (
                   <Movie
+                    id={movie.id}
                     key={movie.id} // 맵내에서 사용, 추가로 입력함 반복생성을 위한 키
                     coverImg={movie.medium_cover_image}
                     title={movie.title}
@@ -61,4 +62,3 @@ export default function Home() {
     </>
   );
 }
-

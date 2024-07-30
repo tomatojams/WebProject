@@ -13,8 +13,8 @@ export default async function Edit(props) {
   // console.log(row);
 
   return (
-    <div className="write-post">
-      <h4 className="titleh4">글수정</h4>
+    <div className="write-post-border">
+      <h4 className="write-post-title">글수정</h4>
       <FormInput
         id={props.params._id}
         inititle={row[0].title}

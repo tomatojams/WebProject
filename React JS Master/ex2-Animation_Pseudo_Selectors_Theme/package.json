@@ -10,11 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "gh-pages": "^6.1.1",
+    "ex5-vite-app": "file:",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.25.1",
     "styled-components": "^6.1.12"
   },
   "devDependencies": {
@@ -26,6 +25,5 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
     "vite": "^5.3.1"
-  },
-  "homepage": "https://tomatojams.github.io/"
+  }
 }

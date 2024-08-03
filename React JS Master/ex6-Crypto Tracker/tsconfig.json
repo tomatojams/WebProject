@@ -24,5 +24,12 @@
     "noEmitOnError": true,
     "esModuleInterop": true
   },
-  "include": ["src", "vite.config.ts"]
+  "include": [
+    "src",
+    "vite.config.ts",
+    "src/types/styled.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.d.ts"
+  ]
 }

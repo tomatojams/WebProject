@@ -13,14 +13,19 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "amqplib": "^0.10.4",
     "axios": "^1.7.3",
+    "dotenv": "^16.4.5",
     "drone-server": "file:",
     "ex5-vite-app": "file:",
+    "express": "^4.19.2",
     "leaflet": "^1.9.4",
+    "mysql2": "^3.11.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-leaflet": "^4.2.1"
+    "react-leaflet": "^4.2.1",
+    "sequelize": "^6.37.3"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

@@ -21,13 +21,17 @@
       { id: "title", onMouseEnter: () => console.log("Mouse entered") },
       "Hello, I'm a span"
     );*/
+    const consl = () => {
+      console.log("Button clicked");
+    };
+
     const Button = (
       <button // button 은 소문자 태그는 소문자임
         style={{
           backgroundColor: "tomato",
           color: "white",
         }}
-        onClick={() => console.log("Button clicked")}>
+        onClick={consl}>
         Click me
       </button>
     );

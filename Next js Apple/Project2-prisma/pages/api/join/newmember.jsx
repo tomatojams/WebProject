@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { initDbConnection } from "@/util/databaseMysql";
+import prisma from "@/lib/prisma";
 import csrf from "csurf";
 
 const csrfProtection = csrf({ cookie: true });
@@ -11,13 +11,15 @@ const saltRounds = 10; // 솔트의 라운드 수, 일반적으로 10~12가 적�
 export default async function Handler(req, res) {
   await csrfProtection(req, res, async () => {
     if (req.method === "POST") {
-      const { id, password } = req.body;
+      const { form_name_id, password } = req.body;
+      console.log("Join req.body:", req.body);
+      // 입력한 암호가 그대로 나오고 _csrf도 나옴
 
-      if (!id || !password) {
+      if (!form_name_id || !password) {
         return res.status(500).json("글의 내용을 써주세요.");
       }
 
-      if (!isValidId(id)) {
+      if (!isValidId(form_name_id)) {
         return res.status(400).json("유효하지 않은 아이디입니다.");
       }
 
@@ -26,21 +28,42 @@ export default async function Handler(req, res) {
       }
       // DB 연결 올리기
       try {
-        let db = await initDbConnection();
+        // let db = await initDbConnection();
 
-        const [existingUsers] = await db.query(
-          "SELECT * FROM forum.member WHERE m_id = ?",
-          [id]
-        );
+        // const [existingUsers] = await db.query(
+        //   "SELECT * FROM forum.member WHERE m_id = ?",
+        //   [form_name_id]
+        // );
 
-        if (existingUsers.length > 0) {
+        const existingUsers = await prisma.member.findUnique({
+          where: {
+            m_id: form_name_id,
+          },
+        });
+
+        // console.log("existingUsers:", existingUsers);
+        // prisma는 배열로 받지 않고  null 아니면 유효한 대이타이므로 null인지 아닌지를 판단하는게
+        // 중요함 일반쿼리일때는 .length>0  인지 판단해서 배열크기로 받았는지 아닌지 판단
+        if (existingUsers) {
           return res.status(409).json("이미 존재하는 아이디입니다.");
         }
         const date = new Date();
         const hashedPassword = await bcrypt.hash(password, saltRounds);
-        const query =
-          "INSERT INTO forum.member (m_id, password,createDate) VALUES (?,?,?)";
-        const [result] = await db.query(query, [id, hashedPassword, date]);
+        // const query =
+        //   "INSERT INTO forum.member (m_id, password,createDate) VALUES (?,?,?)";
+        // const [result] = await db.query(query, [
+        //   form_name_id,
+        //   hashedPassword,
+        //   date,
+        // ]);
+
+        const result = await prisma.member.create({
+          data: {
+            m_id: form_name_id,
+            password: hashedPassword,
+            createDate: date,
+          },
+        });
 
         return res.status(200).redirect("/list");
         // .json({ message: "글이 성공적으로 저장되었습니다.", postId: _id });

@@ -50,8 +50,8 @@ export default async function Detail(props) {
       <h4>{post.title}</h4>
       <p>{post.content}</p>
       <div className="twoButton">
-        <EditButton id={props.params.id}></EditButton>
-        <DeleteButton id={props.params.id} />
+        <EditButton id={post.id}></EditButton>
+        <DeleteButton _id={post.id} />
       </div>
     </div>
   );

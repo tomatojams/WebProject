@@ -1,9 +1,9 @@
 import bcrypt from "bcrypt";
-import { initDbConnection } from "@/util/databaseMysql";
 import csrf from "csurf";
+import { PrismaClient } from "@prisma/client";
 
 const csrfProtection = csrf({ cookie: true });
-
+const prisma = new PrismaClient();
 export default async function handler(req, res) {
   await csrfProtection(req, res, async () => {
     if (req.method === "POST") {
@@ -16,21 +16,28 @@ export default async function handler(req, res) {
       }
 
       try {
-        let db = await initDbConnection();
+        // let db = await initDbConnection();
 
-        // 사용자 정보 가져오기
-        const [users] = await db.query(
-          "SELECT * FROM forum.member WHERE m_id = ?",
-          [id]
-        );
+        // // 사용자 정보 가져오기
+        // const [users] = await db.query(
+        //   "SELECT * FROM forum.member WHERE m_id = ?",
+        //   [id]
+        // );
 
-        if (users.length === 0) {
+        const users = await prisma.member.findUnique({
+          where: {
+            m_id: id,
+          },
+        });
+
+        if (!users) {
           return res
             .status(401)
             .json({ message: "아이디 또는 비밀번호가 잘못되었습니다." });
         }
 
-        const user = users[0];
+        const user = users;
+        console.log("User:", users);
 
         // 비밀번호 검증
         const match = await bcrypt.compare(password, user.password);

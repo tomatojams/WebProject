@@ -1,5 +1,4 @@
 "use client";
-import styles from "@/app/page.module.css";
 import { useState, useEffect } from "react";
 
 export default function Join() {
@@ -29,7 +28,7 @@ export default function Join() {
         <form className="postform" action="/api/join/newmember" method="POST">
           <input
             id="write-title"
-            name="id"
+            name="form_name_id"
             type="text"
             placeholder="아이디"
             required

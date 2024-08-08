@@ -13,7 +13,7 @@ export function middleware(request) {
 
   if (request.nextUrl.pathname.startsWith("/list")) {
     console.log(new Date());
-    console.log(request.body);
+    // console.log(request.body);
     // console.log(request.headers.get("sce-ch-ua-platform"));
     return NextResponse.next();
   }

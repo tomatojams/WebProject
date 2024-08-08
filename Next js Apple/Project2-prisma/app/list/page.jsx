@@ -16,7 +16,7 @@ export default async function List() {
       datetime: "desc",
     },
   });
-
+  // console.log(posts);
   // await fetch("/list", { cache: "force-cache" });
   // GET 요청 결과 캐싱가능
   // await fetch("/list", { cache: "no-store" });

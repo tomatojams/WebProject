@@ -1,12 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-export default function DeleteButton({ id }) {
+// 인자명을 _id으로 받으면 서버에 보낼때도 오브젝스 속성명이 _id 가 됨.
+export default function DeleteButton({ _id }) {
   let router = useRouter();
-
+  const d_id = _id;
   const handleDelete = async (event) => {
     event.preventDefault();
-    console.log(id);
+
     try {
       const response = await fetch(`/api/delete`, {
         method: "DELETE",
@@ -15,7 +16,7 @@ export default function DeleteButton({ id }) {
         },
         // object로 만들때 인덱싱 이름이므로 일치시켜줘야함
         //json으로 만들면 ""을 다 쳐줘서 문자취급
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({ d_id }), // object. 속성이 여기서 정해짐
       });
 
       if (response.ok) {
@@ -31,7 +32,7 @@ export default function DeleteButton({ id }) {
 
   return (
     <form onSubmit={handleDelete}>
-      <input style={{ display: "none" }} name="_id" value={id} />
+      <input style={{ display: "none" }} name="_id" value={_id} />
       <button className="simplebutton" type="submit">
         삭제
       </button>

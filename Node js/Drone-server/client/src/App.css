@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+/* App.css */
+
+/* App.css */
+
+/* 최신 마커의 스타일 */
+.marker-latest {
+  filter: brightness(1); /* 최신 마커는 기본 밝기 */
+}
+
+/* 과거 마커의 스타일 */
+.marker-past {
+  filter: brightness(1); /* 과거 마커는 어두운 색상 */
+  opacity: 0.3; /* 과거 마커의 투명도 */
+  transform: scale(0.5); /* 과거 마커의 크기를 1/2로 조절 */
+  transform-origin: bottom center; /* 크기 조절의 기준 위치 */
+}

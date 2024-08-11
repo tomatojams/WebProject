@@ -65,6 +65,27 @@ async function initializeDatabase() {
 // 테이블 생성
 initializeDatabase();
 
+
+// 메모리 버퍼 초기화
+let buffer = []; // 캐시 버퍼
+
+// 데이터베이스에서 최신 데이터로 버퍼를 업데이트하는 함수
+async function updateBuffer() { // 새로 추가된 부분
+  try {
+    const positions = await Drone.findAll({
+      order: [['createdAt', 'DESC']], // 최신 데이터가 위로 오도록 정렬
+      limit: 5 // 최근 5개 데이터만 가져옴
+    });
+    buffer = positions; // 버퍼 업데이트
+  } catch (error) {
+    console.error('Error updating buffer:', error);
+  }
+}
+
+// 데이터베이스에서 버퍼를 초기화
+updateBuffer(); // 새로 추가된 부분
+
+
 // RabbitMQ에서 메시지 소비 및 데이터베이스 저장
 async function consumeDronePosition() {
   try {
@@ -90,6 +111,9 @@ async function consumeDronePosition() {
             longitude: position.longitude,
           });
 
+           // 버퍼 업데이트
+           await updateBuffer(); // 새로 추가된 부분
+
           channel.ack(msg); // 메시지 확인 및 큐에서 제거
         }
       },
@@ -105,17 +129,13 @@ async function consumeDronePosition() {
 consumeDronePosition();
 
 // API 엔드포인트 추가: 최근 5개 드론 위치 데이터 제공
-app.get('/api/positions', async (req, res) => {
+app.get('/api/positions', (req, res) => { // async 제거
   try {
-    // 가장 최근 5개의 드론 위치 데이터 조회
-    const positions = await Drone.findAll({
-      order: [['createdAt', 'DESC']], // 최신 데이터가 위로 오도록 정렬
-      limit: 5 // 최근 5개 데이터만 가져옴
-    });
-    res.json(positions); // 클라이언트에 위치 데이터 전송
+    // 버퍼에서 최신 5개 드론 위치 데이터 제공
+    res.json(buffer); // 새로 추가된 부분
   } catch (error) {
-    console.error('Error fetching drone positions:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Error fetching drone positions from buffer:', error); // 새로 추가된 부분
+    res.status(500).json({ error: 'Internal Server Error' }); // 새로 추가된 부분
   }
 });
 

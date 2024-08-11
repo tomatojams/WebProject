@@ -10,20 +10,21 @@ import {
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import L from "leaflet";
+import "./App.css"; // App.css 파일을 추가합니다.
+
+// 드론 아이콘 이미지 URL
+const droneIconUrl = `${process.env.PUBLIC_URL}/drone_1.png`;
 
 // 커스텀 마커 아이콘 설정
-const customIcon = new L.Icon({
-  iconUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  iconSize: [25, 41], // 마커 아이콘 크기
-  iconAnchor: [12, 41], // 마커의 앵커 위치
-  popupAnchor: [1, -34], // 팝업의 앵커 위치
-  shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-  shadowSize: [41, 41], // 마커 그림자 크기
-});
+const customIcon = (isLatest) =>
+  new L.Icon({
+    iconUrl: droneIconUrl,
+    iconSize: [40, 40], // 드론 아이콘 크기 (적절히 조정)
+    iconAnchor: [20, 20], // 아이콘의 앵커 위치 (아이콘의 중앙을 기준으로 위치)
+    popupAnchor: [1, -34], // 팝업의 앵커 위치
+    className: isLatest ? "marker-latest" : "marker-past", // 마커 스타일 클래스 설정
+  });
 
-// 지도를 제어할 MapController 컴포넌트
 const MapController = ({ latestPosition, autoCenter }) => {
   const map = useMap();
 
@@ -58,7 +59,7 @@ function App() {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 2000); // 5초마다 데이터 갱신
+    const interval = setInterval(fetchData, 2000); // 2초마다 데이터 갱신
 
     return () => clearInterval(interval);
   }, []);
@@ -93,30 +94,30 @@ function App() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
           />
-          {positions.map((position) => (
-            <Marker
-              key={position.droneId} // 드론 ID를 키로 사용하여 위치 업데이트
-              position={[position.latitude, position.longitude]}
-              icon={customIcon} // 커스텀 아이콘 사용
-            >
-              <Popup>
-                Drone ID: {position.droneId}
-                <br />
-                Latitude: {position.latitude}
-                <br />
-                Longitude: {position.longitude}
-              </Popup>
-            </Marker>
-          ))}
-          {positions.map((position) => (
-            <Circle
-              key={`circle-${position.droneId}`}
-              center={[position.latitude, position.longitude]}
-              radius={100} // 드론 위치의 반경을 표시하는 원
-              color="blue"
-              fillColor="blue"
-              fillOpacity={0.2}
-            />
+          {positions.map((position, index) => (
+            <React.Fragment key={position.droneId}>
+              <Marker
+                position={[position.latitude, position.longitude]}
+                icon={customIcon(index === 0)} // 최신 데이터는 진한 마커, 나머지는 흐릿한 마커
+              >
+                <Popup>
+                  Drone ID: {position.droneId}
+                  <br />
+                  Latitude: {position.latitude}
+                  <br />
+                  Longitude: {position.longitude}
+                </Popup>
+              </Marker>
+              {index === 0 && (
+                <Circle
+                  center={[position.latitude, position.longitude]}
+                  radius={100} // 드론 위치의 반경을 표시하는 원
+                  color="blue"
+                  fillColor="blue"
+                  fillOpacity={0.2} // 흐릿한 색상
+                />
+              )}
+            </React.Fragment>
           ))}
           {/* 최신 위치로 이동시키기 위한 MapController 추가 */}
           <MapController

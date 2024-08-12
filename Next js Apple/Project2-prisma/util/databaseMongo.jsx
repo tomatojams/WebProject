@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-const url = "";
+const url = process.env.MONGODB_LOCAL;
 
 let connectDB;
 

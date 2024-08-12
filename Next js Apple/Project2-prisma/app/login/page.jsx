@@ -23,7 +23,7 @@ export default function Login() {
   }
 
   return (
-    <main id="login-main" >
+    <main id="login-main">
       <div className="write-post-border">
         <h4 className="write-post-title">로그인</h4>
         <form className="postform" action="/api/login/login" method="POST">
@@ -48,6 +48,7 @@ export default function Login() {
           </button>
         </form>
       </div>
+ 
     </main>
   );
 }

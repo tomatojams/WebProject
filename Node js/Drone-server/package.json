@@ -15,6 +15,7 @@
   "dependencies": {
     "amqplib": "^0.10.4",
     "axios": "^1.7.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "drone-server": "file:",
     "ex5-vite-app": "file:",

@@ -13,10 +13,12 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: #333; /* 상속해주는 텍스트 색상*/
 }
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 label {

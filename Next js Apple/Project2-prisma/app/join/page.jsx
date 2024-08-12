@@ -1,4 +1,5 @@
 "use client";
+import { signIn, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 
 export default function Join() {
@@ -47,6 +48,14 @@ export default function Join() {
             작성완료
           </button>
         </form>
+        <button
+          onClick={() => {
+            signIn();
+          }}
+          className="simplebutton-sm"
+          type="submit">
+          깃허브 로그인
+        </button>
       </div>
     </div>
   );

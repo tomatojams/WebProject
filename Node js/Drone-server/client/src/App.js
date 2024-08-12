@@ -19,8 +19,8 @@ const droneIconUrl = `${process.env.PUBLIC_URL}/drone_1.png`;
 const customIcon = (isLatest) =>
   new L.Icon({
     iconUrl: droneIconUrl,
-    iconSize: [40, 40], // 드론 아이콘 크기 (적절히 조정)
-    iconAnchor: [20, 20], // 아이콘의 앵커 위치 (아이콘의 중앙을 기준으로 위치)
+    iconSize: [30, 30], // 드론 아이콘 크기 (적절히 조정)
+    iconAnchor: [15, 15], // 아이콘의 앵커 위치 (아이콘의 중앙을 기준으로 위치)
     popupAnchor: [1, -34], // 팝업의 앵커 위치
     className: isLatest ? "marker-latest" : "marker-past", // 마커 스타일 클래스 설정
   });
@@ -111,7 +111,7 @@ function App() {
               {index === 0 && (
                 <Circle
                   center={[position.latitude, position.longitude]}
-                  radius={100} // 드론 위치의 반경을 표시하는 원
+                  radius={50} // 드론 위치의 반경을 표시하는 원
                   color="blue"
                   fillColor="blue"
                   fillOpacity={0.2} // 흐릿한 색상

@@ -1,61 +1,16 @@
-"use client";
-import { signIn, signOut } from "next-auth/react";
-import { useState, useEffect } from "react";
+import JoinForm from "./JoinForm"; // 클라이언트 컴포넌트를 임포트합니다.
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+export default async function JoinPage() {
+  let session = await getServerSession(authOptions); // /서버컴포넌트 기능안에서 사용가능
+  // 제공된 이름, 이메일, 프로필등을 쓸수있음
+  console.log("Login_Session:", session);
 
-export default function Join() {
-  const [csrfToken, setCsrfToken] = useState("");
-  useEffect(() => {
-    // CSRF 토큰을 가져오기 위해 API 호출
-    const fetchCsrfToken = async () => {
-      try {
-        const response = await fetch("/api/csrf-token");
-        const data = await response.json();
-        setCsrfToken(data.csrfToken);
-      } catch (error) {
-        console.error("CSRF 토큰을 가져오는데 실패했습니다:", error);
-      }
-    };
-    fetchCsrfToken();
-  }, []);
-
-  if (!csrfToken) {
-    // CSRF 토큰을 가져오는 동안 로딩 표시 또는 빈 상태를 반환
-    return <div>Loading...</div>;
-  }
   return (
     <div id="join-main">
       <div className="write-post-border">
         <h4 className="write-post-title">가입</h4>
-        <form className="postform" action="/api/join/newmember" method="POST">
-          <input
-            id="write-title"
-            name="form_name_id"
-            type="text"
-            placeholder="아이디"
-            required
-          />
-
-          <input
-            id="write-content"
-            name="password"
-            type="password"
-            placeholder="비번"
-            required
-          />
-          <input type="hidden" name="_csrf" value={csrfToken} />
-          <br />
-          <button className="simplebutton-sm" type="submit">
-            작성완료
-          </button>
-        </form>
-        <button
-          onClick={() => {
-            signIn();
-          }}
-          className="simplebutton-sm"
-          type="submit">
-          깃허브 로그인
-        </button>
+        <JoinForm session={session} />
       </div>
     </div>
   );

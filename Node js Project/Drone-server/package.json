@@ -21,6 +21,8 @@
     "ex5-vite-app": "file:",
     "express": "^4.19.2",
     "leaflet": "^1.9.4",
+    "mongodb": "^5.9.2",
+    "mongoose": "^8.5.2",
     "mysql2": "^3.11.0",
     "node-cache": "^5.1.2",
     "prop-types": "^15.8.1",

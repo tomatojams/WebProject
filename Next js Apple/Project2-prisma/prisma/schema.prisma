@@ -8,11 +8,21 @@ datasource db {
 }
 
 model member {
-  m_id       String    @id @db.VarChar(100)
-  password   String    @db.VarChar(100)
-  createDate DateTime? @db.DateTime(0)
-  modifyDate DateTime? @db.DateTime(0)
+  id         String       @id @db.VarChar(100)
+  password   String       @db.VarChar(100)
+  createDate DateTime?    @db.DateTime(0)
+  modifyDate DateTime?    @db.DateTime(0)
+  email      String?      @db.VarChar(100)
+  role       member_role? @default(norm)
+  name       String       @unique(map: "member_unique") @db.VarChar(100)
 }
+
+enum member_role {
+  norm
+  admin
+  mentor
+}
+
 
 model board {
   id            String    @id @map("_id") @db.VarChar(100)
@@ -22,6 +32,7 @@ model board {
   edit_datetime DateTime? @db.DateTime(0)
   email         String?   @db.VarChar(100)
 }
+
 model User {
   id            String    @id @default(cuid())
   name          String?

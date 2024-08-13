@@ -1,12 +1,45 @@
+// 초기세팅
 const express = require("express");
 const app = express();
+const cors = require("cors");
+// 아래걸 안하면 못읽어옴
+require("dotenv").config();
+app.use(cors());
+app.use(express.static(__dirname + "/public"));
+// DB 세팅
+const { MongoClient } = require("mongodb");
+let db;
+const url = process.env.MONGODB_URL;
+// console.log(url);
+new MongoClient(url)
+  .connect()
+  .then((client) => {
+    console.log("DB연결성공");
+    db = client.db("forum");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
-const handleListen = () => console.log("Listening on http://localhost:8080");
+// 서버시작
+app.listen(9000, () => console.log("Listening on http://localhost:9000"));
 
-app.listen(8080, handleListen);
-
-app.get("/", (req, res) => res.send("hi~"));
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
 
 app.get("/news", (req, res) => {
-  res.send("너무 더워");
+  // db.collection("post").insertOne({ title: "재밌쪄" });
+  // res.send("너무 더워");
+});
+
+app.get("/about", (req, res) => {
+  res.sendFile(__dirname + "/about.html");
+});
+
+app.get("/list", async (req, res) => {
+  let result = await db.collection("post").find().toArray();
+
+  console.log(result);
+  res.send(result);
 });

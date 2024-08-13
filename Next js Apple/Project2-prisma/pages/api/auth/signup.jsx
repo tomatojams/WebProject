@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
 import prisma from "@/lib/prisma";
 import csrf from "csurf";
 
@@ -11,15 +12,15 @@ const saltRounds = 10; // 솔트의 라운드 수, 일반적으로 10~12가 적�
 export default async function Handler(req, res) {
   await csrfProtection(req, res, async () => {
     if (req.method === "POST") {
-      const { form_name_id, password } = req.body;
+      const { form_name, password, email } = req.body;
       console.log("Join req.body:", req.body);
       // 입력한 암호가 그대로 나오고 _csrf도 나옴
 
-      if (!form_name_id || !password) {
+      if (!form_name || !password) {
         return res.status(500).json("글의 내용을 써주세요.");
       }
 
-      if (!isValidId(form_name_id)) {
+      if (!isValidId(form_name)) {
         return res.status(400).json("유효하지 않은 아이디입니다.");
       }
 
@@ -28,16 +29,9 @@ export default async function Handler(req, res) {
       }
       // DB 연결 올리기
       try {
-        // let db = await initDbConnection();
-
-        // const [existingUsers] = await db.query(
-        //   "SELECT * FROM forum.member WHERE m_id = ?",
-        //   [form_name_id]
-        // );
-
         const existingUsers = await prisma.member.findUnique({
           where: {
-            m_id: form_name_id,
+            name: form_name,
           },
         });
 
@@ -47,21 +41,27 @@ export default async function Handler(req, res) {
         if (existingUsers) {
           return res.status(409).json("이미 존재하는 아이디입니다.");
         }
+        // unique가 아닌값의 경우 finUniue라고 찾으면 안됨
+        const existingEmail = await prisma.member.findFirst({
+          where: {
+            email: email,
+          },
+        });
+
+        if (existingEmail) {
+          return res.status(409).json("이미 존재하는 이메일입니다.");
+        }
+
         const date = new Date();
         const hashedPassword = await bcrypt.hash(password, saltRounds);
-        // const query =
-        //   "INSERT INTO forum.member (m_id, password,createDate) VALUES (?,?,?)";
-        // const [result] = await db.query(query, [
-        //   form_name_id,
-        //   hashedPassword,
-        //   date,
-        // ]);
-
+        const userId = uuidv4();
         const result = await prisma.member.create({
           data: {
-            m_id: form_name_id,
+            id: userId,
+            name: form_name,
             password: hashedPassword,
             createDate: date,
+            email: email,
           },
         });
 

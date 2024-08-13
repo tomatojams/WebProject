@@ -26,7 +26,7 @@ async function sendDronePosition() {
     // RabbitMQ로 메시지 전송
     channel.sendToQueue(queue, Buffer.from(JSON.stringify(position)));
     console.log("Sent:", position);
-  }, 500); // 2초마다 위치 전송
+  }, 2000); // 2초마다 위치 전송
 }
 
 sendDronePosition().catch(console.error);

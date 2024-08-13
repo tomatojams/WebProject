@@ -26,29 +26,41 @@ export default function JoinForm({ session }) {
   }
 
   return (
-    <div className="userin-from">{session?"환영합니다": <form className="postform" action="/api/join/newmember" method="POST">
-        <input
-          id="write-title"
-          name="form_name_id"
-          type="text"
-          placeholder="아이디"
-          required
-        />
+    <div className="userin-from">
+      {session ? (
+        "환영합니다"
+      ) : (
+        <form className="postform" action="/api/auth/signup" method="POST">
+          <input
+            id="write-title"
+            name="form_name"
+            type="text"
+            placeholder="아이디"
+            required
+          />
 
-        <input
-          id="write-content"
-          name="password"
-          type="password"
-          placeholder="비번"
-          required
-        />
-        <input type="hidden" name="_csrf" value={csrfToken} />
-        <br />
-        <button className="simplebutton-sm" type="submit">
-          작성완료
-        </button>
-      </form>}
-     
+          <input
+            id="write-content"
+            name="password"
+            type="password"
+            placeholder="비번"
+            required
+          />
+
+          <input
+            id="write-content"
+            name="email"
+            placeholder="이메일"
+            required
+          />
+          <input type="hidden" name="_csrf" value={csrfToken} />
+          <br />
+          <button className="simplebutton-sm" type="submit">
+            작성완료
+          </button>
+        </form>
+      )}
+
       <LoginButton session={session} />
     </div>
   );

@@ -1,9 +1,3 @@
-.write-post-frame {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .write-post-border {
   display: flex;
   flex-direction: column;

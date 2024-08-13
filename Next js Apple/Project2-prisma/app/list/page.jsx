@@ -12,7 +12,7 @@ export const revalidate = 20;
 
 export default async function List() {
   let session = getServerSession();
-  console.log("Session:", session);
+  // console.log("Session:", session);
   // DB연결 및 데이터 조회
   const posts = await prisma.board.findMany({
     orderBy: {

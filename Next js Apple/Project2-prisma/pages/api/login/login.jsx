@@ -4,6 +4,10 @@ import { PrismaClient } from "@prisma/client";
 
 const csrfProtection = csrf({ cookie: true });
 const prisma = new PrismaClient();
+
+
+
+
 export default async function handler(req, res) {
   await csrfProtection(req, res, async () => {
     if (req.method === "POST") {

@@ -1,12 +1,7 @@
 import Image from "next/image";
 import "./global.css";
-import { initDbConnection } from "@/util/databaseMysql";
 
 export default async function Home() {
-  let dbConnection = await initDbConnection();
-
-  const [rows] = await dbConnection.query("SELECT * FROM forum.post");
-
   // 로직 작성
   // console.log(rows[0]._id);
 

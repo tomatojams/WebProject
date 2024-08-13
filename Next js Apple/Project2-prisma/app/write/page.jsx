@@ -1,5 +1,4 @@
-
-import "@/app/global.css"
+import "@/app/global.css";
 export default function Write() {
   return (
     <div className="write-post-border">

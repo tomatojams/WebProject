@@ -26,8 +26,7 @@ export default function JoinForm({ session }) {
   }
 
   return (
-    <div className="userin-from">
-      <form className="postform" action="/api/join/newmember" method="POST">
+    <div className="userin-from">{session?"환영합니다": <form className="postform" action="/api/join/newmember" method="POST">
         <input
           id="write-title"
           name="form_name_id"
@@ -48,7 +47,8 @@ export default function JoinForm({ session }) {
         <button className="simplebutton-sm" type="submit">
           작성완료
         </button>
-      </form>
+      </form>}
+     
       <LoginButton session={session} />
     </div>
   );

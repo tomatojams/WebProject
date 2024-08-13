@@ -8,7 +8,7 @@ export default async function Home() {
   const [rows] = await dbConnection.query("SELECT * FROM forum.post");
 
   // 로직 작성
-  console.log(rows[0]._id);
+  // console.log(rows[0]._id);
 
   return (
     <div id="mainbox">

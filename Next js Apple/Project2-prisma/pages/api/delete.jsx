@@ -1,4 +1,6 @@
 import prisma from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default async function handler(req, res) {
   if (req.method === "DELETE") {
@@ -10,17 +12,25 @@ export default async function handler(req, res) {
     if (!d_id) {
       return res.status(400).json({ error: "게시물 에러입니다" });
     }
-
+    const session = await getServerSession(req, res, authOptions);
+    if (!session) {
+      return res.status(401).json({ message: "로그인 되지 않았습니다." });
+    }
+    const read = await prisma.board.findUnique({
+      where: {
+        id: d_id,
+      },
+    });
     try {
-      // let db = await initDbConnection();
-      // const [result] = await db.query("DELETE FROM forum.post WHERE _id = ?", [
-      //   d_id,
-      // ]);
-      const result = await prisma.post.delete({
-        where: {
-          id: d_id,
-        },
-      });
+      console.log(read);
+      let result;
+      if (session.user.email === read.email) {
+        result = await prisma.board.delete({
+          where: {
+            id: d_id,
+          },
+        });
+      }
 
       if (result.affectedRows === 0) {
         return res.status(404).json({ error: "게시물이 존재하지 않습니다." });

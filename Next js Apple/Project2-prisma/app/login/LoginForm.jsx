@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import LoginButton from "@/app/components/loginButton";
-export default function LoginForm({session}) {
+export default function LoginForm({ session }) {
   const [csrfToken, setCsrfToken] = useState("");
 
   useEffect(() => {
@@ -26,27 +26,32 @@ export default function LoginForm({session}) {
 
   return (
     <div className="userin-from">
-      <form className="postform" action="/api/login/login" method="POST">
-        <input
-          id="write-title"
-          name="id"
-          type="text"
-          placeholder="아이디"
-          required
-        />
-        <input
-          id="write-content"
-          name="password"
-          type="password"
-          placeholder="비번"
-          required
-        />
-        <input type="hidden" name="_csrf" value={csrfToken} />
-        <br />
-        <button className="simplebutton-sm" type="submit">
-          로그인
-        </button>
-      </form>
+      {session ? (
+        "로그인 중입니다."
+      ) : (
+        <form className="postform" action="/api/login/login" method="POST">
+          <input
+            id="write-title"
+            name="id"
+            type="text"
+            placeholder="아이디"
+            required
+          />
+          <input
+            id="write-content"
+            name="password"
+            type="password"
+            placeholder="비번"
+            required
+          />
+          <input type="hidden" name="_csrf" value={csrfToken} />
+          <br />
+          <button className="simplebutton-sm" type="submit">
+            로그인
+          </button>
+        </form>
+      )}
+
       <LoginButton session={session} />
     </div>
   );

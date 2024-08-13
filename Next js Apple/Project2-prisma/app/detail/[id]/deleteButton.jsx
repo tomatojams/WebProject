@@ -2,7 +2,10 @@
 import { useRouter } from "next/navigation";
 
 // 인자명을 _id으로 받으면 서버에 보낼때도 오브젝스 속성명이 _id 가 됨.
-export default function DeleteButton({ _id }) {
+export default function DeleteButton({ _id, session }) {
+  if (!session) {
+    return <></>;
+  }
   let router = useRouter();
   const d_id = _id;
   const handleDelete = async (event) => {

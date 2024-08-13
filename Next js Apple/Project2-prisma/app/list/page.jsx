@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import WriteButton from "./WriteButton";
 import ListView from "./ListView";
 import "@/app/global.css";
+import { getServerSession } from "next-auth";
 
 // 강제 다이나믹 렌더링
 export const dynamic = "force-dynamic";
@@ -10,8 +11,10 @@ export const dynamic = "force-dynamic";
 export const revalidate = 20;
 
 export default async function List() {
+  let session = getServerSession();
+  console.log("Session:", session);
   // DB연결 및 데이터 조회
-  const posts = await prisma.post.findMany({
+  const posts = await prisma.board.findMany({
     orderBy: {
       datetime: "desc",
     },
@@ -30,7 +33,7 @@ export default async function List() {
         <ListView rows={posts} />
       </div>
       <br />
-      <WriteButton />
+      <WriteButton session={session} />
     </div>
   );
 }

@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: SOPT API docs
+  description: 테스트 API docs
+  license:
+    name: tomato
+servers:
+  - url: http://localhost:9000/
+
+paths:
+  /tasks:
+    post:
+      summary: Create a new task
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                task:
+                  type: string
+                  example: "Complete the project"
+                isComplete:
+                  type: boolean
+                  example: false
+        required: true
+      responses:
+        '200':
+          description: Successfully created a task
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+                  data:
+                    type: object
+                    properties:
+                      task:
+                        type: string
+                      isComplete:
+                        type: boolean
+        '400':
+          description: Bad request
+
+    get:
+      summary: Get all tasks
+      responses:
+        '200':
+          description: Successfully retrieved tasks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        task:
+                          type: string
+                        isComplete:
+                          type: boolean
+        '400':
+          description: Failed to retrieve tasks
+
+ 

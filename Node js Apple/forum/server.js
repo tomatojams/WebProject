@@ -6,11 +6,13 @@ const cors = require("cors");
 require("dotenv").config();
 app.use(cors());
 app.use(express.static(__dirname + "/public"));
+app.set("view engine", "ejs");
+
 // DB 세팅
 const { MongoClient } = require("mongodb");
+
 let db;
 const url = process.env.MONGODB_URL;
-// console.log(url);
 new MongoClient(url)
   .connect()
   .then((client) => {
@@ -39,7 +41,9 @@ app.get("/about", (req, res) => {
 
 app.get("/list", async (req, res) => {
   let result = await db.collection("post").find().toArray();
+  res.render("list.ejs", { post: result }); // 파일 object 대응
+});
 
-  console.log(result);
-  res.send(result);
+app.get("/time", (req, res) => {
+  res.render("time.ejs", { date: new Date() });
 });

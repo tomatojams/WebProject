@@ -30,3 +30,13 @@ async function sendDronePosition() {
 }
 
 sendDronePosition().catch(console.error);
+
+/* message:
+{
+  'message_type': 'Found', 'sender_id': '2acc44fa47a63222241391a15a0d086365da5aa8efd1d505d99beb5e2436ed85',
+    'timestamp': 1723803106725, 'drone':
+  {
+    'name': 'Mavic Air', 'drone_id': '64:60:1f:7a:b0:5e', 'frequency': '2452', 'bandwidth': '5', 'allow_track': True,
+      'allow_takeover': True, 'class_name': 'Air', 'radio_resources': 1
+  }
+} */

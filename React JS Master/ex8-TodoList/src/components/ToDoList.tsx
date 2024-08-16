@@ -1,14 +1,28 @@
 import { useEffect, useState } from "react";
 import { useForm, FieldErrors } from "react-hook-form";
-export interface ValueTracker {}
+import { atom, useRecoilState } from "recoil";
+
+//recoil
+// IToDO 방식의 [] 배열
+const toDoState = atom<ITodDo[]>({
+  key: "toDoKey",
+  default: [],
+});
+
+interface ITodDo {
+  text: string;
+  id: number;
+  caterory: "TO_DO" | "DOING" | "DONE";
+}
 
 interface IForm {
   toDo: string;
-  serverError?: string;
 }
 
 export default function TodoList() {
-  const [level, setLevel] = useState<string>("연구:");
+  // 추가
+  const [level, setLevel] = useState("연구:");
+  const [toDos, setToDos] = useRecoilState(toDoState);
 
   const { register, handleSubmit, setValue, formState } = useForm<IForm>({
     defaultValues: {
@@ -17,21 +31,28 @@ export default function TodoList() {
   });
   const errors = formState.errors as FieldErrors<IForm>;
 
-  const onSubmit = (data: IForm) => {
-    console.log(data);
+  // on Submit
+  const onValid = ({ toDo }: IForm) => {
+    console.log("Add to Do:", toDos);
+    // Recoil Setter는 값을 받거나, 함수를 받을수있다.(리턴값이 새로운값)
+    setToDos((oldToDos) => [{ text: toDo, id: Date.now(), caterory: "TO_DO" }, ...oldToDos]);
+
     setValue("toDo", level); // 유효할때 초기화
   };
+
+  // 추가옵션
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setLevel(event.target.value);
   };
-
   useEffect(() => {
     setValue("toDo", level);
   }, [level]);
 
+  console.log("ToDos:", toDos);
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <h4>To Dos</h4>
+      <form onSubmit={handleSubmit(onValid)}>
         <input
           {...register("toDo", {
             required: "해야할 일을 입력해주세요.",
@@ -53,10 +74,14 @@ export default function TodoList() {
           <option value="과제:">과제</option>
           <option value="스터디:">스터디</option>
         </select>
-
         <span>{errors?.toDo?.message as string}</span>
-        <span>{errors?.serverError?.message}</span>
       </form>
+
+      <ul>
+        {toDos.map((toDo) => (
+          <li key={toDo.id}>{toDo.text}</li>
+        ))}
+      </ul>
     </div>
   );
 }

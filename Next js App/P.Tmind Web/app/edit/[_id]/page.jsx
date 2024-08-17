@@ -12,13 +12,11 @@ export default async function Edit(props) {
   });
 
   return (
-    <div className="write-post-border">
-      <h4 className="write-post-title">글수정</h4>
-      <FormInput
-        id={props.params._id}
-        inititle={board.title}
-        initext={board.content}
-      />
-    </div>
+    <>
+      <div className="write-post-border">
+        <h4 className="write-post-title">글수정</h4>
+        <FormInput id={props.params._id} inititle={board.title} initext={board.content} />
+      </div>
+    </>
   );
 }

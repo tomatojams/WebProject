@@ -31,14 +31,14 @@ export default function LoginForm({ session }) {
       ) : (
         <form className="postform" action="/api/login/login" method="POST">
           <input
-            id="write-title"
+            id="write-title-input"
             name="id"
             type="text"
             placeholder="아이디"
             required
           />
           <input
-            id="write-content"
+            id="write-content-input"
             name="password"
             type="password"
             placeholder="비번"

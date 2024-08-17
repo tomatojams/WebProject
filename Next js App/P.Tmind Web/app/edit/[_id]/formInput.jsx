@@ -7,20 +7,14 @@ export default function FormInput({ id, inititle, initext }) {
   return (
     <form className="postform" onSubmit={handleSubmit}>
       <input
-        id="write-title"
+        id="write-title-input"
         name="title"
         type="text"
         required
         defaultValue={inititle}
         // defaultValue를 쓰면 state를 안써도 수정가능
       />
-      <textarea
-        id="write-content"
-        name="content"
-        rows="10"
-        defaultValue={initext}
-        required
-      />
+      <textarea id="write-content-input" name="content" rows="10" defaultValue={initext} required />
       <input type="hidden" name="_id" value={id} />
       <button className="simplebutton-sm" type="submit">
         수정

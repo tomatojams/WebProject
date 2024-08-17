@@ -17,13 +17,6 @@ model member {
   name       String       @unique(map: "member_unique") @db.VarChar(100)
 }
 
-enum member_role {
-  norm
-  admin
-  mentor
-}
-
-
 model board {
   id            String    @id @map("_id") @db.VarChar(100)
   content       String?   @db.Text
@@ -31,20 +24,40 @@ model board {
   datetime      DateTime? @db.DateTime(0)
   edit_datetime DateTime? @db.DateTime(0)
   email         String?   @db.VarChar(100)
+  comment       comment[]
 }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  posts         Post[]
+model account {
+  id                String  @id
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              user    @relation(fields: [userId], references: [id], onDelete: Cascade, map: "Account_userId_fkey")
+
+  @@unique([provider, providerAccountId], map: "Account_provider_providerAccountId_key")
+  @@index([userId], map: "Account_userId_fkey")
 }
 
-model Post {
+model comment {
+  id       String   @id @db.VarChar(100)
+  post_id  String   @db.VarChar(100)
+  content  String   @db.VarChar(200)
+  email    String   @db.VarChar(100)
+  datetime DateTime @db.DateTime(0)
+  board    board    @relation(fields: [post_id], references: [id], onDelete: Cascade, map: "comment_board_FK")
+
+  @@index([post_id], map: "comment_board_FK")
+}
+
+model post {
   id            Int      @id @default(autoincrement())
   title         String
   code          String   @db.Text
@@ -52,44 +65,44 @@ model Post {
   totalLikes    Int      @default(0)
   totalComments Int      @default(0)
   createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  updatedAt     DateTime
   userId        String
-  user          User     @relation(fields: [userId], references: [id])
+  user          user     @relation(fields: [userId], references: [id], map: "Post_userId_fkey")
+
+  @@index([userId], map: "Post_userId_fkey")
 }
 
-
-model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
+model session {
+  id           String   @id
+  sessionToken String   @unique(map: "Session_sessionToken_key")
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         user     @relation(fields: [userId], references: [id], onDelete: Cascade, map: "Session_userId_fkey")
+
+  @@index([userId], map: "Session_userId_fkey")
 }
 
+model user {
+  id            String    @id
+  name          String?
+  email         String?   @unique(map: "User_email_key")
+  emailVerified DateTime?
+  image         String?
+  account       account[]
+  post          post[]
+  session       session[]
+}
 
-model VerificationToken {
+model verificationtoken {
   identifier String
-  token      String   @unique
+  token      String   @unique(map: "VerificationToken_token_key")
   expires    DateTime
 
-  @@unique([identifier, token])
+  @@unique([identifier, token], map: "VerificationToken_identifier_token_key")
+}
+
+enum member_role {
+  norm
+  admin
+  mentor
 }

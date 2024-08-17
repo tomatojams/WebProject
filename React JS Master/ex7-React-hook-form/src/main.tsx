@@ -7,11 +7,11 @@ import { lightTheme } from "./theme.ts";
 import "./global.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <RecoilRoot>
       <ThemeProvider theme={lightTheme}>
         <App />
       </ThemeProvider>
     </RecoilRoot>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

@@ -36,7 +36,7 @@ export default function DeleteButton({ _id, session }) {
   return (
     <form onSubmit={handleDelete}>
       <input style={{ display: "none" }} name="_id" value={_id} />
-      <button className="simplebutton" type="submit">
+      <button className="simplebutton-reversed" type="submit">
         삭제
       </button>
     </form>

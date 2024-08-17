@@ -1,0 +1,17 @@
+<!-- 3번 문제
+
+ 클릭하고 3초후에 메세지 나타내기 this 활용
+
+
+Q. 그럼 setTimeout을 이용해서 1초 후에 this.innerHTML을 콘솔창에 출력하고 싶으면 어떻게 코드를 수정해야할까요?
+
+1초 후에 '버튼이에요'라는 글자가 콘솔창에 등장하면 성공입니다.  -->
+
+
+<button id="버튼">버튼</button>
+
+<script>
+  document.getElementById("버튼").addEventListener("click", function () {
+    setTimeout(() => console.log(this.innerHTML), 1000);
+  });
+</script>

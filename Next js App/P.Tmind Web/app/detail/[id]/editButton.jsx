@@ -8,7 +8,7 @@ export default function EditButton({ id, session }) {
     <>
       {session ? (
         <button
-          className="simplebutton"
+          className="simplebutton-log"
           onClick={() => {
             router.push("/edit/" + id); // Link 태그는 자동으로 프리페치
           }}>

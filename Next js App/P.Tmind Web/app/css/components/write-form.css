@@ -31,7 +31,7 @@
   align-items: center;
 }
 
-#write-title {
+#write-title-input {
   width: 80%;
   padding: 10px;
   margin: 10px 0;
@@ -41,7 +41,7 @@
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-#write-content {
+#write-content-input {
   width: 80%;
   padding: 10px;
   margin: 10px 0;
@@ -52,8 +52,8 @@
   font-family: "Arial", sans-serif;
 }
 
-#write-title:focus,
-#write-content:focus {
+#write-title-input:focus,
+#write-content-input:focus {
   border-color: #969696;
 
   outline: none;

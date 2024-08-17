@@ -31,28 +31,11 @@ export default function JoinForm({ session }) {
         "환영합니다"
       ) : (
         <form className="postform" action="/api/auth/signup" method="POST">
-          <input
-            id="write-title"
-            name="form_name"
-            type="text"
-            placeholder="아이디"
-            required
-          />
+          <input id="write-title-input" name="form_name" type="text" placeholder="아이디" required />
 
-          <input
-            id="write-content"
-            name="password"
-            type="password"
-            placeholder="비번"
-            required
-          />
+          <input id="write-content-input" name="password" type="password" placeholder="비번" required />
 
-          <input
-            id="write-content"
-            name="email"
-            placeholder="이메일"
-            required
-          />
+          <input id="write-content-input" name="email" placeholder="이메일" required />
           <input type="hidden" name="_csrf" value={csrfToken} />
           <br />
           <button className="simplebutton-sm" type="submit">

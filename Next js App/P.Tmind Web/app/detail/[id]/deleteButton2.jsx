@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-
 export default function DeleteButton2({ id }) {
   let router = useRouter();
 

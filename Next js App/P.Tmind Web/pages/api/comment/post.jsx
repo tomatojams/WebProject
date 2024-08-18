@@ -4,9 +4,10 @@ import { getServerSession } from "next-auth";
 import { v4 as uuidv4 } from "uuid";
 
 export default async function handler(req, res) {
+  //
   if (req.method === "POST") {
     const { post_id, content } = req.body;
-    console.log("BODY", req.body);
+    // console.log("BODY", req.body);
 
     if (!content) {
       return res.status(400).json("글의 내용을 써주세요.");

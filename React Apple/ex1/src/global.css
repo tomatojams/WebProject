@@ -1,6 +1,5 @@
 @import "./css/variable.css";
 @import "./css/components/button.css";
-@import "./css/components/input.css";
 @import "./css/components/write-form.css";
 @import "./css/screen/list.css";
 @import "./css/screen/home.css";
@@ -8,7 +7,6 @@
 @import "./css/screen/navi.css";
 @import "./css/screen/login.css";
 @import "./css/screen/join.css";
-@import "./css/screen/loading.css";
 
 body {
   margin: 0;
@@ -29,11 +27,20 @@ label {
   color: #555;
   margin-bottom: 5px;
 }
-
-ul {
-  padding: 0;
+.modal {
+  margin-top: 20px;
+  padding: 20px;
+  background: #eee;
+  text-align: left;
 }
 
-li {
-  list-style-type: none;
+.black-nav {
+  background-color: black;
+  color: white;
+  padding: 10px;
+  font-weight: 600;
+}
+
+.list {
+  border: 1px solid #eee;
 }

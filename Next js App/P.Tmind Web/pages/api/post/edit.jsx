@@ -1,4 +1,3 @@
-import { initDbConnection } from "@/util/databaseMysql";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";

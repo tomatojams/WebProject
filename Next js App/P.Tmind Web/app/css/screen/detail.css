@@ -24,3 +24,11 @@
   justify-content: space-between;
   align-items: center;
 }
+.no_comment {
+  font-size: 14px;
+  color: rgb(188, 155, 219);
+}
+.comment_post {
+  font-size: 14px;
+  color: #555;
+}

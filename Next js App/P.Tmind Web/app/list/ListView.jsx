@@ -7,25 +7,27 @@ export default function ListView({ rows }) {
 
   return (
     <div>
-      {rows.map((item, index) => {
-        // return 없애면 중괄호도 없애야 함
-        return (
-          <div key={index}>
-            <article className="list-article ">
-              <Link
-                href={
-                  // ***다이나믹 라우팅***
-                  `/detail/${item.id}`
-                }>
-                <span className={styles.title}>{item.title}</span>
-              </Link>
+      {rows
+        ? rows.map((item, index) => {
+            // return 없애면 중괄호도 없애야 함
+            return (
+              <div key={index}>
+                <article className="list-article ">
+                  <Link
+                    href={
+                      // ***다이나믹 라우팅***
+                      `/detail/${item.id}`
+                    }>
+                    <span className={styles.title}>{item.title}</span>
+                  </Link>
 
-              <span className={styles.span}>{timetodate(item.datetime)}</span>
-            </article>
-            <hr className="h-line" />
-          </div>
-        );
-      })}
+                  <span className={styles.span}>{timetodate(item.datetime)}</span>
+                </article>
+                <hr className="h-line" />
+              </div>
+            );
+          })
+        : "통신이 원활하지 않습니다."}
     </div>
   );
 }

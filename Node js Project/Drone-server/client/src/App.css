@@ -53,3 +53,12 @@
   transform: scale(0.5); /* 과거 마커의 크기를 1/2로 조절 */
   transform-origin: bottom center; /* 크기 조절의 기준 위치 */
 }
+
+.custom-marker-label {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 5px;
+  font-size: 12px;
+  text-align: center;
+}

@@ -10,21 +10,11 @@ export default async function Write() {
         <div div className="write-post-border">
           <h4 className="write-post-title">글작성</h4>
           <form className="postform" action="/api/post/new" method="POST">
-            <input
-              id="write-title-input"
-              name="title"
-              type="text"
-              placeholder="제목"
-              required
-            />
+            <input id="write-title-input" name="title" type="text" placeholder="제목" required />
 
-            <textarea
-              id="write-content-input"
-              name="content"
-              rows="10"
-              placeholder="내용"
-              required
-            />
+            <textarea id="write-content-input" name="content" rows="10" placeholder="내용" required />
+            <input type="file" accept="image/*" />
+            <img src="" />
             <br />
             <button className="simplebutton-sm" type="submit">
               글쓰기

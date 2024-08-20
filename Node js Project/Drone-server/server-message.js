@@ -21,7 +21,6 @@ mongoose
 const DroneSchema = new mongoose.Schema(
   {
     message: { type: String, enum: ["FOUND", "WARNING", "ERROR", "VERIFY", "TEST"], required: true },
-    sender_id: { type: String, required: true },
     drone: {
       name: { type: String, required: false },
       frequency: { type: Number, required: false },
@@ -59,18 +58,18 @@ async function consumeDroneMessage() {
       async (msg) => {
         if (msg !== null) {
           try {
-            const droneMessageContent = JSON.parse(msg.content.toString());
-            console.log("Received message:", droneMessageContent);
+            const DroneMessage = JSON.parse(msg.content.toString());
+            console.log("Received message:", DroneMessage);
 
             // 버퍼에 드론 데이터 저장
-            messageBuffer.unshift(droneMessageContent); // 버퍼에 새로운 데이터 추가
+            messageBuffer.unshift(DroneMessage); // 버퍼에 새로운 데이터 추가
             if (messageBuffer.length > 100) {
               // 버퍼 크기 제한 (예: 100개)
               messageBuffer.pop();
             }
 
             // 데이터베이스에 비동기적으로 저장
-            const DroneMessageDoc = new DroneMessage(droneMessageContent);
+            const DroneMessageDoc = new DroneMessage(DroneMessage);
             const savedDroneMessage = await DroneMessageDoc.save();
             console.log("DroneMessage saved to MongoDB:", savedDroneMessage);
 

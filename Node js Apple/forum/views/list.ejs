@@ -7,15 +7,20 @@
     <link rel="stylesheet" href="main.css" />
   </head>
   <body class="grey-bg">
+    <!-- <%- %>: HTML 이스케이프 없이 그대로 출력되기 때문에, HTML 태그가 실제로 적용되어 출력됨 -->
+    <!-- <%= %>는 HTML 이 아닌 문자로 출력 -->
+    <!-- <% %> 는 JS코드 실행 -->
+    <!-- <%= JSON.stringify(post) %>  object를 stringd로 바꿔줌 -->
+    <%- include('nav.ejs') %>
     <div class="white-bg">
+      <% for (let i = 0; i < post.length; i++) { %>
+
       <div class="list-box">
-        <h4><%=post[0].title%></h4>
-        <p><%=post[0].content%></p>
+        <h4><%=post[i].title%></h4>
+        <p><%=post[i].content%></p>
       </div>
-      <div class="list-box">
-        <h4><%=post[1].title%></h4>
-        <p><%=post[1].content%></p>
-      </div>
+
+      <% } %>
     </div>
   </body>
 </html>

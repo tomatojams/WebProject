@@ -2,7 +2,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import newRouter from "./router/router.mjs"; // 확장자 포함
+import newRouter from "./router/router.js"; // 확장자 포함
 import { MongoClient } from "mongodb";
 import { json } from "express";
 import { urlencoded } from "express";
@@ -12,7 +12,10 @@ dotenv.config();
 const app = express();
 app.use(cors());
 // .css, .js, .jpg 을 static파일이라고 부름, public폴더 지정
-app.use(express.static("public"));
+
+// babel을 깔아서 __dirname을 사용할수 있게됨
+app.use(express.static(__dirname + "/public"));
+// app.use(express.static("/public"));
 app.set("view engine", "ejs");
 app.use(json());
 app.use(urlencoded({ extended: true }));

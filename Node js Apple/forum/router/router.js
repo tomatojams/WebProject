@@ -14,7 +14,10 @@ const newRouter = (db) => {
   router.get("/about", (req, res) => {
     // path.join은 경로를 그냥 더하지 않고, 상대경로 변환을 해줌
     // 따라서../ 을 하면 상위폴더이동
-    res.sendFile(path.join(root, "about.html"));
+
+    // __dirname과 root 둘다 됨
+    res.sendFile(path.join(__dirname, "../about.html"));
+    // res.sendFile(path.join(root, "about.html"));
   });
 
   router.get("/list", async (req, res) => {

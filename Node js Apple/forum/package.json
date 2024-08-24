@@ -1,11 +1,17 @@
 {
   "name": "forum",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "server.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node server.mjs",
+    "dev": "nodemon server.mjs"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@public": "public",
+    "@config": "config",
+    "@models": "models"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +23,7 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "forum": "file:",
+    "module-alias": "^2.2.3",
     "mongodb": "^4.17.2"
   },
   "devDependencies": {

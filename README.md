@@ -30,7 +30,7 @@
 
 - 노마드코더 ZOOM
 
-- Node js 용 Swaggr 샘플
+- Node js 용 Swaggr 설치샘플
   
 ![ScreenShot_20240825022734](https://github.com/user-attachments/assets/c0fbea6f-5642-4a51-9cb2-a07d4e116948)
 

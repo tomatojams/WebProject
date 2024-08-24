@@ -1,0 +1,44 @@
+{
+  "name": "drone-server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo \"No build step required for this project\"",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "amqplib": "^0.10.4",
+    "axios": "^1.7.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "drone-server": "file:",
+    "ex5-vite-app": "file:",
+    "express": "^4.19.2",
+    "leaflet": "^1.9.4",
+    "mongodb": "^5.9.2",
+    "mongoose": "^8.5.3",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.11.0",
+    "node-cache": "^5.1.2",
+    "prop-types": "^15.8.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-leaflet": "^4.2.1",
+    "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.2",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "vite": "^5.3.1"
+  }
+}

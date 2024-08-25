@@ -1,10 +1,8 @@
 import bcrypt from "bcrypt";
 import csrf from "csurf";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/client";
 
 const csrfProtection = csrf({ cookie: true });
-const prisma = new PrismaClient();
-
 
 
 

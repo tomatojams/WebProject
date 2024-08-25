@@ -1,6 +1,5 @@
-import prisma from "@/lib/prisma";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { prisma } from "@/lib/client";
+
 
 export default async function handler(req, res) {
   if (req.method === "DELETE") {

@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 app.use(cors());
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(root + "/public"));
 app.set("view engine", "ejs");
 app.use(json());
 app.use(urlencoded({ extended: true }));

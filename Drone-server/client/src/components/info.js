@@ -1,63 +1,87 @@
-export default function InfoDrone({ selectedDroneData, autoCenter, handleToggleAutoCenter }) {
+import React from "react";
+
+export default function InfoDrone({ selectedDroneData }) {
   return (
-    <>
-      <div style={{ flex: 1, padding: "10px", background: "#f0f0f0", borderTop: "1px solid #ddd", marginTop: "auto" }}>
-        <button onClick={handleToggleAutoCenter} style={{ marginBottom: "10px", width: "100%" }}>
-          {autoCenter ? "자동 위치 추적 끄기" : "자동 위치 추적 켜기"}
-        </button>
-        {/* <button onClick={handleCenterLatestPosition} style={{ marginBottom: "20px", width: "100%" }}>
-          최근 위치로 이동
-        </button> */}
-        {selectedDroneData ? (
-          <div style={{ display: "flex", gap: "10px" }}>
-            <div style={{ flex: 1 }}>
-              <p>
-                <strong>Drone ID:</strong>
-                <br /> {selectedDroneData.drone.droneId}
-              </p>
-              <p>
-                <strong>Message:</strong> <br /> {selectedDroneData.message}
-              </p>
-              <p>
-                <strong>Name:</strong>
-                <br /> {selectedDroneData.drone.name}
-              </p>
-              <p>
-                <strong>Frequency:</strong>
-                <br /> {selectedDroneData.drone.frequency}
-              </p>
-              <p>
-                <strong>Bandwidth:</strong> <br /> {selectedDroneData.drone.bandwidth}
-              </p>
-              <p>
-                <strong>Allow Track:</strong> <br /> {selectedDroneData.drone.allow_track ? "Yes" : "No"}
-              </p>
-            </div>
-            <div style={{ flex: 1 }}>
-              <p>
-                <strong>Allow Takeover:</strong>
-                <br /> {selectedDroneData.drone.allow_takeover ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Class Name:</strong> <br /> {selectedDroneData.drone.class_name}
-              </p>
-              <p>
-                <strong>Radio Resources:</strong>
-                <br /> {selectedDroneData.drone.radio_resources}
-              </p>
-              <p>
-                <strong>Latitude:</strong>
-                <br /> {selectedDroneData.drone.latitude}
-              </p>
-              <p>
-                <strong>Longitude:</strong> <br /> {selectedDroneData.drone.longitude}
-              </p>
-            </div>
+    <div className="info-drone-container">
+      {selectedDroneData ? (
+        <div className="info-drone-content">
+          <div className="info-drone-section">
+            <p>
+              <strong className="info-drone-strong">Drone ID:</strong>
+              <br />
+              <span className="info-drone-value-highlight">{selectedDroneData.drone.droneId}</span>
+            </p>
+            <p>
+              <strong className="info-drone-strong">Message:</strong>
+              <br />
+              <span className="info-drone-value">{selectedDroneData.message}</span>
+            </p>
+            <p>
+              <strong className="info-drone-strong">Name:</strong>
+              <br />
+              <span className="info-drone-value">{selectedDroneData.drone.name}</span>
+            </p>
+            <p>
+              <strong className="info-drone-strong">Frequency:</strong>
+              <br />
+              <span className="info-drone-value">{selectedDroneData.drone.frequency}</span>
+            </p>
+            <p>
+              <strong className="info-drone-strong">Bandwidth:</strong>
+              <br />
+              <span className="info-drone-value">{selectedDroneData.drone.bandwidth}</span>
+            </p>
+            <p>
+              <strong className="info-drone-strong">Allow Track:</strong>
+              <br />
+              <span
+                className={
+                  selectedDroneData.drone.allow_track
+                    ? "info-drone-status-yes"
+                    : "info-drone-status-no"
+                }>
+                {selectedDroneData.drone.allow_track ? "Yes" : "No"}
+              </span>
+            </p>
           </div>
-        ) : (
-          <p>드론을 선택해 주세요.</p>
-        )}
-      </div>
-    </>
+          <div className="info-drone-section">
+            <p>
+              <strong className="info-drone-strong">Allow Takeover:</strong>
+              <br />
+              <span
+                className={
+                  selectedDroneData.drone.allow_takeover
+                    ? "info-drone-status-yes"
+                    : "info-drone-status-no"
+                }>
+                {selectedDroneData.drone.allow_takeover ? "Yes" : "No"}
+              </span>
+            </p>
+            <p>
+              <strong className="info-drone-strong">Class Name:</strong>
+              <br />
+              <span className="info-drone-value">{selectedDroneData.drone.class_name}</span>
+            </p>
+            <p>
+              <strong className="info-drone-strong">Radio Resources:</strong>
+              <br />
+              <span className="info-drone-value">{selectedDroneData.drone.radio_resources}</span>
+            </p>
+            <p>
+              <strong className="info-drone-strong">Latitude:</strong>
+              <br />
+              <span className="info-drone-value">{selectedDroneData.drone.latitude}</span>
+            </p>
+            <p>
+              <strong className="info-drone-strong">Longitude:</strong>
+              <br />
+              <span className="info-drone-value">{selectedDroneData.drone.longitude}</span>
+            </p>
+          </div>
+        </div>
+      ) : (
+        <p className="info-drone-placeholder">드론을 선택해 주세요.</p>
+      )}
+    </div>
   );
 }

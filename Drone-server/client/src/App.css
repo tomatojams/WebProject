@@ -1,3 +1,7 @@
+@import "css/info.css";
+@import "css/list.css";
+@import "css/nav.css";
+
 .App {
   text-align: center;
 }
@@ -38,6 +42,7 @@
 }
 
 /* 최신 마커의 스타일 */
+
 .marker-latest {
   filter: brightness(1); /* 최신 마커는 기본 밝기 */
 }

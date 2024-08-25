@@ -1,14 +1,15 @@
 import { MapContainer, TileLayer, Marker, Circle } from "react-leaflet";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import L from "leaflet";
 import { useMap } from "react-leaflet";
 import { useRecoilState } from "recoil";
 import { selectedDroneState } from "../atom";
 
-//
-export default function MapBox({ latestPositions, autoCenter, filteredDrons, customMarkers, handleDroneSelect }) {
+export default function MapBox({ latestPositions, filteredDrons, customMarkers, handleDroneSelect }) {
   // Recoil을 통해 선택된 드론 ID를 가져옴
   const [selectedDroneId, setSelectedDroneId] = useRecoilState(selectedDroneState);
+  // autoCenter 상태를 관리하기 위한 useState 추가
+  const [autoCenter, setAutoCenter] = useState(true);
 
   // 드론 아이콘 이미지 URL
   const droneIconUrl = `${process.env.PUBLIC_URL}/drone_1.png`;
@@ -17,6 +18,11 @@ export default function MapBox({ latestPositions, autoCenter, filteredDrons, cus
   const handleMarkerClick = async (droneId) => {
     setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
     handleDroneSelect(droneId); // 드론을 선택할 때 호출
+  };
+
+  // 자동 중앙 정렬 토글
+  const handleToggleAutoCenter = () => {
+    setAutoCenter((prev) => !prev);
   };
 
   const MapController = ({ latestPositions, autoCenter, filteredDrons }) => {
@@ -72,8 +78,26 @@ export default function MapBox({ latestPositions, autoCenter, filteredDrons, cus
       iconSize: [50, 15],
       iconAnchor: [30, -15],
     });
+
   return (
-    <>
+    <div style={{ height: "100%", width: "100%", position: "relative" }}>
+      <button
+        style={{
+          position: "absolute",
+          bottom: "30px",
+          right: "10px",
+          zIndex: 1000,
+          padding: "5px 10px",
+          backgroundColor: autoCenter ? "green" : "blue",
+          color: "white",
+          border: "none",
+          borderRadius: "4px",
+          cursor: "pointer",
+        }}
+        onClick={handleToggleAutoCenter}>
+        {autoCenter ? "Auto-Center ON" : "Auto-Center OFF"}
+      </button>
+
       <MapContainer style={{ height: "100%", width: "100%" }} center={[37.5665, 126.978]} zoom={13}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -101,7 +125,6 @@ export default function MapBox({ latestPositions, autoCenter, filteredDrons, cus
                 fillColor={selectedDroneId === position.droneId ? "red" : "green"}
                 fillOpacity={0.2}
                 eventHandlers={{ click: () => handleMarkerClick(position.droneId) }}
-                // 키속성을 통해 선택된 드론의 원만 색상 변경***
                 key={
                   selectedDroneId === position.droneId
                     ? `selected-${position.droneId}`
@@ -115,6 +138,6 @@ export default function MapBox({ latestPositions, autoCenter, filteredDrons, cus
           <Marker key={index} position={[marker.lat, marker.lon]} icon={getMarkIcon(marker.markType)} />
         ))}
       </MapContainer>
-    </>
+    </div>
   );
 }

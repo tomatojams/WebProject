@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: Drone API
+  description: API documentation for the Drone project
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000
+paths:
+  /api/positions:
+    get:
+      summary: Retrieve the latest drone positions
+      responses:
+        '200':
+          description: A list of recent drone positions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    droneId:
+                      type: string
+                    latitude:
+                      type: number
+                    longitude:
+                      type: number
+                    name:
+                      type: string
+  /api/drone/{droneId}:
+    get:
+      summary: Retrieve a specific drone's details
+      parameters:
+        - in: path
+          name: droneId
+          schema:
+            type: string
+          required: true
+          description: The ID of the drone to retrieve
+      responses:
+        '200':
+          description: Detailed information of the specified drone
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  sender_id:
+                    type: string
+                  drone:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      frequency:
+                        type: integer
+                      bandwidth:
+                        type: integer
+                      allow_track:
+                        type: boolean
+                      allow_takeover:
+                        type: boolean
+                      class_name:
+                        type: string
+                      radio_resources:
+                        type: integer
+                      droneId:
+                        type: string
+                      latitude:
+                        type: number
+                        format: float
+                      longitude:
+                        type: number
+                        format: float
+        '404':
+          description: Drone not found
+        '500':
+          description: Internal Server Error

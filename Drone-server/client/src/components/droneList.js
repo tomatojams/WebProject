@@ -27,7 +27,7 @@ export default function DroneList({
   );
 
   return (
-    <div className="drone-list-container">
+    <div className="drone-list-container mr-4">
       <h2 className="drone-list-title">드론 목록</h2>
       <input
         type="text"

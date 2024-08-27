@@ -2,7 +2,7 @@ import React from "react";
 
 export default function InfoDrone({ selectedDroneData }) {
   return (
-    <div className="info-drone-container">
+    <div className="info-drone-container mr-4">
       {selectedDroneData ? (
         <div className="info-drone-content">
           <div className="info-drone-section">

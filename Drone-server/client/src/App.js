@@ -3,7 +3,6 @@ import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import { useQuery } from "react-query";
 
-import "./App.css";
 import InfoDrone from "./components/info";
 import DroneList from "./components/droneList";
 import CustomMark from "./components/customMark";
@@ -50,7 +49,7 @@ function App() {
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <AppHeader /> {/* 상단바 추가 */}
       <div style={{ display: "flex", flex: 1 }}>
-        <MapBox
+        <MapBox 
           latestPositions={latestPositions}
           filteredDrons={filteredDrons}
           customMarkers={customMarkers}

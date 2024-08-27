@@ -1,0 +1,22 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Noom
+    link(rel="stylesheet", href="public/global.css")
+  body
+    main#mainbox
+      header
+        h1 Noom
+
+      div
+        form#nick(action="")
+          input#comment_input_name(type="text", placeholder="익명") 
+          button.simplebutton-reversed Save
+        form#message(action="")
+          input#comment_input(type="text", placeholder="메세지", required) 
+
+          button.simplebutton-sm Send
+        ul
+    script(src="public/js/app.js")

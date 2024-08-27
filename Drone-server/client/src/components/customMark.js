@@ -28,7 +28,7 @@ export default function CustomMark({ setCustomMarkers }) {
   };
   return (
     <>
-      <div style={{ padding: "10px", borderBottom: "1px solid #ddd", background: "#f8f8f8" }}>
+      <div class="mt-4 mr-4 mb-4 p-4  border-gray-300 bg-gray-100">
         <h2>커스텀 마크 추가</h2>
         <input
           type="number"
@@ -46,7 +46,10 @@ export default function CustomMark({ setCustomMarkers }) {
           onChange={handleCoordinateChange}
           style={{ width: "90%", marginBottom: "10px" }}
         />
-        <select value={selectedMark} onChange={handleMarkChange} style={{ width: "90%", marginBottom: "10px" }}>
+        <select
+          value={selectedMark}
+          onChange={handleMarkChange}
+          style={{ width: "90%", marginBottom: "10px" }}>
           <option value="mark1">Mark 1</option>
           <option value="mark2">Mark 2</option>
           <option value="mark3">Mark 3</option>

@@ -5,7 +5,12 @@ import { useMap } from "react-leaflet";
 import { useRecoilState } from "recoil";
 import { selectedDroneState } from "../atom";
 
-export default function MapBox({ latestPositions, filteredDrons, customMarkers, handleDroneSelect }) {
+export default function MapBox({
+  latestPositions,
+  filteredDrons,
+  customMarkers,
+  handleDroneSelect,
+}) {
   // Recoil을 통해 선택된 드론 ID를 가져옴
   const [selectedDroneId, setSelectedDroneId] = useRecoilState(selectedDroneState);
   // autoCenter 상태를 관리하기 위한 useState 추가
@@ -30,7 +35,9 @@ export default function MapBox({ latestPositions, filteredDrons, customMarkers, 
 
     useEffect(() => {
       if (autoCenter && latestPositions.length > 0) {
-        const positionsToConsider = latestPositions.filter((pos) => !filteredDrons.includes(pos.droneId));
+        const positionsToConsider = latestPositions.filter(
+          (pos) => !filteredDrons.includes(pos.droneId)
+        );
 
         if (positionsToConsider.length > 0) {
           const latitudes = positionsToConsider.map((pos) => pos.latitude);
@@ -80,12 +87,12 @@ export default function MapBox({ latestPositions, filteredDrons, customMarkers, 
     });
 
   return (
-    <div style={{ height: "100%", width: "100%", position: "relative" }}>
+    <div className="p-5 h-full w-full relative">
       <button
         style={{
           position: "absolute",
-          bottom: "30px",
-          right: "10px",
+          bottom: "50px",
+          right: "30px",
           zIndex: 1000,
           padding: "5px 10px",
           backgroundColor: autoCenter ? "green" : "blue",
@@ -93,12 +100,14 @@ export default function MapBox({ latestPositions, filteredDrons, customMarkers, 
           border: "none",
           borderRadius: "4px",
           cursor: "pointer",
+          width: "140px",
+          boxSizing: "border-box",
         }}
         onClick={handleToggleAutoCenter}>
         {autoCenter ? "Auto-Center ON" : "Auto-Center OFF"}
       </button>
 
-      <MapContainer style={{ height: "100%", width: "100%" }} center={[37.5665, 126.978]} zoom={13}>
+      <MapContainer className="h-full w-full" center={[37.5665, 126.978]} zoom={13}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
@@ -133,9 +142,17 @@ export default function MapBox({ latestPositions, filteredDrons, customMarkers, 
               />
             </React.Fragment>
           ))}
-        <MapController latestPositions={latestPositions} autoCenter={autoCenter} filteredDrons={filteredDrons} />
+        <MapController
+          latestPositions={latestPositions}
+          autoCenter={autoCenter}
+          filteredDrons={filteredDrons}
+        />
         {customMarkers.map((marker, index) => (
-          <Marker key={index} position={[marker.lat, marker.lon]} icon={getMarkIcon(marker.markType)} />
+          <Marker
+            key={index}
+            position={[marker.lat, marker.lon]}
+            icon={getMarkIcon(marker.markType)}
+          />
         ))}
       </MapContainer>
     </div>

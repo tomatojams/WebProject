@@ -1,10 +1,6 @@
 import amqp from "amqplib";
 
-// 서버의 기준 위치 설정
-const serverLatitude = 37.740642559182625;
-const serverLongitude = 127.1852350893005;
-
-const sendDronePosition = async (droneId, droneName) => {
+const sendDronePosition = async (droneId, initialLat, initialLng, droneName) => {
   try {
     const connection = await amqp.connect("amqp://127.0.0.1");
     const channel = await connection.createChannel();
@@ -12,11 +8,10 @@ const sendDronePosition = async (droneId, droneName) => {
 
     await channel.assertQueue(queue, { durable: false });
 
-    let latitude = serverLatitude;
-    let longitude = serverLongitude;
+    let latitude = initialLat;
+    let longitude = initialLng;
 
     setInterval(() => {
-      // 위치를 기준 위치에서 약간의 변화를 줌
       latitude += (Math.random() - 0.5) * 0.0002;
       longitude += (Math.random() - 0.5) * 0.0002;
 
@@ -45,34 +40,8 @@ const sendDronePosition = async (droneId, droneName) => {
   }
 };
 
-// 센서 위치 전송 함수 (1분마다 실행)
-const sendSensorPosition = async () => {
-  try {
-    const connection = await amqp.connect("amqp://127.0.0.1");
-    const channel = await connection.createChannel();
-    const queue = "Mark_message";
-
-    await channel.assertQueue(queue, { durable: false });
-
-    setInterval(() => {
-      const position = {
-        latitude: serverLatitude + (Math.random() - 0.5) * 0.0002,
-        longitude: serverLongitude + (Math.random() - 0.5) * 0.0002,
-      };
-
-      channel.sendToQueue(queue, Buffer.from(JSON.stringify(position)));
-      console.log("Sent Sensor Position:", position);
-    }, 60000); // 1분마다 위치 전송
-  } catch (error) {
-    console.error("Error in sending sensor position:", error);
-  }
-};
-
-// 드론 위치 전송
-sendDronePosition("64:60:1f:7a:b0:5e", "Mavic Air");
-sendDronePosition("12:34:56:78:9a:bc", "Phantom 4");
-sendDronePosition("a1:b2:c3:d4:e5:f6", "Inspire 2");
-sendDronePosition("11:22:33:44:55:66", "Mavic Mini");
-
-// 센서 위치 전송
-sendSensorPosition();
+// 두 대의 드론 설정: 초기 위치는 약간의 차이를 둠
+sendDronePosition("64:60:1f:7a:b0:5e", 37.5665, 126.978, "Mavic Air");
+sendDronePosition("12:34:56:78:9a:bc", 37.5667, 126.9782, "Phantom 4");
+sendDronePosition("a1:b2:c3:d4:e5:f6", 37.5668, 126.9784, "Inspire 2");
+sendDronePosition("11:22:33:44:55:66", 37.5669, 126.9786, "Mavic Mini");

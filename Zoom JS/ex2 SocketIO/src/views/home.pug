@@ -9,14 +9,19 @@ html(lang="en")
     main#mainbox
       header
         h1 Noom
+      #welcome
+        form#roomName
+          input#comment_input_name(type="text", placeholder="room name", required) 
+          input#comment_input_nickname(type="text", placeholder="닉네임", required) 
+          button.simplebutton-reversed Enter Room
+      #room
+        h3 room
 
-      div
-        form#nick(action="")
-          input#comment_input_name(type="text", placeholder="익명") 
-          button.simplebutton-reversed Save
-        form#message(action="")
+        #messageBox
+          ul#messageList
+        form#message
           input#comment_input(type="text", placeholder="메세지", required) 
-
           button.simplebutton-sm Send
-        ul
+
+    script(src="/socket.io/socket.io.js")
     script(src="public/js/app.js")

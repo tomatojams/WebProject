@@ -1,5 +1,5 @@
 .simplebutton-sm {
-  background-color: var(--main-violet); /* 배경색: 초록색 */
+  background-color:#9060f0; /* 배경색: 초록색 */
   border: none; /* 테두리 없음 */
   color: white; /* 텍스트 색상: 흰색 */
   padding: 5px 15px; /* 패딩 */
@@ -15,7 +15,7 @@
 }
 
 .simplebutton-log {
-  background-color: var(--main-violet); /* 배경색: 초록색 */
+  background-color: #9060f0; /* 배경색: 초록색 */
   border: none; /* 테두리 없음 */
   color: white; /* 텍스트 색상: 흰색 */
   padding: 5px 5px; /* 패딩 */
@@ -33,7 +33,7 @@
 .simplebutton-reversed {
   background-color: white; /* 배경색: 초록색 */
   border: none; /* 테두리 없음 */
-  color: var(--main-violet); /* 텍스트 색상: 흰색 */
+  color:#9060f0; /* 텍스트 색상: 흰색 */
   padding: 5px 5px; /* 패딩 */
   text-align: center; /* 텍스트 중앙 정렬 */
   text-decoration: none; /* 텍스트 밑줄 없음 */
@@ -46,7 +46,7 @@
   box-shadow: 0 0 2px rgb(189, 189, 189);
 }
 .simplebutton {
-  background-color: var(--main-violet); /* 배경색: 초록색 */
+  background-color: #9060f0; /* 배경색: 초록색 */
   border: none; /* 테두리 없음 */
   color: white; /* 텍스트 색상: 흰색 */
   padding: 10px 10px; /* 패딩 */

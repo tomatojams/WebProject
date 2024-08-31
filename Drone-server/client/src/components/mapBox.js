@@ -1,7 +1,6 @@
-import { MapContainer, TileLayer, Marker, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import React, { useEffect, useState } from "react";
 import L from "leaflet";
-import { useMap } from "react-leaflet";
 import { useRecoilState } from "recoil";
 import { selectedDroneState } from "../atom";
 
@@ -11,29 +10,26 @@ export default function MapBox({
   customMarkers,
   handleDroneSelect,
 }) {
-  // Recoil을 통해 선택된 드론 ID를 가져옴
   const [selectedDroneId, setSelectedDroneId] = useRecoilState(selectedDroneState);
-  // autoCenter 상태를 관리하기 위한 useState 추가
   const [autoCenter, setAutoCenter] = useState(true);
+  const droneIconUrl = `${process.env.PUBLIC_URL}/drone_2.png`;
+  const droneIconRedUrl = `${process.env.PUBLIC_URL}/drone_2_red.png`; // 추가된 빨간 드론 아이콘
 
-  // 드론 아이콘 이미지 URL
-  const droneIconUrl = `${process.env.PUBLIC_URL}/drone_1.png`;
-
-  // 클릭된 드론 ID가 현재 선택된 드론과 같으면 선택 해제, 아니면 선택
   const handleMarkerClick = async (droneId) => {
     setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
-    handleDroneSelect(droneId); // 드론을 선택할 때 호출
+    handleDroneSelect(droneId);
   };
 
-  // 자동 중앙 정렬 토글
   const handleToggleAutoCenter = () => {
     setAutoCenter((prev) => !prev);
   };
 
   const MapController = ({ latestPositions, autoCenter, filteredDrons }) => {
-    const map = useMap();
+    const map = useMap(); // map 객체 가져오기
 
     useEffect(() => {
+      if (!map) return; // map이 정의되지 않은 경우 빠져나오기
+
       if (autoCenter && latestPositions.length > 0) {
         const positionsToConsider = latestPositions.filter(
           (pos) => !filteredDrons.includes(pos.droneId)
@@ -48,12 +44,13 @@ export default function MapBox({
           map.setView([centerLat, centerLon], map.getZoom());
         }
       }
+
+      // 각 드론의 위치에 따라 원의 위치 업데이트
     }, [latestPositions, autoCenter, map, filteredDrons]);
 
     return null;
   };
 
-  // 마크 아이콘 설정
   const getMarkIcon = (markType) => {
     const icons = {
       mark1: `${process.env.PUBLIC_URL}/mark1.png`,
@@ -67,23 +64,21 @@ export default function MapBox({
     });
   };
 
-  // 커스텀 드론 아이콘 설정
-  const customIcon = (isLatest, droneIndex) =>
-    new L.Icon({
-      iconUrl: droneIconUrl,
-      iconSize: [30, 30],
-      iconAnchor: [15, 15],
-      popupAnchor: [1, -34],
-      className: `marker-${isLatest ? "latest" : "past"} marker-drone-${droneIndex}`,
-    });
-
-  // 드론 이름을 아이콘 아래에 표시하기 위한 함수
-  const nameIcon = (name) =>
+  const customCombinedIcon = (name, isSelected) =>
     L.divIcon({
-      className: "custom-marker-label",
-      html: `<div>${name}</div>`,
-      iconSize: [50, 15],
-      iconAnchor: [30, -15],
+      className: "custom-marker-icon",
+      html: `
+        <div class="base-icon">
+          <img src="${isSelected ? droneIconRedUrl : droneIconUrl}" alt="Drone" />
+        </div>
+        <div class="animated-icon" style="transform: translateX(-10px) translateY(50px);">
+          <div class="custom-marker-label" style="width: 80px; text-align: center;">
+            ${name}
+          </div>
+        </div>
+      `,
+      iconSize: [30, 30],
+      iconAnchor: [20, 20],
     });
 
   return (
@@ -114,31 +109,12 @@ export default function MapBox({
         />
         {latestPositions
           .filter((position) => !filteredDrons.includes(position.droneId))
-          .map((position, index) => (
+          .map((position) => (
             <React.Fragment key={position.droneId}>
               <Marker
                 position={[position.latitude, position.longitude]}
-                icon={customIcon(true, index)}
+                icon={customCombinedIcon(position.name, selectedDroneId === position.droneId)} // 드론이 선택되었는지 확인하여 아이콘 설정
                 eventHandlers={{ click: () => handleMarkerClick(position.droneId) }}
-              />
-              <Marker
-                eventHandlers={{ click: () => handleMarkerClick(position.droneId) }}
-                position={[position.latitude, position.longitude]}
-                icon={nameIcon(position.name)}
-                opacity={0.7}
-              />
-              <Circle
-                center={[position.latitude, position.longitude]}
-                radius={50}
-                color={selectedDroneId === position.droneId ? "red" : "green"}
-                fillColor={selectedDroneId === position.droneId ? "red" : "green"}
-                fillOpacity={0.2}
-                eventHandlers={{ click: () => handleMarkerClick(position.droneId) }}
-                key={
-                  selectedDroneId === position.droneId
-                    ? `selected-${position.droneId}`
-                    : `unselected-${position.droneId}`
-                }
               />
             </React.Fragment>
           ))}

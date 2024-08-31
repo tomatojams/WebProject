@@ -21,7 +21,10 @@
     "@babel/core": "^7.25.2",
     "@babel/node": "^7.25.0",
     "@babel/preset-env": "^7.25.3",
+    "@eslint/js": "^9.9.1",
     "@prettier/plugin-pug": "^3.0.0",
+    "eslint": "^9.9.1",
+    "globals": "^15.9.0",
     "nodemon": "^3.1.4",
     "prettier": "^3.3.3"
   }

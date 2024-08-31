@@ -18,7 +18,58 @@
 }
 
 .your_message {
+  /* display: inline-block; */
+  float: right;
+  text-align: end;
   background-color: rgb(245, 233, 219);
-  padding: 5px;
-  border-radius: 8px;
+  padding: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  clear: both;
+}
+
+.friend_message {
+  /* display: inline-block; */
+  float: left;
+  text-align: end;
+  background-color: #ffeb33;
+  padding: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  clear: both;
+}
+.sys_message {
+  /* display: inline-block; */
+
+  text-align: center;
+  /* background-color: rgb(245, 233, 219); */
+  padding: 10px;
+  /* border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px; */
+  clear: both;
+}
+
+#messageBox {
+  background-color: #bacee0;
+  width: 500px;
+  height: 300px;
+  border: 1px solid #ccc;
+  overflow-y: auto; /* 스크롤 활성화 */
+  display: flex;
+  flex-direction: column-reverse; /* 아래에서부터 위로 올라가는 레이아웃 */
+  padding: 10px;
+  margin-top: 20px;
+}
+
+#messageBox ul {
+  list-style: none; /* 리스트 스타일 제거 */
+  padding: 0;
+  margin: 0;
+}
+
+#messageBox li {
+  margin-bottom: 5px;
 }

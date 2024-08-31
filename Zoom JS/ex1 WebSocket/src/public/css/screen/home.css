@@ -18,7 +18,10 @@
 }
 
 .your_message {
+  text-align: end;
   background-color: rgb(245, 233, 219);
   padding: 5px;
-  border-radius: 8px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
 }

@@ -14,6 +14,17 @@
 
   outline: none;
 }
+#comment_input_nickname {
+  width: 68%;
+  padding: 5px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #555;
+  background-color: #e8f0fe;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
 #comment_input_name {
   width: 68%;
@@ -26,7 +37,7 @@
   background-color: #e8f0fe;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-
+#comment_input_nickname,
 #comment_input_name:focus {
   border-color: #969696;
 

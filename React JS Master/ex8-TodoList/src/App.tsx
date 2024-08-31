@@ -1,4 +1,4 @@
-import { GlobalStyle } from "./style/resetGlobal";
+import { GlobalStyle } from "./css/resetGlobal";
 import TodoList from "./components/ToDoList";
 
 export default function App() {

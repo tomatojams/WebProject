@@ -80,3 +80,47 @@ code {
   font-size: 12px;
   text-align: center;
 }
+.leaflet-marker-icon {
+  transition: transform 1s linear;
+}
+
+.leaflet-interactive {
+  transition: transform 1s linear; /* 위치가 바뀔 때 부드럽게 이동 */
+}
+
+.custom-marker-label {
+  display: inline-block;
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 2px 5px;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+}
+
+.custom-marker-label.animated {
+  transform: scale(1); /* 예시로 크기 변화 애니메이션 */
+}
+
+.custom-marker-icon {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.base-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.animated-icon {
+  position: absolute;
+  top: 0;
+  left: -5px;
+  width: 100%;
+  height: 100%;
+  animation: pulse 1.5s infinite; /* 간단한 애니메이션 효과 */
+  opacity: 0.9;
+}

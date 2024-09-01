@@ -3,11 +3,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 export default async function LoginPage() {
   let session = await getServerSession(authOptions);
+  let isSession = Boolean(session);
   return (
     <main id="login-main">
       <div className="write-post-border">
         <h4 className="write-post-title">로그인</h4>
-        <LoginForm session={session} />
+        <LoginForm isSession={isSession} />
       </div>
     </main>
   );

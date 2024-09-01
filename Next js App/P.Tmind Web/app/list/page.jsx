@@ -13,8 +13,10 @@ export const dynamic = "force-dynamic";
 
 export default async function List() {
   // await를 써서 받고 authOptions로 인증을 받아온다.
-  const session = await getServerSession(authOptions);
-  console.log("Session:", session);
+  // const를 쓰면 안됨.
+  let session = await getServerSession(authOptions);
+  let isSession = Boolean(session);
+  console.log("Session:", isSession);
   // DB연결 및 데이터 조회
   const posts = await prisma.board.findMany({
     orderBy: {
@@ -35,7 +37,7 @@ export default async function List() {
         <ListView rows={posts} />
       </div>
       <br />
-      <WriteButton session={session} />
+      <WriteButton isSession={isSession} />
     </div>
   );
 }

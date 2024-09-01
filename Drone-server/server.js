@@ -6,12 +6,7 @@ import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
-import {
-  markBuffer,
-  messageBuffer,
-  consumeDroneMessage,
-  consumeMarkMessage,
-} from "./consume func/func.js";
+import { messageBuffer, consumeDroneMessage, consumeMarkMessage } from "./consume func/func.js";
 
 dotenv.config();
 // 폴더루트 변수선언

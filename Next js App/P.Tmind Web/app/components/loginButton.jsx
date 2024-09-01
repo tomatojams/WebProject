@@ -1,9 +1,9 @@
 "use client";
 import { signIn } from "next-auth/react";
-export default function LoginButton({ session }) {
+export default function LoginButton({ isSession }) {
   return (
     <div c>
-      {session ? null : (
+      {isSession ? null : (
         <button
           className="simplebutton-sm"
           onClick={() => {

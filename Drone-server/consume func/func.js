@@ -1,4 +1,3 @@
-// Drone 메시지 소비
 import amqp from "amqplib";
 import dotenv from "dotenv";
 
@@ -10,7 +9,6 @@ let isReceiving = false; // 메시지를 받고 있는지 여부
 let markMessageTimeout;
 const MARK_MESSAGE_TIMEOUT_INTERVAL = 10000; // 10초
 
-let markBuffer = null; // 전역 변수로 설정
 const BUFFER_SIZE = 30;
 const messageBuffer = [];
 const trackedDrones = new Set();
@@ -82,19 +80,22 @@ const consumeMarkMessage = async () => {
         if (msg !== null) {
           if (!isReceiving) {
             isReceiving = true;
-            printStatus("Receiving Sonsor message"); // 처음 메시지 받을 때만 출력
+            printStatus("Receiving Sensor message"); // 처음 메시지 받을 때만 출력
           }
           resetMarkMessageTimeout(); // 타이머 리셋
 
           try {
             const markMessageContent = JSON.parse(msg.content.toString());
-            markBuffer = {
-              ...markBuffer,
-              mark2: markMessageContent,
-            };
 
-            const MarkDoc = new MarkModel(markBuffer);
-            const savedMark = await MarkDoc.save();
+            // 마크 메시지 내용 콘솔에 출력
+            console.log("Received Mark Message:", markMessageContent);
+
+            // MongoDB에 최신 마크 메시지 저장
+            await MarkModel.findOneAndUpdate(
+              {}, // 조건을 빈 객체로 설정하면 전체 문서를 업데이트합니다
+              markMessageContent, // 새로운 데이터로 업데이트
+              { upsert: true } // 문서가 없으면 새로 생성
+            );
 
             channel.ack(msg);
           } catch (error) {
@@ -129,4 +130,4 @@ const getCurrentTime = () => {
   return new Date().toLocaleString();
 };
 
-export { markBuffer, messageBuffer, consumeDroneMessage, consumeMarkMessage };
+export { messageBuffer, consumeDroneMessage, consumeMarkMessage };

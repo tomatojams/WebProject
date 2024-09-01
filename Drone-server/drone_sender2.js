@@ -1,22 +1,45 @@
 import amqp from "amqplib";
+import dotenv from "dotenv";
 
-// 서버의 기준 위치 설정
-const serverLatitude = 37.740642559182625;
-const serverLongitude = 127.1852350893005;
+dotenv.config();
+const amqp_url = process.env.AMQP_URL;
 
-const sendDronePosition = async (droneId, droneName) => {
+// 센서 위치를 생성하는 함수
+const generateSensorPosition = (latitude, longitude) => {
+  return {
+    sensor_id: `sensor-${Date.now()}`,
+    latitude: latitude + (Math.random() - 0.5) * 0.0001, // 위치를 조금씩 변동
+    longitude: longitude + (Math.random() - 0.5) * 0.0001,
+    state: Math.random() > 0.5, // 랜덤으로 상태 설정
+  };
+};
+
+let connection;
+let channel;
+const droneQueue = "Drone_message";
+const sensorQueue = "Mark_message";
+
+// 연결 및 채널을 생성하는 함수
+const createConnectionAndChannel = async () => {
+  connection = await amqp.connect(amqp_url);
+  channel = await connection.createChannel();
+  await channel.assertQueue(droneQueue, { durable: false });
+  await channel.assertQueue(sensorQueue, { durable: false });
+};
+
+// 드론 위치를 주기적으로 전송하는 함수
+const sendDronePosition = async (droneId, initialLat, initialLng, droneName) => {
   try {
-    const connection = await amqp.connect("amqp://127.0.0.1");
-    const channel = await connection.createChannel();
-    const queue = "Drone_message";
+    // 채널이 없으면 새로 생성
+    if (!channel) {
+      await createConnectionAndChannel();
+    }
 
-    await channel.assertQueue(queue, { durable: false });
+    let latitude = initialLat;
+    let longitude = initialLng;
 
-    let latitude = serverLatitude;
-    let longitude = serverLongitude;
-
+    // 드론 위치 전송
     setInterval(() => {
-      // 위치를 기준 위치에서 약간의 변화를 줌
       latitude += (Math.random() - 0.5) * 0.0002;
       longitude += (Math.random() - 0.5) * 0.0002;
 
@@ -37,42 +60,41 @@ const sendDronePosition = async (droneId, droneName) => {
         },
       };
 
-      channel.sendToQueue(queue, Buffer.from(JSON.stringify(position)));
-      console.log(`Sent: ${droneName}`, position);
-    }, 1000); // 1초마다 위치 전송
+      channel.sendToQueue(droneQueue, Buffer.from(JSON.stringify(position)));
+      console.log(`Sent drone position: ${droneName}`, position);
+    }, 1000); // 1초마다 드론 위치 전송
   } catch (error) {
     console.error("Error in sending drone position:", error);
   }
 };
 
-// 센서 위치 전송 함수 (1분마다 실행)
-const sendSensorPosition = async () => {
+// 센서 위치를 한 번만 전송하는 함수
+const sendSensorPosition = async (latitude, longitude) => {
   try {
-    const connection = await amqp.connect("amqp://127.0.0.1");
-    const channel = await connection.createChannel();
-    const queue = "Mark_message";
+    // 채널이 없으면 새로 생성
+    if (!channel) {
+      await createConnectionAndChannel();
+    }
 
-    await channel.assertQueue(queue, { durable: false });
+    const sensorPosition = generateSensorPosition(latitude, longitude);
 
-    setInterval(() => {
-      const position = {
-        latitude: serverLatitude + (Math.random() - 0.5) * 0.0002,
-        longitude: serverLongitude + (Math.random() - 0.5) * 0.0002,
-      };
-
-      channel.sendToQueue(queue, Buffer.from(JSON.stringify(position)));
-      console.log("Sent Sensor Position:", position);
-    }, 60000); // 1분마다 위치 전송
+    channel.sendToQueue(sensorQueue, Buffer.from(JSON.stringify(sensorPosition)));
+    console.log(`Sent sensor position:`, sensorPosition);
   } catch (error) {
     console.error("Error in sending sensor position:", error);
   }
 };
 
-// 드론 위치 전송
-sendDronePosition("64:60:1f:7a:b0:5e", "Mavic Air");
-sendDronePosition("12:34:56:78:9a:bc", "Phantom 4");
-sendDronePosition("a1:b2:c3:d4:e5:f6", "Inspire 2");
-sendDronePosition("11:22:33:44:55:66", "Mavic Mini");
+// 초기화 및 드론 및 센서 위치 전송 호출
+const init = async () => {
+  await createConnectionAndChannel();
 
-// 센서 위치 전송
-sendSensorPosition();
+  sendDronePosition("64:60:1f:7a:b0:5e", 37.5665, 126.978, "Mavic Air");
+  sendDronePosition("12:34:56:78:9a:bc", 37.5667, 126.9782, "Phantom 4");
+  sendDronePosition("a1:b2:c3:d4:e5:f6", 37.5668, 126.9784, "Inspire 2");
+  sendDronePosition("11:22:33:44:55:66", 37.5669, 126.9786, "Mavic Mini");
+
+  await sendSensorPosition(37.5665, 126.978); // 센서 위치를 한 번만 전송
+};
+
+init();

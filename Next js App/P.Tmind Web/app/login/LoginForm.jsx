@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import LoginButton from "@/app/components/loginButton";
-export default function LoginForm({ session }) {
+export default function LoginForm({ isSession }) {
   const [csrfToken, setCsrfToken] = useState("");
+  const [session, setSession] = useState(isSession);
 
   useEffect(() => {
     // CSRF 토큰을 가져오기 위해 API 호출
@@ -17,7 +18,8 @@ export default function LoginForm({ session }) {
       }
     };
     fetchCsrfToken();
-  }, []);
+    setSession(isSession);
+  }, [isSession]);
 
   if (!csrfToken) {
     // CSRF 토큰을 가져오는 동안 로딩 표시
@@ -30,13 +32,7 @@ export default function LoginForm({ session }) {
         "로그인 중입니다."
       ) : (
         <form className="postform" action="/api/login/login" method="POST">
-          <input
-            id="write-title-input"
-            name="id"
-            type="text"
-            placeholder="아이디"
-            required
-          />
+          <input id="write-title-input" name="id" type="text" placeholder="아이디" required />
           <input
             id="write-content-input"
             name="password"
@@ -52,7 +48,7 @@ export default function LoginForm({ session }) {
         </form>
       )}
 
-      <LoginButton session={session} />
+      <LoginButton isSession={isSession} />
     </div>
   );
 }

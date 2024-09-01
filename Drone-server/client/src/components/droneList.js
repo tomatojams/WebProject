@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useRecoilState } from "recoil";
 import { selectedDroneState } from "../atom";
+import { useForm } from "react-hook-form";
 
 export default function DroneList({
   latestPositions,
@@ -8,32 +9,32 @@ export default function DroneList({
   handleFilterDrone,
   filteredDrons,
 }) {
+  // useForm
+  const { register, watch } = useForm();
+
   // 선택된 드론 ID를 저장해서 백그라운드 색상을 변경**
   const [selectedDroneId, setSelectedDroneId] = useRecoilState(selectedDroneState);
-  const [searchTerm, setSearchTerm] = useState("");
 
   const handleItemClick = (droneId) => {
     // 클릭된 드론 ID가 현재 선택된 드론과 같으면 선택 해제, 아니면 선택
     setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
     handleDroneSelect(droneId); // 드론을 선택할 때 호출
   };
-
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
+  const searchTerm = watch("search") || ""; // useState("") 처음 빈문자열 초기화
 
   const filteredDronsList = latestPositions.filter((drone) =>
-    drone.name.toLowerCase().includes(searchTerm.toLowerCase())
+    // toLowerCase()를 쓰려면 undefined가 아니어야 하므로 ? 또는 ""로 초기화
+    drone.name.toLowerCase().includes(searchTerm?.toLowerCase())
   );
 
   return (
     <div className="drone-list-container mr-4">
       <h2 className="drone-list-title">드론 목록</h2>
       <input
+        {...register("search")}
         type="text"
         placeholder="드론 이름 검색..."
         value={searchTerm}
-        onChange={handleSearchChange}
         className="drone-list-search"
       />
       {filteredDronsList.length > 0 ? (

@@ -1,8 +1,15 @@
 "use client";
 import { useRouter } from "next/navigation";
-export default function WriteButton({ session }) {
+import { useEffect, useState } from "react";
+export default function WriteButton({ isSession }) {
   let router = useRouter();
+  const [session, setSession] = useState(isSession);
 
+  useEffect(() => {
+    setSession(isSession);
+  }, [isSession]);
+
+  // console.log("button", isSession);
   return (
     <>
       {session ? (

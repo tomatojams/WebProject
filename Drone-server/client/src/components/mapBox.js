@@ -123,9 +123,9 @@ export default function MapBox({
           autoCenter={autoCenter}
           filteredDrons={filteredDrons}
         />
-        {customMarkers.map((marker, index) => (
+        {customMarkers.map((marker) => (
           <Marker
-            key={index}
+            key={marker.id} // 유니크한 ID를 키로 사용
             position={[marker.lat, marker.lon]}
             icon={getMarkIcon(marker.markType)}
           />

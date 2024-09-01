@@ -7,6 +7,7 @@ import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
 import { messageBuffer, consumeDroneMessage, consumeMarkMessage } from "./consume func/func.js";
+import { MarkModel } from "./schema/schema.js";
 
 dotenv.config();
 // 폴더루트 변수선언
@@ -67,19 +68,23 @@ app.get("/api/drone/:droneId", (req, res) => {
 // 마크 데이터 가져오기
 app.get("/api/marks", async (req, res) => {
   try {
-    if (markBuffer) {
-      res.json(markBuffer);
+    // 최신 센서 데이터 1개 조회
+    const latestSensor = await MarkModel.findOne().sort({ createdAt: -1 }).exec();
+    if (latestSensor) {
+      // 센서 데이터 반환
+      const sensor = {
+        id: latestSensor.sensor_id,
+        lat: latestSensor.latitude,
+        lon: latestSensor.longitude,
+        state: latestSensor.state,
+      };
+      res.json(sensor); // 클라이언트에서 예상하는 형태로 반환
     } else {
-      const latestMark = await MarkModel.findOne().sort({ createdAt: -1 }).exec();
-      if (latestMark) {
-        res.json(latestMark);
-      } else {
-        res.status(404).json({ error: "No marks found" });
-      }
+      res.status(404).json({ error: "서버에 센서 데이터가 없습니다." });
     }
   } catch (error) {
-    console.error("Error fetching marks:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Error fetching sensor:", error);
+    res.status(500).json({ error: "센서 데이터를 가져오는 데 실패했습니다." });
   }
 });
 

@@ -78,3 +78,31 @@ paths:
           description: Drone not found
         '500':
           description: Internal Server Error
+  /api/marks:
+    get:
+      summary: Retrieve the latest sensor marks
+      responses:
+        '200':
+          description: A list of recent sensor marks
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sensors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        lat:
+                          type: number
+                        lon:
+                          type: number
+                        state:
+                          type: boolean
+        '404':
+          description: No sensor data available
+        '500':
+          description: Internal Server Error

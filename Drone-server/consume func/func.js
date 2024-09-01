@@ -1,5 +1,6 @@
 import amqp from "amqplib";
 import dotenv from "dotenv";
+import { DroneMessage, MarkModel } from "../schema/schema.js";
 
 dotenv.config();
 const amqp_url = process.env.AMQP_URL;
@@ -12,7 +13,6 @@ const MARK_MESSAGE_TIMEOUT_INTERVAL = 10000; // 10초
 const BUFFER_SIZE = 30;
 const messageBuffer = [];
 const trackedDrones = new Set();
-import { DroneMessage, MarkModel } from "../schema/schema.js";
 
 const consumeDroneMessage = async () => {
   try {
@@ -50,7 +50,7 @@ const consumeDroneMessage = async () => {
 
             channel.ack(msg);
           } catch (error) {
-            console.error("Error processing message:", error);
+            console.error("Error processing drone message:", error);
             channel.nack(msg);
           }
         }
@@ -58,7 +58,7 @@ const consumeDroneMessage = async () => {
       { noAck: false }
     );
   } catch (error) {
-    console.error("Failed to consume messages:", error);
+    console.error("Failed to consume drone messages:", error);
   }
 };
 
@@ -72,17 +72,15 @@ const consumeMarkMessage = async () => {
     await channel.assertQueue(queue, { durable: false });
     console.log(`Waiting for mark messages in ${queue}. To exit press CTRL+C`);
 
-    resetMarkMessageTimeout(); // 초기 타이머 설정
-
     channel.consume(
       queue,
       async (msg) => {
         if (msg !== null) {
           if (!isReceiving) {
             isReceiving = true;
-            printStatus("Receiving Sensor message"); // 처음 메시지 받을 때만 출력
+            printStatus("Receiving Mark message"); // 처음 메시지 받을 때만 출력
           }
-          resetMarkMessageTimeout(); // 타이머 리셋
+          // 타이머 리셋
 
           try {
             const markMessageContent = JSON.parse(msg.content.toString());
@@ -90,21 +88,19 @@ const consumeMarkMessage = async () => {
             // 마크 메시지 내용 콘솔에 출력
             console.log("Received Mark Message:", markMessageContent);
 
-            // MongoDB에 최신 마크 메시지 저장
-            await MarkModel.findOneAndUpdate(
-              {}, // 조건을 빈 객체로 설정하면 전체 문서를 업데이트합니다
-              markMessageContent, // 새로운 데이터로 업데이트
-              { upsert: true } // 문서가 없으면 새로 생성
-            );
+            // MongoDB에 새 마크 메시지 추가
+            const markDoc = new MarkModel(markMessageContent);
+            const savedMark = await markDoc.save();
 
+            console.log("Mark message saved:", savedMark);
             channel.ack(msg);
           } catch (error) {
             console.error("Error processing mark message:", error);
-            channel.nack(msg);
+            channel.nack(msg); // 에러 발생 시 메시지를 다시 큐에 추가
           }
         }
       },
-      { noAck: false }
+      { noAck: false } // 수동 응답 사용
     );
   } catch (error) {
     console.error("Failed to consume mark messages:", error);
@@ -116,7 +112,7 @@ const resetMarkMessageTimeout = () => {
   clearTimeout(markMessageTimeout);
   markMessageTimeout = setTimeout(() => {
     isReceiving = false;
-    printStatus("Waiting for Drone messages..."); // 10초 이상 메시지가 없으면 출력
+    printStatus("Waiting for messages..."); // 10초 이상 메시지가 없으면 출력
   }, MARK_MESSAGE_TIMEOUT_INTERVAL);
 };
 

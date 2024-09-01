@@ -8,7 +8,7 @@ import DroneList from "./components/droneList";
 import CustomMark from "./components/customMark";
 import MapBox from "./components/mapBox";
 import AppHeader from "./components/nav"; // AppHeader 컴포넌트 임포트
-import { fetchDronePositions } from "./components/api";
+import { fetchDronePositions, fetchMarkData } from "./components/api";
 
 function App() {
   const [selectedDroneData, setSelectedDroneData] = useState(null);
@@ -16,17 +16,21 @@ function App() {
   const [customMarkers, setCustomMarkers] = useState([]);
 
   // 리액트 쿼리를 사용하여 주기적으로 드론 위치 데이터를 가져옴
-  const {
-    data: latestPositions,
-    isLoading,
-    error,
-  } = useQuery(["dronePositions"], fetchDronePositions, {
+  const { data: latestPositions } = useQuery(["dronePositions"], fetchDronePositions, {
     refetchInterval: 1000,
   });
 
-  // 리액트쿼리 에러처리
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching drone positions: {error.message}</div>;
+  // 리액트 쿼리를 사용하여 주기적으로 마크 데이터를 가져옴
+
+  // const {data} = useQuery(["markData"],fetchMarkData,{refetchInterval:6000})
+
+  useQuery(["markData"], fetchMarkData, {
+    refetchInterval: 10000,
+    onSuccess: (data) => {
+      setCustomMarkers(data.markers || []);
+      console.log(data); // markers 데이터 업데이트
+    },
+  });
 
   // 드론 선택시 데이터 페치
   const handleDroneSelect = async (droneId) => {
@@ -49,21 +53,27 @@ function App() {
     <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <AppHeader /> {/* 상단바 추가 */}
       <div style={{ display: "flex", flex: 1 }}>
-        <MapBox 
-          latestPositions={latestPositions}
-          filteredDrons={filteredDrons}
-          customMarkers={customMarkers}
-          handleDroneSelect={handleDroneSelect}
-        />
-        <div style={{ width: "400px", display: "flex", flexDirection: "column" }}>
-          <CustomMark setCustomMarkers={setCustomMarkers} />
-          <DroneList
+        {latestPositions && (
+          <MapBox
             latestPositions={latestPositions}
-            handleDroneSelect={handleDroneSelect}
-            handleFilterDrone={handleFilterDrone}
             filteredDrons={filteredDrons}
+            customMarkers={customMarkers}
+            handleDroneSelect={handleDroneSelect}
           />
-          <InfoDrone selectedDroneData={selectedDroneData} />
+        )}
+        <div style={{ width: "400px", display: "flex", flexDirection: "column" }}>
+          {latestPositions && (
+            <>
+              <CustomMark setCustomMarkers={setCustomMarkers} />
+              <DroneList
+                latestPositions={latestPositions}
+                handleDroneSelect={handleDroneSelect}
+                handleFilterDrone={handleFilterDrone}
+                filteredDrons={filteredDrons}
+              />
+              <InfoDrone selectedDroneData={selectedDroneData} />
+            </>
+          )}
         </div>
       </div>
     </div>

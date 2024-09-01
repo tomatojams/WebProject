@@ -10,7 +10,7 @@ let isReceiving = false; // 메시지를 받고 있는지 여부
 let markMessageTimeout;
 const MARK_MESSAGE_TIMEOUT_INTERVAL = 10000; // 10초
 
-const BUFFER_SIZE = 30;
+const BUFFER_SIZE = process.env.BUFFER;
 const messageBuffer = [];
 const trackedDrones = new Set();
 

@@ -1,19 +1,21 @@
 import { MapContainer, TileLayer, Marker, Circle, useMap } from "react-leaflet";
-import React, { useEffect, useState } from "react";
-import L from "leaflet";
+import React, { useEffect, useState, useCallback } from "react";
 import { useRecoilState } from "recoil";
 import { selectedDroneState } from "../atom";
+import { customCombinedIcon, getCustomMarkerIcon } from "./customIcon";
+import { isDroneInEventRange } from "./calculate";
 
 export default function MapBox({
   latestPositions,
   filteredDrons,
   customMarkers,
   handleDroneSelect,
+  droneCount,
+  setDroneCount,
+  radius,
 }) {
   const [selectedDroneId, setSelectedDroneId] = useRecoilState(selectedDroneState);
   const [autoCenter, setAutoCenter] = useState(true);
-  const droneIconUrl = `${process.env.PUBLIC_URL}/drone_2.png`;
-  const droneIconRedUrl = `${process.env.PUBLIC_URL}/drone_2_red.png`; // 추가된 빨간 드론 아이콘
 
   const handleMarkerClick = async (droneId) => {
     setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
@@ -25,10 +27,10 @@ export default function MapBox({
   };
 
   const MapController = ({ latestPositions, autoCenter, filteredDrons }) => {
-    const map = useMap(); // map 객체 가져오기
+    const map = useMap();
 
     useEffect(() => {
-      if (!map) return; // map이 정의되지 않은 경우 빠져나오기
+      if (!map) return;
 
       if (autoCenter && latestPositions.length > 0) {
         const positionsToConsider = latestPositions.filter(
@@ -44,42 +46,26 @@ export default function MapBox({
           map.setView([centerLat, centerLon], map.getZoom());
         }
       }
-
-      // 각 드론의 위치에 따라 원의 위치 업데이트
     }, [latestPositions, autoCenter, map, filteredDrons]);
 
     return null;
   };
 
-  const getMarkIcon = (markType) => {
-    const icons = {
-      mark1: `${process.env.PUBLIC_URL}/mark1.png`,
-      mark2: `${process.env.PUBLIC_URL}/mark2.png`,
-      mark3: `${process.env.PUBLIC_URL}/mark3.png`,
-      mark4: `${process.env.PUBLIC_URL}/mark4.png`,
-    };
-    return new L.Icon({
-      iconUrl: icons[markType] || droneIconUrl,
-      iconSize: [30, 30],
+  // `useCallback`을 사용하여 `countDronesInRange` 함수를 안정적으로 만듭니다.
+  const countDronesInRange = useCallback(() => {
+    let count = 0;
+    latestPositions.forEach((position) => {
+      if (isDroneInEventRange(position, customMarkers, radius)) {
+        count += 1;
+      }
     });
-  };
+    setDroneCount(count);
+  }, [latestPositions, customMarkers, radius, setDroneCount]);
 
-  const customCombinedIcon = (name, isSelected) =>
-    L.divIcon({
-      className: "custom-marker-icon",
-      html: `
-        <div class="base-icon">
-          <img src="${isSelected ? droneIconRedUrl : droneIconUrl}" alt="Drone" />
-        </div>
-        <div class="animated-icon" style="transform: translateX(-10px) translateY(50px);">
-          <div class="custom-marker-label" style="width: 80px; text-align: center;">
-            ${name}
-          </div>
-        </div>
-      `,
-      iconSize: [30, 30],
-      iconAnchor: [20, 20],
-    });
+  // `useEffect`에서 `countDronesInRange`를 호출하고 종속성 배열에 포함합니다.
+  useEffect(() => {
+    countDronesInRange();
+  }, [radius, latestPositions, countDronesInRange]);
 
   return (
     <div className="p-5 h-full w-full relative">
@@ -102,6 +88,19 @@ export default function MapBox({
         {autoCenter ? "Auto-Center ON" : "Auto-Center OFF"}
       </button>
 
+      <div
+        style={{
+          position: "absolute",
+          top: "10px",
+          left: "10px",
+          zIndex: 1000,
+          padding: "5px",
+          backgroundColor: "rgba(255, 255, 255, 0.8)",
+          borderRadius: "4px",
+        }}>
+        Drones in Range: {droneCount}
+      </div>
+
       <MapContainer className="h-full w-full" center={[37.5665, 126.978]} zoom={13}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -109,15 +108,19 @@ export default function MapBox({
         />
         {latestPositions
           .filter((position) => !filteredDrons.includes(position.droneId))
-          .map((position) => (
-            <React.Fragment key={position.droneId}>
-              <Marker
-                position={[position.latitude, position.longitude]}
-                icon={customCombinedIcon(position.name, selectedDroneId === position.droneId)} // 드론이 선택되었는지 확인하여 아이콘 설정
-                eventHandlers={{ click: () => handleMarkerClick(position.droneId) }}
-              />
-            </React.Fragment>
-          ))}
+          .map((position) => {
+            const isInEventRange = isDroneInEventRange(position, customMarkers, radius);
+            const isSelected = selectedDroneId === position.droneId;
+            return (
+              <React.Fragment key={position.droneId}>
+                <Marker
+                  position={[position.latitude, position.longitude]}
+                  icon={customCombinedIcon(position.name, isSelected, isInEventRange)}
+                  eventHandlers={{ click: () => handleMarkerClick(position.droneId) }}
+                />
+              </React.Fragment>
+            );
+          })}
         <MapController
           latestPositions={latestPositions}
           autoCenter={autoCenter}
@@ -127,15 +130,15 @@ export default function MapBox({
           <React.Fragment key={marker.id}>
             <Marker
               position={[marker.lat, marker.lon]}
-              icon={getMarkIcon(marker.markType)}
+              icon={getCustomMarkerIcon(marker.markType)}
             />
             <Circle
               center={[marker.lat, marker.lon]}
-              radius={100} // 원의 반지름 설정 (미터 단위)
+              radius={radius || 50}
               pathOptions={{
-                color: 'green', // 외곽선 색상
-                fillColor: 'rgba(0, 255, 0, 0.2)', // 배경 색상 (반투명)
-                fillOpacity: 0.2, // 배경의 투명도
+                color: "green",
+                fillColor: "rgba(0, 255, 0, 0.2)",
+                fillOpacity: 0.2,
               }}
             />
           </React.Fragment>

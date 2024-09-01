@@ -1,37 +1,39 @@
-import React, { useState } from "react";
+// CustomMark.js
 
-export default function CustomMark({ setCustomMarkers }) {
-  const [coordinates, setCoordinates] = useState({ lat: "", lon: "" });
-  const [selectedMark, setSelectedMark] = useState("mark1");
+// import React, { useState } from "react";
 
-  const handleCoordinateChange = (e) => {
-    const { name, value } = e.target;
-    setCoordinates((prev) => ({ ...prev, [name]: value }));
-  };
+export default function CustomMark({ setCustomMarkers, droneCount, radius, setRadius }) {
+  // const [coordinates, setCoordinates] = useState({ lat: "", lon: "" });
+  // const [selectedMark, setSelectedMark] = useState("mark1");
 
-  const handleMarkChange = (e) => {
-    setSelectedMark(e.target.value);
-  };
+  // const handleCoordinateChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setCoordinates((prev) => ({ ...prev, [name]: value }));
+  // };
 
-  const handleAddMarker = () => {
-    if (coordinates.lat && coordinates.lon) {
-      const newMarker = {
-        id: `custom-${Date.now()}`, // 고유 ID 생성
-        lat: parseFloat(coordinates.lat),
-        lon: parseFloat(coordinates.lon),
-        markType: selectedMark,
-        state: true, // 기본적으로 활성화 상태
-      };
+  // const handleMarkChange = (e) => {
+  //   setSelectedMark(e.target.value);
+  // };
 
-      setCustomMarkers((prev) => [...prev, newMarker]);
-      setCoordinates({ lat: "", lon: "" });
-    }
-  };
+  // const handleAddMarker = () => {
+  //   if (coordinates.lat && coordinates.lon) {
+  //     const newMarker = {
+  //       id: `custom-${Date.now()}`,
+  //       lat: parseFloat(coordinates.lat),
+  //       lon: parseFloat(coordinates.lon),
+  //       markType: selectedMark,
+  //       state: true,
+  //     };
+
+  //     setCustomMarkers((prev) => [...prev, newMarker]);
+  //     setCoordinates({ lat: "", lon: "" });
+  //   }
+  // };
 
   return (
     <div className="mt-4 mr-4 mb-4 p-4 border-gray-300 bg-gray-100">
-      <h2>커스텀 마크 추가</h2>
-      <input
+      <h2>이벤트 반경 조절</h2>
+      {/* <input
         type="number"
         name="lat"
         placeholder="위도"
@@ -58,7 +60,19 @@ export default function CustomMark({ setCustomMarkers }) {
       </select>
       <button onClick={handleAddMarker} style={{ width: "90%" }}>
         마크 추가
-      </button>
+      </button> */}
+      <div style={{ marginTop: "10px" }}>
+        <strong>Event:</strong> {droneCount}
+      </div>
+      {/* 반경 입력란 추가 */}
+      <input
+        type="number"
+        value={radius}
+        onChange={(e) => setRadius(parseInt(e.target.value, 10))}
+        placeholder="반경 설정"
+        style={{ width: "20%", marginTop: "10px", textAlign: "end" }}
+      />{" "}
+      m
     </div>
   );
 }

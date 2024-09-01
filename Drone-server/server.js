@@ -31,7 +31,8 @@ consumeMarkMessage();
 // 최근 드론 위치 가져오기
 app.get("/api/positions", (req, res) => {
   try {
-    const recentPositions = messageBuffer.slice(0, 5);
+    let sliceNumber = process.env.FETCH_COUNT;
+    const recentPositions = messageBuffer.slice(0, sliceNumber);
 
     const filteredPositions = recentPositions.map((position) => ({
       droneId: position.drone.droneId,

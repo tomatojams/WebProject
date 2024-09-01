@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
-import { useSetRecoilState } from "recoil";
-import { toDoState } from "./atoms";
+// 커스텀 훅으로 값을 변경
+import { useAddToDo } from "./atoms";
 import { IForm } from "../types/IForm";
+
 // 타입의 변수대로
 //
 //useForm***
@@ -16,7 +17,7 @@ import { IForm } from "../types/IForm";
 5. useEffect 안써도됨
 -- watch에 포함
 6. 폼리셋
--- reset이 input.value = "" 대신해줌
+-- reset이 input.value = "" 대신해줌 
 7.유효성검사
 -- register에서 required, minlength 지정
 8. 디펄트값 설정
@@ -41,7 +42,7 @@ export default function CreateTodo() {
     // 입력값을 직접 설정할 때 사용
     setValue,
     // 모니터링
-    watch,
+    // watch,
   } = useForm<IForm>({
     // 디펄트값 지정가능
     // defaultValues: {
@@ -49,23 +50,23 @@ export default function CreateTodo() {
     // },
   }); // useForm 훅 사용
 
-  // Recoil Setter를 받아옴
-  const setToDos = useSetRecoilState(toDoState);
-
   // useEffect 처럼 반응함***
-  const watchToDo = watch("toDo"); // 현재 입력값
-  console.log("current value:", watchToDo);
+  // const watchToDo = watch("toDo"); // 현재 입력값
+  // console.log("current value:", watchToDo);
+
+  //atom 변경을 위한 커스텀 훅을 불러옴
+  // 상태변경 함수를 반환해줌
+  const addToDo = useAddToDo();
 
   const _onValid = ({ toDo }: IForm) => {
-    // Recoil Setter에 값을 지정하기보다 콜백함수 지정
-    //(업데이트의 경우에는 함수를 넣을수있는 콜백이 유용함)
-    setToDos((oldToDos) => [{ text: toDo, id: Date.now(), category: "TO_DO" }, ...oldToDos]);
+    addToDo(toDo);
 
     setValue("toDo", ""); // 유효할때 초기화
   };
   return (
     <form onSubmit={handleSubmit(_onValid)}>
       <input
+        id="comment_input"
         // 등록하며 입력을 폼상태차원에서 모니터링, 검수 등이 가능해짐
         {...register("toDo", {
           // 미입력시 에러메세지
@@ -82,7 +83,7 @@ export default function CreateTodo() {
         type="text"
         placeholder="Write to do"
       />
-      <button>Add</button>
+      <button className="simplebutton-log">Add</button>
 
       <span>{errors?.toDo?.message as string}</span>
     </form>

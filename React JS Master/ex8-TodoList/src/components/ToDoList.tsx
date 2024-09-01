@@ -1,26 +1,45 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import CreateTodo from "./CreateTodo";
-import { toDoSelector, toDoState } from "./atoms";
+import { toDoSelector, categoryState } from "./atoms";
 import ToDo from "./Todo";
+import { Category } from "../types/Category";
 
 //recoil
 // IToDO 방식의 [] 배열
 
 export default function TodoList() {
-  const toDos = useRecoilValue(toDoState);
-  const selectorOutput = useRecoilValue(toDoSelector);
-  console.log(selectorOutput);
+  // 리턴값을 destructuring해서 받아옴
+  const toDos = useRecoilValue(toDoSelector);
+  const [category, setCategory] = useRecoilState(categoryState);
+  // FormEvent 쓰는 이유
+  const _onInput = (e: React.FormEvent<HTMLSelectElement>) => {
+    setCategory(e.currentTarget.value as Category);
+  };
+
   return (
-    <div>
-      <h4>To Dos</h4>
+    <div className="todo_box_frame">
+      <h2>To Dos</h2>
+      {/* oninput 은 선택해서 변하자마자 이벤트가 일어나고,
+        onchange는 선택하고 포커슬ㄹ 잃은다음에야 일어나기때문에 */}
+
+      {/* value={category} 쓰는 이유 */}
+      <select value={category} onInput={_onInput}>
+        <option value={Category.TO_DO}>To Do</option>
+        <option value={Category.DOING}>Doing</option>
+        <option value={Category.DONE}>Done</option>
+      </select>
 
       <CreateTodo />
-      <ul>
-        {toDos.map((toDo) => (
-          // {...toDo}는 props를 각각 지정하는 이것과 같음 <Todo caterory={toDo.caterory} id={toDo.id} text={toDo.text} />
-          <ToDo key={toDo.id} {...toDo} />
-        ))}
-      </ul>
+
+      <div className="todo_box_section">
+        <ul>
+          {toDos?.map((toDo) => (
+            // {...toDo}는 props를 각각 지정하는 이것과 같음 <Todo caterory={toDo.caterory}
+            //id = { toDo.id } text = { toDo.text } />
+            <ToDo key={toDo.id} {...toDo} />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

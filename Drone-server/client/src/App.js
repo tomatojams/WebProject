@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -22,15 +22,27 @@ function App() {
 
   // 리액트 쿼리를 사용하여 주기적으로 마크 데이터를 가져옴
 
-  // const {data} = useQuery(["markData"],fetchMarkData,{refetchInterval:6000})
+  const { data: sensorMark } = useQuery(["markData"], fetchMarkData, { refetchInterval: 6000 });
 
-  useQuery(["markData"], fetchMarkData, {
-    refetchInterval: 10000,
-    onSuccess: (data) => {
-      setCustomMarkers(data.markers || []);
-      console.log(data); // markers 데이터 업데이트
-    },
-  });
+  useEffect(() => {
+    const newMarker = {
+      id: sensorMark.id, // 고유 ID 생성
+      lat: parseFloat(sensorMark.lat),
+      lon: parseFloat(sensorMark.lon),
+      markType: "mark1",
+      state: sensorMark.state, // 기본적으로 활성화 상태
+    };
+
+    setCustomMarkers(() => [newMarker]);
+  }, [sensorMark]);
+
+  // useQuery(["markData"], fetchMarkData, {
+  //   refetchInterval: 10000,
+  //   onSuccess: (data) => {
+  //     setCustomMarkers(data.markers || []);
+  //     console.log(customMarkers); // markers 데이터 업데이트
+  //   },
+  // });
 
   // 드론 선택시 데이터 페치
   const handleDroneSelect = async (droneId) => {

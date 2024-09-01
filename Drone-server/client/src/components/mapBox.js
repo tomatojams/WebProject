@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Circle, useMap } from "react-leaflet";
 import React, { useEffect, useState } from "react";
 import L from "leaflet";
 import { useRecoilState } from "recoil";
@@ -124,11 +124,21 @@ export default function MapBox({
           filteredDrons={filteredDrons}
         />
         {customMarkers.map((marker) => (
-          <Marker
-            key={marker.id} // 유니크한 ID를 키로 사용
-            position={[marker.lat, marker.lon]}
-            icon={getMarkIcon(marker.markType)}
-          />
+          <React.Fragment key={marker.id}>
+            <Marker
+              position={[marker.lat, marker.lon]}
+              icon={getMarkIcon(marker.markType)}
+            />
+            <Circle
+              center={[marker.lat, marker.lon]}
+              radius={100} // 원의 반지름 설정 (미터 단위)
+              pathOptions={{
+                color: 'green', // 외곽선 색상
+                fillColor: 'rgba(0, 255, 0, 0.2)', // 배경 색상 (반투명)
+                fillOpacity: 0.2, // 배경의 투명도
+              }}
+            />
+          </React.Fragment>
         ))}
       </MapContainer>
     </div>

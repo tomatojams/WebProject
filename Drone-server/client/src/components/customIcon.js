@@ -22,7 +22,7 @@ export const getCustomMarkerIcon = (markType) => {
             background-color: rgba(255, 255, 255, 0.8); 
             padding: 2px 5px; 
             border-radius: 4px;
-            display: inline-block;
+            display: inline-block;  
              transform: translateX(-8px);
           ">
             Sensor
@@ -30,7 +30,7 @@ export const getCustomMarkerIcon = (markType) => {
         </div>
       `,
     iconSize: [30, 42],
-    iconAnchor: [15, 42],
+    iconAnchor: [15, 29],
   });
 };
 

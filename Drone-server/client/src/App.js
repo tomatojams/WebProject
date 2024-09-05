@@ -19,11 +19,11 @@ function App() {
   const [droneCount, setDroneCount] = useState(0);
   const [radius, setRadius] = useState(100); // 반경 상태 추가
 
-  const { data: latestPositions } = useQuery(["dronePositions"], fetchDronePositions, {
+  const { data: latestPositions = [] } = useQuery(["dronePositions"], fetchDronePositions, {
     refetchInterval: 1000,
   });
 
-  const { data: sensorMark } = useQuery(["markData"], fetchMarkData, { refetchInterval: 6000 });
+  const { data: sensorMark = [] } = useQuery(["markData"], fetchMarkData, { refetchInterval: 6000 });
 
   useEffect(() => {
     if (!sensorMark || !sensorMark.lat || !sensorMark.lon || !sensorMark.id) {

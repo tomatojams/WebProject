@@ -1,10 +1,4 @@
-import {
-  useParams,
-  Link,
-  useLocation,
-  Outlet,
-  useMatch,
-} from "react-router-dom";
+import { useParams, Link, useLocation, Outlet, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
@@ -32,8 +26,7 @@ const Tabs = styled.div`
 `;
 
 const Tab = styled.span<{ isAcctive: boolean }>`
-  color: ${(props) =>
-    props.isAcctive ? props.theme.accentColor : props.theme.textColor};
+  color: ${(props) => (props.isAcctive ? props.theme.accentColor : props.theme.textColor)};
 `;
 
 const Overview = styled.div`
@@ -63,6 +56,14 @@ const Header = styled.header`
 const Title = styled.h1`
   font-size: 40px;
   color: ${(props) => props.theme.textColor};
+`;
+
+const FlexSpan = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 `;
 
 interface ITag {
@@ -159,8 +160,9 @@ export default function Coin() {
     }
   );
 
-  console.log("Price:", price);
+  // console.log("Price:", price);
   const loading = infoLoading || tickerLoading;
+  // console.log(price);
   return (
     <Frame>
       <Helmet>
@@ -171,28 +173,43 @@ export default function Coin() {
         "loading..."
       ) : (
         <>
-          {" "}
-          <a href="/">
-            <i className="fa-solid fa-house"></i>
-          </a>
-          <a href="javascript:history.back();">
-            <span> Back </span>
-          </a>
           <Overview>
-            <span>Rank {data?.rank}</span>
-            <span>SYMBOL: {data?.symbol}</span>
-            <span>OPEN SOURCE: {data?.open_source ? "Yes" : "No"}</span>
+            {" "}
+            <a href="/">
+              <i className="fa-solid fa-house"></i>
+            </a>
+            <a href="javascript:history.back();">
+              <span> Back </span>
+            </a>
           </Overview>
+
           <Container>
             <Header></Header>
-            <Title>
-              {state?.cool ? state.cool : loading ? "Loading" : data?.name}
-            </Title>
+            <Title>{state?.cool ? state.cool : loading ? "Loading" : data?.name}</Title>
           </Container>
-          <Header></Header>
           <Overview>
-            <span>PRICE {price?.quotes.USD.price}$</span>
-            <span>MARKET CAP: {price?.quotes.USD.market_cap}</span>
+            <FlexSpan>
+              <span>Rank</span> <span> {data?.rank}</span>
+            </FlexSpan>
+            <FlexSpan>
+              {" "}
+              <span>SYMBOL:</span> <span>{data?.symbol}</span>{" "}
+            </FlexSpan>
+            <FlexSpan>
+              {" "}
+              <span>OPEN SOURCE:</span> <span>{data?.open_source ? "Yes" : "No"}</span>{" "}
+            </FlexSpan>
+          </Overview>
+
+          <Overview>
+            <FlexSpan>
+              {" "}
+              <span>PRESENT PRICE:</span> <span>{price?.quotes.USD.price.toFixed(3)}$</span>{" "}
+            </FlexSpan>
+            <FlexSpan>
+              {" "}
+              <span>MARKET CAP:</span> <span> {price?.quotes.USD.market_cap}</span>
+            </FlexSpan>
           </Overview>
           <nav>
             <Overview>

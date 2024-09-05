@@ -1,5 +1,7 @@
 import Image from "next/image";
 import "./global.css";
+// 정적 렌더링 강제
+export const dynamic = "force-static";
 
 export default async function Home() {
   // 로직 작성

@@ -1,0 +1,16 @@
+{
+  "extends": ["next/core-web-vitals"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "react/prop-types": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.mjs"],
+      "parser": "espree",
+      "parserOptions": {
+        "ecmaVersion": "latest"
+      }
+    }
+  ]
+}

@@ -11,5 +11,8 @@
   "devDependencies": {
     "sass": "^1.77.8",
     "vite": "^4.4.5"
+  },
+  "dependencies": {
+    "css-layout-1": "file:"
   }
 }

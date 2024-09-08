@@ -1,0 +1,42 @@
+@import "./css/variable.css";
+@import "./css/components/button.css";
+@import "./css/components/write-form.css";
+@import "./css/screen/list.css";
+@import "./css/screen/home.css";
+@import "./css/screen/detail.css";
+@import "./css/screen/navi.css";
+@import "./css/screen/login.css";
+@import "./css/screen/join.css";
+@import "./css/screen/toDo.css";
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #333; /* 상속해주는 텍스트 색상*/
+}
+
+body {
+  font-weight: 300;
+  color: black;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #e09, #d0e);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+label {
+  font-family: "Arial", sans-serif;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}

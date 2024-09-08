@@ -4,13 +4,15 @@ import { ThemeProvider } from "styled-components";
 import App from "./App.tsx";
 import { lightTheme } from "./theme.ts";
 import "./global.css";
+import { GlobalStyle } from "./css/resetGlobal.ts";
+
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  // <React.StrictMode>
   <RecoilRoot>
+   
     <ThemeProvider theme={lightTheme}>
+    <GlobalStyle />
       <App />
     </ThemeProvider>
   </RecoilRoot>
-  // </React.StrictMode>
 );

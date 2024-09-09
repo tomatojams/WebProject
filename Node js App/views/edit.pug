@@ -8,9 +8,9 @@ html(lang="en")
   body.grey-bg
     include nav.pug
 
-    form.form-box(action="/post", method="POST")
-      h4 글쓰기
-      input(name="title", type="text")
-      input(name="content", type="text")
+    form.form-box(action=`/edit/${postAlias._id}`, method="POST")
+      h4 수정
+      input(name="title", type="text", value= postAlias.title)
+      input(name="content", type="text" , value =postAlias.content)
 
       button(type="submit") 전송

@@ -29,8 +29,7 @@ interface playerShape {
 }
 
 // 함수선언시 타입지정
-const sayHello = (playerObj: playerShape) =>
-  `${playerObj.name}, you're ${playerObj.age} years old`;
+const sayHello = (playerObj: playerShape) => `${playerObj.name}, you're ${playerObj.age} years old`;
 
 // 파이썬의 타입힌트 모델과같음
 

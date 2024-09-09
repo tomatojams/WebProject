@@ -1,0 +1,1 @@
+export type NewCategory = string;

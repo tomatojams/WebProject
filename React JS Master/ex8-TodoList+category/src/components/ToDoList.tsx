@@ -1,8 +1,11 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import CreateTodo from "./CreateTodo";
-import { toDoSelector, categoryState } from "./atoms";
+import { toDoSelector, categoryState, categoryListState } from "./atoms";
 import ToDo from "./Todo";
 import { Category } from "../types/Category";
+
+import CreateCategory from "./CreateCategory";
+import { NewCategory } from "../types/NewCategory";
 
 //recoil
 // IToDO 방식의 [] 배열
@@ -11,9 +14,10 @@ export default function TodoList() {
   // 리턴값을 destructuring해서 받아옴
   const toDos = useRecoilValue(toDoSelector);
   const [category, setCategory] = useRecoilState(categoryState);
+  const categoryList = useRecoilValue(categoryListState);
   // FormEvent 쓰는 이유
   const _onInput = (e: React.FormEvent<HTMLSelectElement>) => {
-    setCategory(e.currentTarget.value as Category);
+    setCategory(e.currentTarget.value as Category | NewCategory);
   };
 
   return (
@@ -23,11 +27,18 @@ export default function TodoList() {
         onchange는 선택하고 포커슬ㄹ 잃은다음에야 일어나기때문에 */}
 
       {/* value={category} 쓰는 이유 */}
-      <select value={category} onInput={_onInput}>
-        <option value={Category.TO_DO}>To Do</option>
-        <option value={Category.DOING}>Doing</option>
-        <option value={Category.DONE}>Done</option>
-      </select>
+
+      <div className="input_frame">
+        <CreateCategory />
+
+        <select className="category_select" value={category} onInput={_onInput}>
+          {categoryList.map((category, index) => (
+            <option key={index} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <CreateTodo />
 

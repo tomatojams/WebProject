@@ -1,0 +1,19 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Document
+    link(rel="stylesheet", href="main.css")
+  body.grey-bg
+    //- != : HTML 이스케이프 없이 그대로 출력되기 때문에, HTML 태그가 실제로 적용되어 출력됨
+    //- = : HTML 이스케이프 처리가 되어 안전하게 출력됨
+    //- Pug에서는 JavaScript 코드는 들여쓰기를 통해 직접 실행 가능
+    //- = JSON.stringify(post) : 객체를 문자열로 변환하여 출력
+    //-   주입되는 변수를 in 다음에 써야함 
+    include nav.pug
+    .white-bg
+      each item in post
+        .list-box
+          h4= item.title
+          p= item.content

@@ -1,0 +1,16 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Document
+    link(rel="stylesheet", href="main.css")
+  body.grey-bg
+    include nav.pug
+
+    form.form-box(action="/post", method="POST")
+      h4 글쓰기
+      input(name="title", type="text")
+      input(name="content", type="text")
+
+      button(type="submit") 전송

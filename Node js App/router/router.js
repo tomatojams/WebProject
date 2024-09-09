@@ -8,7 +8,7 @@ const newRouter = (db) => {
 
   // 라우터에 메서드들을 추가
   router.get("/", (req, res) => {
-    res.render("index.ejs");
+    res.render("index.pug");
   });
 
   router.get("/about", (req, res) => {
@@ -22,17 +22,17 @@ const newRouter = (db) => {
 
   router.get("/list", async (req, res) => {
     let result = await db.collection("post").find().toArray();
-    res.render("list.ejs", { post: result }); // 파일 object 대응
+    res.render("list.pug", { post: result }); // 파일 object 대응
   });
 
   router.get("/time", (req, res) => {
     // ejs파일은views폴더에 넣어야함
     // 동적으로 데이터를 넣을때는 render를 써야함
-    res.render("time.ejs", { date: new Date() });
+    res.render("time.pug", { date: new Date() });
   });
 
   router.get("/write", (req, res) => {
-    res.render("write.ejs");
+    res.render("write.pug");
   });
 
   router.post("/post", async (req, res) => {

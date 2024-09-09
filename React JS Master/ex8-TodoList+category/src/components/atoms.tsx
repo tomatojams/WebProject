@@ -4,6 +4,7 @@ import { IToDo } from "../types/IToDo";
 import { Category } from "../types/Category";
 // 로컬 스토리지저장
 import { recoilPersist } from "recoil-persist";
+import { NewCategory } from "../types/NewCategory";
 
 const { persistAtom } = recoilPersist({
   key: "toLocal",
@@ -18,10 +19,25 @@ export const toDoState = atom<IToDo[]>({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const categoryState = atom<Category>({
+export const categoryState = atom<Category | NewCategory>({
   key: "category",
   default: Category.TO_DO,
 });
+
+export const categoryListState = atom<Category[] | NewCategory[]>({
+  key: "customCategory",
+  default: [Category.TO_DO, Category.DOING, Category.DONE],
+  effects_UNSTABLE: [persistAtom],
+});
+
+// 카테고리 변경 훅
+export const useAddCategory = () => {
+  const setCategoryList = useSetRecoilState(categoryListState);
+  // 상태변경함수 반환
+  return (newCategory: string) => {
+    setCategoryList((oldList) => [...oldList, newCategory]);
+  };
+};
 
 //2. 상태의 가공정보 여러정보를 가공해서 전달해줌
 export const toDoSelector = selector({

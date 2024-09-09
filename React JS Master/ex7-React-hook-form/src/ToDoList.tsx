@@ -1,42 +1,3 @@
-/*
-import { useState } from "react";
-export default function TodoList() {
-  const [toDo, setToDo] = useState("");
-  const [error, setError] = useState("");
-
-  const _onChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { value },
-    } = e;
-    setError("");
-    setToDo(value);
-  };
-
-  const _onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (toDo.length < 5) {
-      return setError("To do should be longer");
-    }
-
-    console.log("submit");
-  };
-  return (
-    <div>
-      <form onSubmit={_onSubmit}>
-        <input
-          onChange={_onChange}
-          value={toDo}
-          type="text"
-          placeholder="Write to do"
-        />
-        <button>Add</button>
-        {error !== "" ? error : null}
-      </form>
-    </div>
-  );
-} */
-
 import { useForm, FieldErrors } from "react-hook-form";
 export interface ValueTracker {}
 
@@ -108,8 +69,10 @@ function TodoList() {
 
             validate: {
               //9.  async 넣어서 서버응답용으로 쓸수도있다.
-              noNice: (value) => (value?.includes("nice") ? "starts from nice is not allowed" : true),
-              noSexy: (value) => (value?.includes("sexy") ? "starts from sexy is not allowed" : true),
+              noNice: (value) =>
+                value?.includes("nice") ? "starts from nice is not allowed" : true,
+              noSexy: (value) =>
+                value?.includes("sexy") ? "starts from sexy is not allowed" : true,
             },
             minLength: 3,
           })}
@@ -118,12 +81,18 @@ function TodoList() {
         <span>{(errors?.name?.message as string) || null}</span>
         <input
           // 10. 등록시 ...register("변수", {조건, 에머메세지 object})
-          {...register("pass1", { required: "Password is required", minLength: { value: 5, message: "too short" } })}
+          {...register("pass1", {
+            required: "Password is required",
+            minLength: { value: 5, message: "too short" },
+          })}
           type="password"
         />
         <span>{(errors?.pass1?.message as string) || null}</span>
         <input
-          {...register("pass2", { required: "Password is required", minLength: { value: 5, message: "too short" } })}
+          {...register("pass2", {
+            required: "Password is required",
+            minLength: { value: 5, message: "too short" },
+          })}
           type="password"
         />
         <span>{(errors?.pass2?.message as string) || null}</span>

@@ -7,10 +7,10 @@ html(lang="en")
     link(rel="stylesheet", href="/main.css")
   body.grey-bg
     include nav.pug
+    div.write-post-border
+      form.postform(action="/post", method="POST")
+        h4 글쓰기
+        input#write-title(name="title", type="text")
+        input#write-content(name="content", type="text")
 
-    form.form-box(action="/post", method="POST")
-      h4 글쓰기
-      input(name="title", type="text")
-      input(name="content", type="text")
-
-      button(type="submit") 전송
+        button.simplebutton-log(type="submit") 전송

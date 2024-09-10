@@ -9,16 +9,15 @@ const newRouter = (db) => {
 
   // 라우터에 메서드들을 추가
   router.get('/', (req, res) => {
-    res.render('index.pug');
+    res.render('home.pug');
   });
 
   router.get('/about', (req, res) => {
     // path.join은 경로를 그냥 더하지 않고, 상대경로 변환을 해줌
     // 따라서../ 을 하면 상위폴더이동
 
-    // __dirname과 root 둘다 되지만 sendFile은 별칭을 사용할수 없음
+    // sendFile은 별칭을 사용할수 없음
     res.sendFile(path.join(root, 'about.html'));
-    // res.sendFile(path.join(root, "about.html"));
   });
 
   // 게시판
@@ -34,7 +33,7 @@ const newRouter = (db) => {
 
   // 상세
   router.get('/detail/:post_id', async (req, res) => {
-    console.log(req.params);
+    // console.log(req.params);
     let id = req.params.post_id;
 
     try {
@@ -50,14 +49,13 @@ const newRouter = (db) => {
       res.render('error.pug');
     }
   });
-
+  // 수정페이지
   router.get('/editpage/:post_id', async (req, res) => {
-    console.log(req.params);
+    // console.log(req.params);
     let id = req.params.post_id;
 
     try {
       const post = await db.collection('post').findOne({ _id: new ObjectId(id) });
-      // 문자가 하나만 틀리면 에러가 아니라  null이 오게됨.
       if (post === null) {
         res.render('error.pug');
       }
@@ -69,23 +67,40 @@ const newRouter = (db) => {
     }
   });
 
-  // 수정함
-  router.post('/edit/:post_id', async (req, res) => {
-    const { post_id } = req.params;
-    const { title, content } = req.body;
+  // 수정
+  router.put('/edit', async (req, res) => {
+    // 글의 아이디를 숨겨서 body에 넣어서 보냄
+    const { id, title, content } = req.body;
+
     if (!title || !content) {
       res.status(400).send('제목이나 내용을 입력해주세요');
       return;
     }
     await db.collection('post').updateOne(
       {
-        _id: new ObjectId(post_id), // 수정할 대상
+        _id: new ObjectId(id), // 수정할 대상
       },
       {
         $set: { title: title, content: content }, // 수정할 값
       },
     );
     res.status(200).redirect('/list');
+  });
+
+  // 좋아요 증가
+  router.get('/plus', async (req, res) => {
+    // 글의 아이디를 숨겨서 body에 넣어서 보냄
+
+    await db.collection('post').updateOne(
+      {
+        _id: new ObjectId('66df8337512cc7d19fcee75f'), // 수정할 대상
+      },
+      {
+        $inc: { like: 1 }, //1씩 증가
+        // $mul 곱샘, $unset 필드삭제, 
+        // updateMany 여러개를 수정
+      },
+    );
   });
 
   // 글을 올림

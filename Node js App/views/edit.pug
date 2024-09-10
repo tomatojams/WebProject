@@ -8,9 +8,11 @@ html(lang="en")
   body.grey-bg
     include nav.pug
 
-    form.form-box(action=`/edit/${postAlias._id}`, method="POST")
-      h4 수정
-      input(name="title", type="text", value= postAlias.title)
-      input(name="content", type="text" , value =postAlias.content)
+    div.write-post-border
+        form.postform(action=`/edit?_method=PUT`, method="POST" )
+            h4 수정
+            input(name="id", value= postAlias._id hidden)
+            input#write-title(name="title", type="text", value= postAlias.title)
+            input#write-content(name="content", type="text" , value =postAlias.content)
 
-      button(type="submit") 전송
+            button.simplebutton-log(type="submit") 수정완료

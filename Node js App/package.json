@@ -13,9 +13,10 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "ejs": "^3.1.10",
     "express": "^4.19.2",
     "forum": "file:",
+    "globals": "^15.9.0",
+    "method-override": "^3.0.0",
     "mongodb": "^4.17.2",
     "pug": "^3.0.3"
   },
@@ -24,7 +25,6 @@
     "@eslint/js": "^9.9.1",
     "@prettier/plugin-pug": "^3.0.0",
     "eslint": "^9.9.1",
-    "globals": "^15.9.0",
     "nodemon": "^3.1.4",
     "prettier": "^3.3.3"
   }

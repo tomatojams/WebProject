@@ -9,6 +9,8 @@ import { MongoClient } from 'mongodb';
 // json을 자동으로 객체로 풀어줌
 import { json } from 'express';
 import { urlencoded } from 'express';
+// 폼태그에서도 put, delete  요청가능
+import methodOverride from 'method-override';
 const root = process.cwd();
 
 dotenv.config();
@@ -19,6 +21,8 @@ app.use(express.static(root + '/public'));
 app.set('view engine', 'pug');
 app.use(json());
 app.use(urlencoded({ extended: true }));
+// 폼태그에서도 put, delete  요청가능
+app.use(methodOverride('_method'));
 
 // DB 세팅
 

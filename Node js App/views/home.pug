@@ -1,0 +1,17 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Document
+    link(rel="stylesheet", href="/main.css")
+  body
+    include nav.pug
+    
+    article.mainbox_logo
+      img(src="images/logo/logocool.svg", style="width: 150px")
+      span(style="font-weight: 500; font-family: Satoshi; color: #aaaaaa; font-size: 14px") Train your happiness
+
+      form(action="/list", method="GET")
+        button.simplebutton(style="font-family: Satoshi; font-size: 16px; font-weight: 600") Follow us
+

@@ -29,25 +29,30 @@ export default function ToDo({ text, category, id }: IToDo) {
 
   return (
     <li>
-      <span>{text}</span>
-      {/* 단축평가로 첫번째가 true인 경우에만 두번째가 true인지 확인하기위해 연산 */}
-
-      {categoryList.map((listCategory, index) => {
-        return (
-          category !== listCategory && (
-            <button
-              key={index}
-              className="simplebutton-reversed"
-              name={listCategory}
-              onClick={_onClick}>
-              {listCategory}
-            </button>
-          )
-        );
-      })}
-      <button className="simplebutton-log" name={Category.DONE} onClick={_onDelete}>
-        Delete
-      </button>
+      <div className="write-post-border">
+        <span>{text}</span>
+        {/* 단축평가로 첫번째가 true인 경우에만 두번째가 true인지 확인하기위해 연산 */}
+        <br></br>
+        <div>
+          {" "}
+          {categoryList.map((listCategory, index) => {
+            return (
+              category !== listCategory && (
+                <button
+                  key={index}
+                  className="simplebutton-reversed"
+                  name={listCategory}
+                  onClick={_onClick}>
+                  {listCategory}
+                </button>
+              )
+            );
+          })}
+          <button className="simplebutton-log" name={Category.DONE} onClick={_onDelete}>
+            Delete
+          </button>
+        </div>
+      </div>
     </li>
   );
 }

@@ -34,3 +34,27 @@ class User {
     this.name = name;
   }
 }
+
+// 10. 자동지정을 이용
+let members = "park";
+let goodmem = [1, 2, 3];
+
+//Q2
+type Singer = {
+  [key: string]: string;
+};
+const she: Singer = { title: "killthislove", 가수: "blackpink" };
+
+//Q3
+
+type club = {
+  member: string[];
+  days: number;
+  started: boolean;
+};
+
+let project: club = {
+  member: ["kim", "park"],
+  days: 30,
+  started: true,
+};

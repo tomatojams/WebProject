@@ -18,18 +18,18 @@ export const toDoState = atom<IToDo[]>({
   // 실험적 기능
   effects_UNSTABLE: [persistAtom],
 });
-
+// 챌린지 수정
 export const categoryState = atom<Category | NewCategory>({
   key: "category",
   default: Category.TO_DO,
 });
-
-export const categoryListState = atom<Category[] | NewCategory[]>({
+// 챌린지 수정
+export const categoryListState = atom<(Category | NewCategory)[]>({
   key: "customCategory",
   default: [Category.TO_DO, Category.DOING, Category.DONE],
   effects_UNSTABLE: [persistAtom],
 });
-
+// 챌린지 수정
 // 카테고리 변경 훅
 export const useAddCategory = () => {
   const setCategoryList = useSetRecoilState(categoryListState);

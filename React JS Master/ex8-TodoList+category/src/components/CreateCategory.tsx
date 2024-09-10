@@ -2,7 +2,10 @@ import { useForm } from "react-hook-form";
 import { useAddCategory, categoryListState } from "./atoms";
 import { ICategory } from "../types/ICategory";
 import { useRecoilValue } from "recoil";
+// 챌린지 추가
 
+// useForm 자체가 입력값을 객체로 관리함
+// 입력하면 등록한 'Category'는 필드로 지정하게 됨.
 export default function CreateTodo() {
   const {
     register, // 등록
@@ -10,6 +13,8 @@ export default function CreateTodo() {
     formState: { errors },
     setValue, // 입력폼 지우기
   } = useForm<ICategory>({});
+
+
 
   const categoryList = useRecoilValue(categoryListState);
   const addCategory = useAddCategory();

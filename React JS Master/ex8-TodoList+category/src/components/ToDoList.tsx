@@ -21,28 +21,29 @@ export default function TodoList() {
   };
 
   return (
-    <div className="todo_box_frame">
-      <h2>To Dos</h2>
+    <div className="frame">
+      <h3>T O D O_L I S T</h3>
       {/* oninput 은 선택해서 변하자마자 이벤트가 일어나고,
         onchange는 선택하고 포커슬ㄹ 잃은다음에야 일어나기때문에 */}
 
       {/* value={category} 쓰는 이유 */}
 
-      <div className="input_frame">
-        <CreateCategory />
+      <div className="to_do_menu">
+        <div className="to_category">
+          <CreateCategory />
 
-        <select className="category_select" value={category} onInput={_onInput}>
-          {categoryList.map((category, index) => (
-            <option key={index} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+          <select className="category_select" value={category} onInput={_onInput}>
+            {categoryList.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+        <CreateTodo />
       </div>
 
-      <CreateTodo />
-
-      <div className="todo_box_section">
+      <div>
         <ul>
           {toDos?.map((toDo) => (
             // {...toDo}는 props를 각각 지정하는 이것과 같음 <Todo caterory={toDo.caterory}

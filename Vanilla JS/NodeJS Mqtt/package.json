@@ -14,7 +14,7 @@
     "nodemon": "^3.1.4"
   },
   "dependencies": {
-    "express": "^4.19.2",
+    "express": "^4.19.3",
     "mqtt-nodejs": "file:",
     "pug": "^3.0.3"
   }

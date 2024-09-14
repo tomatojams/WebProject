@@ -58,8 +58,6 @@ export default function CreateTodo() {
   // 상태변경 함수를 반환해줌
   const addToDo = useAddToDo();
 
-  
-
   const _onValid = ({ toDo }: IForm) => {
     addToDo(toDo);
 
@@ -87,7 +85,7 @@ export default function CreateTodo() {
       />
       <button className="simplebutton-log">Add</button>
 
-      <span>{errors?.toDo?.message as string}</span>
+      <span>{errors?.toDo?.message}</span>
     </form>
   );
 }

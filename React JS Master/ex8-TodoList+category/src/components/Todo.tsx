@@ -20,7 +20,7 @@ export default function ToDo({ text, category, id }: IToDo) {
       currentTarget: { name },
     } = event;
     // 훅사용
-    changeCategory(text, id, name as Category);
+    changeCategory(text, id, name);
   };
 
   const _onDelete = () => {

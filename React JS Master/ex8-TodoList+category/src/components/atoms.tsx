@@ -57,10 +57,7 @@ export const useAddToDo = () => {
   const setToDos = useSetRecoilState(toDoState);
   // 상태변경함수 반환
   return (newToDo: string) => {
-    setToDos((oldToDos) => [
-      { text: newToDo, id: Date.now(), category: category as IToDo["category"] },
-      ...oldToDos,
-    ]);
+    setToDos((oldToDos) => [{ text: newToDo, id: Date.now(), category: category }, ...oldToDos]);
   };
 };
 
@@ -74,7 +71,7 @@ export const useChangeToDo = () => {
       //   // 배열.findIndex(오브젝트 => 오브젝트.속성 ==== 값)
       const targetIndex = oldToDos.findIndex((todo) => todo.id === id);
 
-      const newTodo = { text: text, id: id, category: name as IToDo["category"] };
+      const newTodo = { text: text, id: id, category: name };
       return [...oldToDos.slice(0, targetIndex), newTodo, ...oldToDos.slice(targetIndex + 1)];
     });
   };

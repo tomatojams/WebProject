@@ -14,8 +14,6 @@ export default function CreateTodo() {
     setValue, // 입력폼 지우기
   } = useForm<ICategory>({});
 
-
-
   const categoryList = useRecoilValue(categoryListState);
   const addCategory = useAddCategory();
   const _onValid = ({ Category }: ICategory) => {
@@ -43,7 +41,7 @@ export default function CreateTodo() {
       />
       <button className="simplebutton-log">Add</button>
 
-      <span>{errors?.Category?.message as string}</span>
+      <span>{errors?.Category?.message}</span>
     </form>
   );
 }

@@ -21,6 +21,7 @@ app.use(express.static(root + `/public`));
 app.use(morgan("combined"));
 
 // Swagger setup
+
 const swaggerDocument = YAML.load(path.join(root, "openapi.yaml"));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

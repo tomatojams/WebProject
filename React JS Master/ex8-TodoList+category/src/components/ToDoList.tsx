@@ -2,10 +2,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import CreateTodo from "./CreateTodo";
 import { toDoSelector, categoryState, categoryListState } from "./atoms";
 import ToDo from "./Todo";
-import { Category } from "../types/Category";
-
 import CreateCategory from "./CreateCategory";
-import { NewCategory } from "../types/NewCategory";
 
 //recoil
 // IToDO 방식의 [] 배열
@@ -17,7 +14,7 @@ export default function TodoList() {
   const categoryList = useRecoilValue(categoryListState);
   // FormEvent 쓰는 이유
   const _onInput = (e: React.FormEvent<HTMLSelectElement>) => {
-    setCategory(e.currentTarget.value as Category | NewCategory);
+    setCategory(e.currentTarget.value );
   };
 
   return (

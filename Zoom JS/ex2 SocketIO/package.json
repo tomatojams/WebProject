@@ -11,7 +11,7 @@
   "license": "ISC",
   "description": "Zoom Clone WebRTC",
   "dependencies": {
-    "express": "^4.19.2",
+    "express": "^4.19.3",
     "pug": "^3.0.3",
     "socket.io": "^4.7.5",
     "ws": "^8.18.0",

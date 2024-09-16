@@ -32,8 +32,9 @@ function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const homeMatch = useMatch("/netflex/");
   const tvMatch = useMatch("/netflex/Tv");
-  const inputAnimaion = useAnimation();
+
   // Variants와 같은 효과를 내는 객체 생성
+  const inputAnimaion = useAnimation();
   const navAnimation = useAnimation();
   const navAnimation2 = useAnimation();
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ function Header() {
   useEffect(() => {
     // 변화가 일어나는 변수에서 조건부여 ***
     scrollY.on("change", () => {
+      // console.log(scrollY.get());
       if (scrollY.get() > 80) {
         navAnimation2.start("scroll"); // Varient의 라벨주입
         navAnimation.start({ backgroundColor: "rgba(0,0,0,1)" }); // useAnimation 상태 객체주입
@@ -62,6 +64,7 @@ function Header() {
     });
   }, [scrollY, navAnimation]);
 
+  console.log(scrollY.get());
   const onValid = (data: IForm) => {
     console.log("Form data:", data);
     navigate(`/netflex/search?keyword=${data.keyword}`, { replace: true });
@@ -80,21 +83,23 @@ function Header() {
     <>
       <Nav
         variants={navVarients}
-        //방법1
-        // 상태변수 + 일반객체
         animate={
-          scrollY.get() > 80
-            ? { backgroundColor: "rgba(0,0,0,1)" }
-            : { backgroundColor: "rgba(0,0,0,0)" }
-          // 방법2
-          // 상태변수 + Varients
-          // animate={scrollY.get() > 80 ? "scroll" : "top"}
+          //방법1
+          // 상태변수 + 일반객체 - > 안될 수있음
+          // scrollY.get() > 80
+          //   ? { backgroundColor: "rgba(0,0,0,1)" }
+          //   : { backgroundColor: "rgba(0,0,0,0)" }
+          // 방법2 -> 안될수있음
+          // 상태변수 +  상태Varients
+          // scrollY.get() > 80 ? "scroll" : "top"
           // 방법3
           // useAnimation 으로 객체주입 + useEffect
-          // animate={navAnimation}
+          // animate={
+          navAnimation
+          //</>}
           // 방법4
           // Variants + useEffect + useAnimation
-          // animate={navAnimation2}
+          // navAnimation2
         }>
         <Col>
           <Logo

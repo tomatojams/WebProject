@@ -1,6 +1,5 @@
 import { useQuery } from "react-query";
 import { getMovies, getMovieInfo } from "../api";
-
 import { AnimatePresence, useScroll } from "framer-motion";
 import { useState } from "react";
 import { useNavigate, useMatch } from "react-router-dom";
@@ -20,7 +19,7 @@ import {
   MovieInfo,
   Block,
   BigMovie,
-} from "../Components/Homestyled";
+} from "../Components/HomeStyled";
 import { findIndexById } from "../utils";
 import { rowVariants, boxVariants, infoVariants } from "../Components/HomeVariants";
 
@@ -33,40 +32,43 @@ export default function Home() {
   const navigate = useNavigate(); // 경로변경을 강제로 시킴
   const bigMovieMatch = useMatch("/netflex/movies/:id"); // 경로일치 검사, 주소가 바뀔때마다 자동실행
   const [movieIds, setMovieIds] = useState<number[]>([]); // 두번째 쿼리를 위한 첫번째 쿼리 결과
+  // console.log(scrollY.get());
+  // 아래코드들 + 상태변수를  쿼리두개로 해결
 
-  /* const { data, isLoading } = useQuery<IMoviesNow>(
-  ["movies", "nowPlaying"],
-  () => getMovies("en", 1)
-);
+  //1. 첫번째 쿼리
+  /*   const { data, isLoading } = useQuery<IMoviesNow>(["movies", "nowPlaying"], () =>
+    getMovies("en", 1)
+  );
 
-// 화면 로딩에 지장없게 useEffect로 로딩
-// 영화 데이터에서 id 목록을 추출하여 상태로 관리
-useEffect(() => {
-  if (data?.results) {
-    const ids = data.results.map((item) => item.id);
-    setMovieIds(ids);
-  }
-}, [data]);
+  화면 로딩에 지장없게 useEffect로 로딩
+  영화 데이터에서 id 목록을 추출하여 상태로 관리
+  2. 추출용 useEffect
+  useEffect(() => {
+    if (data?.results) {
+      const ids = data.results.map((item) => item.id);
+      setMovieIds(ids);
+    }
+  }, [data]);
+  3. 조건부 fetch를 위한 useEffect
+  query로 가져온걸 바탕으로 getMovieInfo로 조건부 가져옴***
+  useEffect(() => {
+    if (movieIds.length > 0) {
+      const fetchMovieDetails = async () => {
+        const details = await Promise.all(movieIds.map((id) => getMovieInfo(id)));
+        setMovieDetails(details);
+      };
+      fetchMovieDetails();
+    }
+  }, [movieIds]); */
 
- query로 가져온걸 바탕으로 getMovieInfo로 조건부 가져옴***
-useEffect(() => {
-  if (movieIds.length > 0) {
-    const fetchMovieDetails = async () => {
-      const details = await Promise.all(movieIds.map((id) => getMovieInfo(id)));
-      setMovieDetails(details); 
-    };
-    fetchMovieDetails();
-  }
-}, [movieIds]);
- */
-
-  // 첫 번째 쿼리: 현재 상영 중인 영화 목록 가져오기
+  // 코드개선
+  // 1. 첫번째쿼리 - onSuccess: 로성공후 작업세팅
   const { data, isLoading } = useQuery<IMoviesNow>(
     ["movies", "nowPlaying"],
     () => getMovies("en", 1),
     {
+      //**  onSuccess: 성공후 조건부여
       onSuccess: (data) => {
-        // 첫 번째 쿼리 성공 시 ID 목록 추출
         if (data?.results) {
           const ids = data.results.map((item) => item.id);
           setMovieIds(ids);
@@ -75,10 +77,10 @@ useEffect(() => {
     }
   );
 
-  // 두 번째 쿼리: 영화 상세 정보 가져오기 (조건부 실행)
-  // useEffect를 두번써야 하는 번거로움을 피할수있다.
+  // 2. 두번째 쿼리 - enabled로 두번째 쿼리 실행
+  // useEffect를 두번쓰는걸 방지. 상태변수 절약
   const { data: detail, isLoading: isDetailLoading } = useQuery<IMovieInfo[]>(
-    ["movies", "details", movieIds],
+    ["movies", "details", movieIds], //** Promise.all fetch로 받는 배열전송
     () => Promise.all(movieIds.map((id) => getMovieInfo(id))),
     {
       enabled: movieIds.length > 0, // 조건부 실행: movieIds가 존재할 때만 실행
@@ -116,7 +118,7 @@ useEffect(() => {
     bigMovieMatch?.params.id &&
     data?.results.find((movie) => movie.id === +(bigMovieMatch.params.id + ""));
   console.log(clickedMovie);
-
+ 
   return (
     <>
       <Wrapper>

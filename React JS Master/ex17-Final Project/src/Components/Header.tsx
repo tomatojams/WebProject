@@ -1,93 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { useMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import { useForm } from "react-hook-form";
 import { IForm } from "../type/IForm";
-
+import { Nav, Col, Logo, Items, Item, Circle, Search, SearchInput } from "./HeaderStyled";
 // useForm
-
-const Nav = styled(motion.nav)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  font-size: 14px;
-  padding: 20px 60px;
-  color: white;
-`;
-
-const Col = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Logo = styled(motion.svg)`
-  margin-right: 50px;
-  width: 95px;
-  height: 25px;
-  fill: ${(props) => props.theme.red};
-  path {
-    stroke-width: 6px;
-    stroke: white;
-  }
-`;
-
-const Items = styled.ul`
-  display: flex;
-  align-items: center;
-`;
-
-const Item = styled.li`
-  margin-right: 20px;
-  color: ${(props) => props.theme.white.darker};
-  position: relative;
-  transition: color 0.3s ease-in-out;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  &:hover {
-    color: ${(props) => props.theme.white.lighter};
-  }
-`;
-
-const Circle = styled(motion.span)`
-  position: absolute;
-  bottom: -12px;
-  width: 6px;
-  height: 6px;
-  border-radius: 3px;
-
-  background-color: ${(props) => props.theme.red};
-`;
-
-const Search = styled.form`
-  display: flex;
-  align-items: center;
-  position: relative;
-  color: white;
-  svg {
-    height: 25px;
-  }
-`;
-
-const SearchInput = styled(motion.input)`
-  // 변화시작점
-  transform-origin: right center;
-  position: absolute;
-  left: -160px;
-  padding: 8px 10px;
-  padding-left: 40px;
-  z-index: -1;
-  background-color: transparent;
-  color: #b6b6b6;
-  border: 1px solid #3d3d3d;
-`;
 
 // 애니메이션용 객체
 const logoVariants = {
@@ -100,14 +18,11 @@ const logoVariants = {
     transition: { repeat: Infinity },
   },
 };
-// 애니메이션용 객체
 
 const navVarients = {
   top: { backgroundColor: "rgba(0,0,0,0)" },
   scroll: { backgroundColor: "rgba(0,0,0,1)" },
 };
-
-
 
 function Header() {
   const { register, watch, handleSubmit } = useForm<IForm>();
@@ -118,7 +33,7 @@ function Header() {
   const homeMatch = useMatch("/netflex/");
   const tvMatch = useMatch("/netflex/Tv");
   const inputAnimaion = useAnimation();
-  // Variants와 같은 효과를 내는 상태객체 생성
+  // Variants와 같은 효과를 내는 객체 생성
   const navAnimation = useAnimation();
   const navAnimation2 = useAnimation();
   const navigate = useNavigate();
@@ -126,23 +41,13 @@ function Header() {
   // input 모니터링
   const searchTerm = watch("keyword");
   console.log(searchTerm);
+
   // 초기화면 강제 home 설정
   useEffect(() => {
     if (!homeMatch) {
       navigate("/netflex/", { replace: true });
     }
   }, []);
-
-  const _toggleSearch = () => {
-    // inputAnimaion 라는 state 변수를 만들어서 사용하면 여러개의 요소에 삽입가능
-    if (searchOpen) {
-      inputAnimaion.start({ scaleX: 0 });
-    } else {
-      inputAnimaion.start({ scaleX: 1 });
-    }
-    setSearchOpen((prev) => !prev);
-  };
-
   // 스크롤 감지
   useEffect(() => {
     // 변화가 일어나는 변수에서 조건부여 ***
@@ -159,10 +64,17 @@ function Header() {
 
   const onValid = (data: IForm) => {
     console.log("Form data:", data);
-
     navigate(`/netflex/search?keyword=${data.keyword}`, { replace: true });
   };
-
+  const _toggleSearch = () => {
+    // inputAnimaion 라는 state 변수를 만들어서 사용하면 여러개의 요소에 삽입가능
+    if (searchOpen) {
+      inputAnimaion.start({ scaleX: 0 });
+    } else {
+      inputAnimaion.start({ scaleX: 1 });
+    }
+    setSearchOpen((prev) => !prev);
+  };
   //
   return (
     <>
@@ -183,7 +95,6 @@ function Header() {
           // 방법4
           // Variants + useEffect + useAnimation
           // animate={navAnimation2}
-          //
         }>
         <Col>
           <Logo

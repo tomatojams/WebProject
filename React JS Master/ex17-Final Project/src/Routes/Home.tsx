@@ -20,9 +20,9 @@ import {
   MovieInfo,
   Block,
   BigMovie,
-} from "../Components/styled";
+} from "../Components/Homestyled";
 import { findIndexById } from "../utils";
-import { rowVariants, boxVariants, infoVariants } from "../Components/variants";
+import { rowVariants, boxVariants, infoVariants } from "../Components/HomeVariants";
 
 const offset = 6;
 //home

@@ -9,10 +9,10 @@ export default function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/tv" element={<Tv />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/movies/:movieId" element={<Home />} />
+        <Route path="/netflex/" element={<Home />} />
+        <Route path="/netflex/tv" element={<Tv />} />
+        <Route path="/netflex/search" element={<Search />} />
+        <Route path="/netflex/movies/:movieId" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );

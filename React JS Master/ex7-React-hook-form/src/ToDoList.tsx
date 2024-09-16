@@ -66,7 +66,6 @@ function TodoList() {
             // 하나의 경우에만 쓸경우
             // validate: (value) => (value?.includes("nice") ? "starts from nice is not allowed" : true),
             // 여러개를 검사할수있으므로 object 로 만든다
-
             validate: {
               //9.  async 넣어서 서버응답용으로 쓸수도있다.
               noNice: (value) =>

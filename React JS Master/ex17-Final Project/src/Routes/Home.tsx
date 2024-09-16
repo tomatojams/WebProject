@@ -1,165 +1,98 @@
 import { useQuery } from "react-query";
-import { getMovies, IMoviesNow } from "../api";
-import styled from "styled-components";
-import { makeImagePath } from "../utils";
-import { motion, AnimatePresence } from "framer-motion";
+import { getMovies, getMovieInfo } from "../api";
+
+import { AnimatePresence, useScroll } from "framer-motion";
 import { useState } from "react";
-import { useNavigate, useMatch, PathMatch } from "react-router-dom";
-
-const Wrapper = styled.div`
-  background-color: black;
-  padding-bottom: 100px;
-  cursor: pointer;
-`;
-
-const Loader = styled.div`
-  height: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-// 두개의배경 하나는 흐린색 하나는사진 글자가잘 보이게하기위해서
-const Banner = styled.div<{ bgPhoto: string }>`
-background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.1)), url(${(
-  props
-) => makeImagePath(props.bgPhoto, "original")});
-background-size: cover;
-height: 100vh;
-display: flex;
-flex-direction: column;
-justify-content: center;
-padding:60px
-background-color: red;
-
-`;
-
-const Title = styled.h2`
-  padding-left: 30px;
-  font-size: 68px;
-  margin-bottom: 20px;
-`;
-const Overview = styled.p`
-  padding-left: 30px;
-  font-size: 24px;
-  width: 50%;
-`;
-
-const Slider = styled.div`
-  // gap: 50px;
-  // display: flex;
-  // flex-direction: column;
-  position: relative;
-  top: -200px;
-`;
-
-const Row = styled(motion.div)`
-  display: grid;
-  gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
-  position: absolute;
-  width: 100%;
-  margin-bottom: 5px;
-`;
-
-const Box = styled(motion.div)<{ photo: string }>`
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)),
-    url(${(props) => makeImagePath(props.photo, "w500")});
-  background-color: white;
-  // 중요***
-  background-size: cover;
-  // 중요*** 이것때문에 축소될때 가려짐
-  // relative는 z-index를 자동으로하기때문에 의도치않게 동작할수있다
-  // position: relative;
-
-  background-position: center center;
-  height: 200px;
-  color: #aaa;
-  font-size: 28px;
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  padding: 10px;
-  // *** 중요
-  &:first-child {
-    transform-origin: center left;
-  }
-  &:last-child {
-    transform-origin: center right;
-  }
-`;
-const Info = styled(motion.div)`
-  background-color: ${(props) => props.theme.black.lighter};
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  h5 {
-    text-align: center;
-    font-size: 12px;
-  }
-`;
-
-const rowVariants = {
-  hidden: {
-    x: window.outerWidth + 10, //아이콘사이거리띄우기
-  },
-  visible: {
-    x: 0,
-  },
-  exit: {
-    x: -window.outerWidth - 10,
-  },
-};
-
-const boxVariants = {
-  normal: {
-    scale: 1,
-  },
-  hover: {
-    zIndex: 99,
-    scale: 1.3,
-    y: -50,
-    transition: {
-      delay: 0.2,
-      duaration: 0.3,
-      type: "tween",
-    },
-  },
-};
-
-const infoVariants = {
-  hover: {
-    opacity: 1,
-    transition: {
-      delay: 0.5,
-      duaration: 0.1,
-      type: "tween",
-    },
-  },
-};
+import { useNavigate, useMatch } from "react-router-dom";
+import { IMoviesNow } from "../type/IMoviesNow";
+import { IMovieInfo } from "../type/IMovieInfo";
+import {
+  Wrapper,
+  Loader,
+  Banner,
+  Title,
+  Overview,
+  Slider,
+  Row,
+  Box,
+  Info,
+  Overlay,
+  MovieInfo,
+  Block,
+  BigMovie,
+} from "../Components/styled";
+import { findIndexById } from "../utils";
+import { rowVariants, boxVariants, infoVariants } from "../Components/variants";
 
 const offset = 6;
 //home
 export default function Home() {
-  // history를 볼수있음
-  const navigate = useNavigate();
-  console.log("History", history);
+  const [leaving, setLeaving] = useState(false);
+  const { scrollY } = useScroll(); // Y 위치 포착 팝업용
+  const [index, setIndex] = useState(0);
+  const navigate = useNavigate(); // 경로변경을 강제로 시킴
+  const bigMovieMatch = useMatch("/netflex/movies/:id"); // 경로일치 검사, 주소가 바뀔때마다 자동실행
+  const [movieIds, setMovieIds] = useState<number[]>([]); // 두번째 쿼리를 위한 첫번째 쿼리 결과
 
-  const bigMovieMatch: PathMatch<string> | null = useMatch("/movies/:id");
-  console.log(bigMovieMatch);
+  /* const { data, isLoading } = useQuery<IMoviesNow>(
+  ["movies", "nowPlaying"],
+  () => getMovies("en", 1)
+);
+
+// 화면 로딩에 지장없게 useEffect로 로딩
+// 영화 데이터에서 id 목록을 추출하여 상태로 관리
+useEffect(() => {
+  if (data?.results) {
+    const ids = data.results.map((item) => item.id);
+    setMovieIds(ids);
+  }
+}, [data]);
+
+ query로 가져온걸 바탕으로 getMovieInfo로 조건부 가져옴***
+useEffect(() => {
+  if (movieIds.length > 0) {
+    const fetchMovieDetails = async () => {
+      const details = await Promise.all(movieIds.map((id) => getMovieInfo(id)));
+      setMovieDetails(details); 
+    };
+    fetchMovieDetails();
+  }
+}, [movieIds]);
+ */
+
+  // 첫 번째 쿼리: 현재 상영 중인 영화 목록 가져오기
   const { data, isLoading } = useQuery<IMoviesNow>(
     ["movies", "nowPlaying"],
-    //인자던저주지않아서 에러남
-    () => getMovies("en", 1)
+    () => getMovies("en", 1),
+    {
+      onSuccess: (data) => {
+        // 첫 번째 쿼리 성공 시 ID 목록 추출
+        if (data?.results) {
+          const ids = data.results.map((item) => item.id);
+          setMovieIds(ids);
+        }
+      },
+    }
   );
-  const [leaving, setLeaving] = useState(false);
 
-  const [index, setIndex] = useState(0);
-  const totalMovies = data?.results.length || 0;
-  const maxIndex = Math.floor((totalMovies - 1) / offset - 1);
-  console.log(`maxIndex: ${maxIndex}`);
+  // 두 번째 쿼리: 영화 상세 정보 가져오기 (조건부 실행)
+  // useEffect를 두번써야 하는 번거로움을 피할수있다.
+  const { data: detail, isLoading: isDetailLoading } = useQuery<IMovieInfo[]>(
+    ["movies", "details", movieIds],
+    () => Promise.all(movieIds.map((id) => getMovieInfo(id))),
+    {
+      enabled: movieIds.length > 0, // 조건부 실행: movieIds가 존재할 때만 실행
+    }
+  );
+
+  console.log("DetailInfoMovie", detail);
+
+  // 이벤트함수
+  // 가로 스크롤
   const increseIndex = () => {
     if (leaving) return;
+    const totalMovies = data?.results.length || 0;
+    const maxIndex = Math.floor((totalMovies - 1) / offset - 1);
     setLeaving(true);
     setIndex((prev) => {
       if (prev === maxIndex) {
@@ -168,29 +101,37 @@ export default function Home() {
       return prev + 1;
     });
   };
+
+  // 박스클릭
   const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
+    navigate(`/netflex/movies/${movieId}`);
   };
+  //뒤로가기
+  const resetBigMatch = () => {
+    navigate("/netflex/");
+  };
+
+  // find-> 조건 만족하는 첫번째 요소 반환 하므로 해당무비가 반환됨
+  const clickedMovie =
+    bigMovieMatch?.params.id &&
+    data?.results.find((movie) => movie.id === +(bigMovieMatch.params.id + ""));
+  console.log(clickedMovie);
+
   return (
     <>
-      {}
       <Wrapper>
         {isLoading ? (
           <Loader>Loading..</Loader>
         ) : (
           <>
             {/* 데이타없으면 빈문자열 보냄 */}
-            <Banner
-              onClick={increseIndex}
-              bgPhoto={data?.results[0].backdrop_path || ""}>
+            <Banner onClick={increseIndex} bgPhoto={data?.results[0].backdrop_path || ""}>
               <Title>{data?.results[0].title}</Title>
               <Overview>{data?.results[0].overview}</Overview>
             </Banner>
             <Slider>
               {/* 새로 배운것 *** */}
-              <AnimatePresence
-                initial={false}
-                onExitComplete={() => setLeaving(false)}>
+              <AnimatePresence initial={false} onExitComplete={() => setLeaving(false)}>
                 <Row
                   variants={rowVariants}
                   initial="hidden"
@@ -220,35 +161,67 @@ export default function Home() {
                     ))}
                 </Row>
               </AnimatePresence>
-              {/* <Row>
-                {[7, 8, 9, 10, 11, 12].map((item) => (
-                  <Box
-                    photo={data?.results[item].poster_path || ""}
-                    key={item}></Box>
-                ))}
-              </Row>{" "}
-              <Row>
-                {[13, 14, 15, 16, 17, 18].map((item) => (
-                  <Box
-                    photo={data?.results[item].poster_path || ""}
-                    key={item}></Box>
-                ))}
-              </Row> */}
             </Slider>
             <AnimatePresence>
               {bigMovieMatch ? (
-                <motion.div
-                  layoutId={bigMovieMatch.params.movieId}
-                  style={{
-                    position: "absolute",
-                    width: "40vw",
-                    height: "80vh",
-                    backgroundColor: "red",
-                    top: 50,
-                    left: 0,
-                    right: 0,
-                    margin: "0 auto",
-                  }}></motion.div>
+                <>
+                  <BigMovie
+                    id={bigMovieMatch.params.id || ""}
+                    detail={detail!}
+                    layoutId={bigMovieMatch.params.id}
+                    style={{ top: scrollY.get() + 100 }}>
+                    {bigMovieMatch.params.id ? (
+                      <>
+                        {/* 데이타 존재검사후 화면표시 */}
+                        {!isDetailLoading &&
+                          detail &&
+                          bigMovieMatch.params.id &&
+                          findIndexById(+bigMovieMatch.params.id, detail) && (
+                            <MovieInfo>
+                              <Block>
+                                <h4>
+                                  Age:
+                                  <span>
+                                    {detail![findIndexById(+bigMovieMatch.params.id, detail!)].adult
+                                      ? "Only for adults"
+                                      : "For everyone"}
+                                  </span>
+                                </h4>
+                              </Block>
+                              <div>
+                                <h4>Overview</h4>
+                                <span>
+                                  {
+                                    detail![findIndexById(+bigMovieMatch.params.id, detail!)]
+                                      .overview
+                                  }
+                                </span>
+                              </div>
+                              <Block>
+                                <h4>Status</h4>
+                                <span>
+                                  {detail![findIndexById(+bigMovieMatch.params.id, detail!)].status}
+                                </span>
+                              </Block>
+                              <Block>
+                                <h4>vote_average</h4>
+                                <span>
+                                  {
+                                    detail![findIndexById(+bigMovieMatch.params.id, detail!)]
+                                      .vote_average
+                                  }
+                                </span>
+                              </Block>
+                            </MovieInfo>
+                          )}
+                      </>
+                    ) : null}
+                  </BigMovie>
+                  <Overlay
+                    onClick={resetBigMatch}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}></Overlay>
+                </>
               ) : null}
             </AnimatePresence>
           </>

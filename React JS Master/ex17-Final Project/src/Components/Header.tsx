@@ -1,8 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { useMatch } from "react-router-dom";
 import { useEffect, useState } from "react";
+
+import { useForm } from "react-hook-form";
+import { IForm } from "../type/IForm";
+
+// useForm
 
 const Nav = styled(motion.nav)`
   display: flex;
@@ -11,7 +16,6 @@ const Nav = styled(motion.nav)`
   position: fixed;
   width: 100%;
   top: 0;
-
   font-size: 14px;
   padding: 20px 60px;
   color: white;
@@ -62,7 +66,7 @@ const Circle = styled(motion.span)`
   background-color: ${(props) => props.theme.red};
 `;
 
-const Search = styled.span`
+const Search = styled.form`
   display: flex;
   align-items: center;
   position: relative;
@@ -96,7 +100,6 @@ const logoVariants = {
     transition: { repeat: Infinity },
   },
 };
-
 // 애니메이션용 객체
 
 const navVarients = {
@@ -104,28 +107,39 @@ const navVarients = {
   scroll: { backgroundColor: "rgba(0,0,0,1)" },
 };
 
+
+
 function Header() {
+  const { register, watch, handleSubmit } = useForm<IForm>();
+
   // 값이 같은지 확인해서 상태변수로 저장
   // 라우터안에 있기때문에 "/"로 시작한다.
-
   const [searchOpen, setSearchOpen] = useState(false);
-  const homeMatch = useMatch("/");
-  const tvMatch = useMatch("/Tv");
+  const homeMatch = useMatch("/netflex/");
+  const tvMatch = useMatch("/netflex/Tv");
   const inputAnimaion = useAnimation();
   // Variants와 같은 효과를 내는 상태객체 생성
   const navAnimation = useAnimation();
   const navAnimation2 = useAnimation();
-
+  const navigate = useNavigate();
   const { scrollY } = useScroll();
+  // input 모니터링
+  const searchTerm = watch("keyword");
+  console.log(searchTerm);
+  // 초기화면 강제 home 설정
+  useEffect(() => {
+    if (!homeMatch) {
+      navigate("/netflex/", { replace: true });
+    }
+  }, []);
+
   const _toggleSearch = () => {
     // inputAnimaion 라는 state 변수를 만들어서 사용하면 여러개의 요소에 삽입가능
-
     if (searchOpen) {
       inputAnimaion.start({ scaleX: 0 });
     } else {
       inputAnimaion.start({ scaleX: 1 });
     }
-
     setSearchOpen((prev) => !prev);
   };
 
@@ -142,6 +156,14 @@ function Header() {
       }
     });
   }, [scrollY, navAnimation]);
+
+  const onValid = (data: IForm) => {
+    console.log("Form data:", data);
+
+    navigate(`/netflex/search?keyword=${data.keyword}`, { replace: true });
+  };
+
+  //
   return (
     <>
       <Nav
@@ -179,19 +201,20 @@ function Header() {
             <Item>
               {homeMatch ? <Circle layoutId="circle" /> : null}
               {/* 새로고침없이 쓰려면 Link */}
-              <Link to={"/"}>Home</Link>
+              <Link to={"/netflex/"}>Home</Link>
             </Item>
             <Item>
               {tvMatch && <Circle layoutId="circle" />}
               {/* /Tv Tv 상대경로 절대경로 다 먹음 */}
-              <Link to={"Tv"}>Tv Shows</Link>
+              <Link to={"/netflex/Tv"}>Tv Shows</Link>
             </Item>
           </Items>
         </Col>
 
         <Col>
-          <Search>
+          <Search onSubmit={handleSubmit(onValid)}>
             <SearchInput
+              {...register("keyword", { required: true, minLength: 2 })}
               initial={{ scaleX: 0 }}
               animate={inputAnimaion}
               transition={{ type: "linear" }}

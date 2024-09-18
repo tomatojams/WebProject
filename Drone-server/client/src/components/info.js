@@ -1,8 +1,37 @@
 import React from "react";
+import styled from "styled-components";
+const Card = styled.div`
+  width: 350px;
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 0px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+`;
+
+const Title = styled.h2`
+  width: 100%;
+  background-color: #f1f5f9;
+  padding: 10px 30px;
+  margin: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: "Satoshi", sans-serif;
+  letter-spacing: 0.36em; /* 자간 36% */
+  color: #0e43b9;
+`;
 
 export default function InfoDrone({ selectedDroneData }) {
   return (
-    <div className="info-drone-container mr-4">
+    <Card>
+      <Title> DRONE INFO</Title>
       {selectedDroneData ? (
         <div className="info-drone-content">
           <div className="info-drone-section">
@@ -82,6 +111,6 @@ export default function InfoDrone({ selectedDroneData }) {
       ) : (
         <p className="info-drone-placeholder">드론을 선택해 주세요.</p>
       )}
-    </div>
+    </Card>
   );
 }

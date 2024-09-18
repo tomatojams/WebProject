@@ -94,9 +94,7 @@ function Header() {
           // scrollY.get() > 80 ? "scroll" : "top"
           // 방법3
           // useAnimation 으로 객체주입 + useEffect
-          // animate={
           navAnimation
-          //</>}
           // 방법4
           // Variants + useEffect + useAnimation
           // navAnimation2

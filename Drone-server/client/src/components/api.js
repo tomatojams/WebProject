@@ -18,5 +18,4 @@ const fetchMarkData = async () => {
   return res.data; // 데이터 구조가 클라이언트에서 처리할 수 있는 형태여야 합니다
 };
 
-
 export { fetchDronePositions, fetchMarkData };

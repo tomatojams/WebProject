@@ -21,7 +21,7 @@ import {
   BigMovie,
 } from "../Components/HomeStyled";
 import { findIndexById } from "../utils";
-import { rowVariants, boxVariants, infoVariants } from "../Components/HomeVariants";
+import { rowVariants, boxVariants, infoVariants } from "../Components/AniVariants";
 
 const offset = 6;
 //home
@@ -118,7 +118,7 @@ export default function Home() {
     bigMovieMatch?.params.id &&
     data?.results.find((movie) => movie.id === +(bigMovieMatch.params.id + ""));
   console.log(clickedMovie);
- 
+
   return (
     <>
       <Wrapper>

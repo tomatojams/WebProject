@@ -1,7 +1,90 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { selectedDroneState } from "../atom";
+import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
+import styled from "styled-components";
+
+const Card = styled.div`
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 0px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+  padding-bottom: 20px;
+`;
+
+// const Row = styled.div`
+//   display: flex;
+//   align-items: end;
+// `;
+const Title = styled.h2`
+  width: 100%;
+  background-color: #f1f5f9;
+  padding: 10px 30px;
+  margin: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: "Satoshi", sans-serif;
+  letter-spacing: 0.36em; /* 자간 36% */
+  color: #0e43b9;
+`;
+
+const SearchInput = styled.input`
+  margin: 10px 0px;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Dronelist = styled.ul`
+  width: 100%;
+  padding: 0px 20px;
+`;
+
+const DroneElement = styled.li`
+  width: 100%;
+  height: 36px;
+  padding: 0px 20px;
+  margin: 5px 0px;
+`;
+
+const FilterOff = styled(motion.span)`
+  display: flex;
+  align-items: center;
+  padding: 0px 2px;
+  width: 50px;
+  border-radius: 17px;
+  background-color: #e7e7e7;
+  height: 28px;
+`;
+const FilterOn = styled(motion.span)`
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 0px 2px;
+  width: 50px;
+  border-radius: 17px;
+  background-color: #7d87f8;
+  height: 28px;
+`;
+
+const FilterSwitch = styled(motion.span)`
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.1);
+`;
 
 export default function DroneList({
   latestPositions,
@@ -28,9 +111,9 @@ export default function DroneList({
   );
 
   return (
-    <div className="drone-list-container mr-4">
-      <h2 className="drone-list-title">드론 목록</h2>
-      <input
+    <Card>
+      <Title>DRONE LIST</Title>
+      <SearchInput
         {...register("search")}
         type="text"
         placeholder="드론 이름 검색..."
@@ -38,9 +121,9 @@ export default function DroneList({
         className="drone-list-search"
       />
       {filteredDronsList.length > 0 ? (
-        <ul className="drone-list">
+        <Dronelist>
           {filteredDronsList.map((drone) => (
-            <li
+            <DroneElement
               key={drone.droneId}
               onClick={() => handleItemClick(drone.droneId)}
               className={`drone-list-item ${selectedDroneId === drone.droneId ? "selected" : ""}`}>
@@ -52,16 +135,23 @@ export default function DroneList({
                 onClick={(e) => {
                   e.stopPropagation(); // 클릭 이벤트가 상위 항목으로 전파되는 것을 막음
                   handleFilterDrone(drone.droneId);
-                }}
-                className={`drone-list-item-button ${filteredDrons.includes(drone.droneId) ? "filtered" : ""}`}>
-                {filteredDrons.includes(drone.droneId) ? "활성화" : "필터"}
+                }}>
+                {filteredDrons.includes(drone.droneId) ? (
+                  <FilterOn layoutId={`${drone.droneId + "back"}`}>
+                    <FilterSwitch layoutId={`${drone.droneId}`} />
+                  </FilterOn>
+                ) : (
+                  <FilterOff layoutId={`${drone.droneId + "back"}`}>
+                    <FilterSwitch layoutId={`${drone.droneId}`} />
+                  </FilterOff>
+                )}
               </button>
-            </li>
+            </DroneElement>
           ))}
-        </ul>
+        </Dronelist>
       ) : (
         <p className="drone-list-placeholder">등록된 드론이 없습니다.</p>
       )}
-    </div>
+    </Card>
   );
 }

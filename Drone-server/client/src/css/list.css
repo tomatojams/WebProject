@@ -31,7 +31,7 @@
 
 .drone-list-item {
   padding: 8px;
-  border-bottom: 1px solid #ddd;
+
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -41,7 +41,9 @@
 }
 
 .drone-list-item.selected {
-  background-color: pink;
+  background-color: #f1f5f9;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 .drone-list-item-name {

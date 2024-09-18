@@ -1,9 +1,24 @@
-import { MapContainer, TileLayer, Marker, Circle, useMap } from "react-leaflet";
 import React, { useEffect, useState, useCallback } from "react";
+import { MapContainer, TileLayer, Marker, Circle, useMap } from "react-leaflet";
 import { useRecoilState } from "recoil";
 import { selectedDroneState } from "../atom";
 import { customCombinedIcon, getCustomMarkerIcon } from "./customIcon";
 import { isDroneInEventRange } from "./calculate";
+import styled from "styled-components";
+
+const Card = styled.div`
+  width: 100%;
+  height: 95%;
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-bottom: 25px;
+  padding: 20px;
+  position: relative;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 0px 2px rgba(0, 0, 0, 0.1);
+`;
 
 export default function MapBox({
   latestPositions,
@@ -26,32 +41,26 @@ export default function MapBox({
     setAutoCenter((prev) => !prev);
   };
 
-  const MapController = ({ latestPositions, autoCenter, filteredDrons }) => {
+  const MapController = ({ customMarkers, autoCenter }) => {
     const map = useMap();
 
     useEffect(() => {
       if (!map) return;
 
-      if (autoCenter && latestPositions.length > 0) {
-        const positionsToConsider = latestPositions.filter(
-          (pos) => !filteredDrons.includes(pos.droneId)
-        );
+      // autoCenter가 켜져 있고 센서가 존재할 경우 센서들의 중앙 좌표로 이동
+      if (autoCenter && customMarkers.length > 0) {
+        const latitudes = customMarkers.map((marker) => marker.lat);
+        const longitudes = customMarkers.map((marker) => marker.lon);
+        const centerLat = (Math.max(...latitudes) + Math.min(...latitudes)) / 2;
+        const centerLon = (Math.max(...longitudes) + Math.min(...longitudes)) / 2;
 
-        if (positionsToConsider.length > 0) {
-          const latitudes = positionsToConsider.map((pos) => pos.latitude);
-          const longitudes = positionsToConsider.map((pos) => pos.longitude);
-          const centerLat = (Math.max(...latitudes) + Math.min(...latitudes)) / 2;
-          const centerLon = (Math.max(...longitudes) + Math.min(...longitudes)) / 2;
-
-          map.setView([centerLat, centerLon], map.getZoom());
-        }
+        map.setView([centerLat, centerLon], map.getZoom());
       }
-    }, [latestPositions, autoCenter, map, filteredDrons]);
+    }, [customMarkers, autoCenter, map]);
 
     return null;
   };
 
-  // `useCallback`을 사용하여 `countDronesInRange` 함수를 안정적으로 만듭니다.
   const countDronesInRange = useCallback(() => {
     let count = 0;
     latestPositions.forEach((position) => {
@@ -62,13 +71,12 @@ export default function MapBox({
     setDroneCount(count);
   }, [latestPositions, customMarkers, radius, setDroneCount]);
 
-  // `useEffect`에서 `countDronesInRange`를 호출하고 종속성 배열에 포함합니다.
   useEffect(() => {
     countDronesInRange();
   }, [radius, latestPositions, countDronesInRange]);
 
   return (
-    <div className="p-5 h-full w-full relative">
+    <Card>
       <button
         style={{
           position: "absolute",
@@ -87,19 +95,6 @@ export default function MapBox({
         onClick={handleToggleAutoCenter}>
         {autoCenter ? "Auto-Center ON" : "Auto-Center OFF"}
       </button>
-
-      <div
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "10px",
-          zIndex: 1000,
-          padding: "5px",
-          backgroundColor: "rgba(255, 255, 255, 0.8)",
-          borderRadius: "4px",
-        }}>
-        Drones in Range: {droneCount}
-      </div>
 
       <MapContainer className="h-full w-full" center={[37.5665, 126.978]} zoom={13}>
         <TileLayer
@@ -121,11 +116,7 @@ export default function MapBox({
               </React.Fragment>
             );
           })}
-        <MapController
-          latestPositions={latestPositions}
-          autoCenter={autoCenter}
-          filteredDrons={filteredDrons}
-        />
+        <MapController customMarkers={customMarkers} autoCenter={autoCenter} />
         {customMarkers.map((marker) => (
           <React.Fragment key={marker.id}>
             <Marker
@@ -144,6 +135,6 @@ export default function MapBox({
           </React.Fragment>
         ))}
       </MapContainer>
-    </div>
+    </Card>
   );
 }

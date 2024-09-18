@@ -1,4 +1,4 @@
-import { string } from "prop-types";
+
 
 // 타입 좁히기
 function tomato2(x: number | string) {

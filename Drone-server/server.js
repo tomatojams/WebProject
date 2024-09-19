@@ -31,8 +31,9 @@ app.get("/api/positions", (req, res) => {
     let sliceNumber = process.env.FETCH_COUNT;
     const recentPositions = droneStateMessageBuffer.slice(0, sliceNumber);
 
+    // 드론 위치 필드를 droneId로 변경
     const filteredPositions = recentPositions.map((position) => ({
-      droneId: position.drone.drone_id, // 변경된 필드 사용 (droneId -> drone_id)
+      droneId: position.drone.droneId,
       latitude: position.drone.location.latitude,
       longitude: position.drone.location.longitude,
       name: position.drone.name,
@@ -45,12 +46,11 @@ app.get("/api/positions", (req, res) => {
   }
 });
 
-// 특정 드론의 위치 가져오기
 app.get("/api/drone/:droneId", (req, res) => {
   const { droneId } = req.params;
 
   try {
-    const droneMessage = droneStateMessageBuffer.find((msg) => msg.drone.drone_id === droneId);
+    const droneMessage = droneStateMessageBuffer.find((msg) => msg.drone.droneId === droneId);
 
     if (!droneMessage) {
       return res.status(404).json({ error: "Drone not found" });

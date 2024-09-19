@@ -48,7 +48,7 @@ const sendDronePosition = async (droneId, initialLat, initialLng, droneName) => 
         sender_id: "2acc44fa47a63222241391a15a0d086365da5aa8efd1d505d99beb5e2436ed85", // 송신자 정보
         timestamp: Date.now(), // 현재 시간을 Unix timestamp로 사용
         drone: {
-          drone_id: droneId, // 고유한 드론 ID를 사용
+          droneId, // 고유한 드론 ID를 사용
           name: droneName,
           frequency: 2452,
           bandwidth: 5,

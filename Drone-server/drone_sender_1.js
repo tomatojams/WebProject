@@ -69,7 +69,7 @@ const sendDronePosition = async (droneId, initialLat, initialLng, droneName) => 
 
       channel.sendToQueue(droneQueue, Buffer.from(JSON.stringify(position)));
       console.log(`Sent drone position: ${droneName}`, position);
-    }, 1000); // 1초마다 드론 위치 전송
+    }, 2000); // 1초마다 드론 위치 전송
   } catch (error) {
     console.error("Error in sending drone position:", error);
   }

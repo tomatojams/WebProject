@@ -31,7 +31,7 @@ const consumeDroneStateMessage = async (droneCommands) => {
           try {
             const droneStateMessageContent = JSON.parse(msg.content.toString());
 
-            // 원래 되던 기능: 메시지 버퍼에 저장 및 DB에 저장
+            // 메시지 버퍼에 저장 및 DB에 저장
             droneStateMessageBuffer.unshift(droneStateMessageContent);
             if (droneStateMessageBuffer.length > NEW_BUFFER_SIZE) {
               droneStateMessageBuffer.pop();
@@ -44,8 +44,7 @@ const consumeDroneStateMessage = async (droneCommands) => {
 
             const DroneStateMessageDoc = new DroneStateMessage(droneStateMessageContent);
             const savedDroneStateMessage = await DroneStateMessageDoc.save();
-
-            console.log("Drone state message saved:");
+            console.log("Drone state message saved");
 
             // 새로운 기능: 클라이언트에서 활성화된 enum에 따라 메시지 수정 및 전송
             if (droneCommands[droneId]) {
@@ -60,10 +59,15 @@ const consumeDroneStateMessage = async (droneCommands) => {
 
                   // 1. 전송 전 메시지를 sent_message 콜렉션에 저장 (message_type 만 변경됨)
                   const sentMessageDoc = new SentMessage(modifiedMessage);
+
+                  // 저장 직전에 데이터 확인을 위해 로그 추가
+                  console.log("Saving modified message to SentMessage");
+
                   await sentMessageDoc.save(); // DB에 저장
 
                   // 2. 수정된 메시지를 다시 RabbitMQ로 전송
-                  const targetQueue = `Modified_${queue}`; // 큐 이름을 다르게 설정
+                  // const targetQueue = `Modified_${queue}`;
+                  const targetQueue = `Client_message`;
                   await channel.assertQueue(targetQueue, { durable: false });
                   channel.sendToQueue(targetQueue, Buffer.from(JSON.stringify(modifiedMessage)));
                   console.log(`Sent modified message with type ${enumType}:`);

@@ -195,7 +195,10 @@ export default function AppHeader() {
       <Header>
         <Nav>
           <Logo src={`${process.env.PUBLIC_URL}/logo_hori.svg`} alt="Logo" />
-          <NavItem isActive={matchMonitor}>Monitor</NavItem>
+          <Link to="/maininfo" style={{ textDecoration: "none", color: "#414040" }}>
+            <NavItem isActive={matchMonitor}>Monitor</NavItem>
+          </Link>
+
           <Link to="/setting" style={{ textDecoration: "none", color: "#414040" }}>
             <NavItem isActive={matchSetting}>Setting</NavItem>
           </Link>

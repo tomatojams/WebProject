@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 // 스타일 컴포넌트 정의
 const Card = styled.div`
-  margin: 16px;
+  margin: 11px;
   width: 350px;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
@@ -32,7 +32,7 @@ const Title = styled.h2`
 `;
 
 const InfoText = styled.div`
-  padding: 10px 30px;
+  padding: 4px 30px 10px;
   font-family: "Satoshi", sans-serif;
   font-size: 15px;
   font-weight: 400;

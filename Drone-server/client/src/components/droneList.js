@@ -6,7 +6,9 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
 const Card = styled.div`
-  margin: 16px;
+  margin-left: 12px;
+  margin-top: 8px;
+  margin-right: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +54,7 @@ const Dronelist = styled.ul`
 
 const DroneElement = styled.li`
   width: 100%;
-  height: 36px;
+  height: 34px;
   padding: 0px 20px;
   margin: 5px 0px;
 `;

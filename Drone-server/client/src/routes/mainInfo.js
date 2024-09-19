@@ -25,6 +25,7 @@ const ContentWrapper = styled.div`
 `;
 
 const Sidebar = styled.div`
+  box-sizing: border-box;
   width: 400px;
   display: flex;
   flex-direction: column;

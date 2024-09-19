@@ -8,10 +8,10 @@ import styled from "styled-components";
 
 const Card = styled.div`
   width: 100%;
-  height: 95%;
-  margin-top: 25px;
-  margin-left: 25px;
-  margin-bottom: 25px;
+
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
   padding: 20px;
   position: relative;
   border: 1px solid #e0e0e0;

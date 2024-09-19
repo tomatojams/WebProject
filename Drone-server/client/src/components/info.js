@@ -5,7 +5,9 @@ import axios from "axios";
 // Card 스타일
 const Card = styled.div`
   width: 350px;
-  margin: 16px;
+  margin-left: 12px;
+  margin-top: 20px;
+  margin-right: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,7 +59,7 @@ const DroneInfo = styled.div`
   top: 60px;
   left: 180px;
   display: flex;
-  gap: 15px;
+  gap: 10px;
   flex-direction: column;
 `;
 
@@ -65,9 +67,9 @@ const DroneInfo = styled.div`
 const DroneDetail = styled.div`
   width: 100%;
   margin-top: 70px;
-  padding: 20px;
+  padding: 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 const DroneDetailCol = styled.div`
@@ -83,6 +85,9 @@ const ButtonGroup = styled.div`
   width: 100%;
   margin-top: 10px;
   padding: 0 15px;
+`;
+const SmallSpan = styled.span`
+  font-size: 14px;
 `;
 
 const ToggleButton = styled.button`
@@ -169,12 +174,12 @@ export default function InfoDrone({ selectedDroneData }) {
               <p>
                 <strong>Latitude:</strong>
                 <br />
-                {selectedDroneData.drone.location.latitude}
+                <SmallSpan>{selectedDroneData.drone.location.latitude}</SmallSpan>
               </p>
               <p>
                 <strong>Longitude:</strong>
                 <br />
-                {selectedDroneData.drone.location.longitude}
+                <SmallSpan> {selectedDroneData.drone.location.longitude}</SmallSpan>
               </p>
             </DroneDetailCol>
           </DroneDetail>

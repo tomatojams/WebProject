@@ -105,14 +105,32 @@ const SensorMessageSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// 새로운 드론 저장
+const DroneHistorySchema = new mongoose.Schema(
+  {
+    droneId: { type: String, required: true },
+    name: { type: String, required: true },
+    frequency: { type: Number, required: false },
+    bandwidth: { type: Number, required: false },
+    allow_track: { type: Boolean, required: false },
+    allow_takeover: { type: Boolean, required: false },
+    class_name: { type: String, required: false },
+    radio_resources: { type: Number, required: false },
+  },
+  { timestamps: true }
+);
+
+// DroneHistory 모델을 'dronehistorylists'라는 콜렉션에 저장
+const DroneHistory = mongoose.model("DroneHistory", DroneHistorySchema, "dronehistorylists");
+
 // SentMessage 스키마는 DroneStateMessageSchema와 동일한 형식을 사용
 const SentMessage = mongoose.model("SentMessage", DroneStateMessageSchema);
-// 익스포트 형식 맞추기
 const DroneStateMessage = mongoose.model("DroneStateMessage", DroneStateMessageSchema);
 const ServerMessage = mongoose.model("ServerMessage", ServerMessageSchema);
 const SensorMessage = mongoose.model("SensorMessage", SensorMessageSchema);
 
-export { DroneStateMessage, ServerMessage, SensorMessage, SentMessage };
+export { DroneStateMessage, ServerMessage, SensorMessage, SentMessage, DroneHistory };
 
 // MarkSchema 정의
 const sensorSchema = new mongoose.Schema(
@@ -124,7 +142,8 @@ const sensorSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+//센서 메세지 그대로 저장
 const MarkModel = mongoose.model("Mark", sensorSchema, "marks");
-
-export { MarkModel };
+// 새로운 센서만 추출해서 저장
+const SensorListModel = mongoose.model("SensorList", sensorSchema, "sensorlists");
+export { MarkModel, SensorListModel };

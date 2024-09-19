@@ -1,6 +1,12 @@
 import amqp from "amqplib";
 import dotenv from "dotenv";
-import { SentMessage, DroneStateMessage, MarkModel } from "../schema/schema.js";
+import {
+  DroneHistory,
+  SentMessage,
+  DroneStateMessage,
+  MarkModel,
+  SensorListModel,
+} from "../schema/schema.js";
 
 dotenv.config();
 const amqp_url = process.env.AMQP_URL;
@@ -30,16 +36,34 @@ const consumeDroneStateMessage = async (droneCommands) => {
         if (msg !== null) {
           try {
             const droneStateMessageContent = JSON.parse(msg.content.toString());
-
+            const droneId = droneStateMessageContent.drone.droneId;
             // 메시지 버퍼에 저장 및 DB에 저장
             droneStateMessageBuffer.unshift(droneStateMessageContent);
             if (droneStateMessageBuffer.length > NEW_BUFFER_SIZE) {
               droneStateMessageBuffer.pop();
             }
 
-            const droneId = droneStateMessageContent.drone.droneId;
+            // 기존드론 리스트에 없는 드론일때만 1.추적드론에 저장 2.DB에 저장시도
             if (!trackedNewDrones.has(droneId)) {
               trackedNewDrones.add(droneId);
+              // DB에 드론이 존재하는지 확인 후 중복이 없다면 저장 (upsert 사용)
+              await DroneHistory.findOneAndUpdate(
+                { droneId: droneId }, // droneId가 존재하는지 확인
+                {
+                  $setOnInsert: {
+                    droneId: droneId,
+                    name: droneStateMessageContent.drone.name,
+                    frequency: droneStateMessageContent.drone.frequency,
+                    bandwidth: droneStateMessageContent.drone.bandwidth,
+                    allow_track: droneStateMessageContent.drone.allow_track,
+                    allow_takeover: droneStateMessageContent.drone.allow_takeover,
+                    class_name: droneStateMessageContent.drone.class_name,
+                    radio_resources: droneStateMessageContent.drone.radio_resources,
+                  },
+                },
+                { upsert: true, new: true } // 중복되지 않으면 추가 (업서트)
+              );
+              console.log(`Drone with ID: ${droneId} saved to DB`);
             }
 
             const DroneStateMessageDoc = new DroneStateMessage(droneStateMessageContent);
@@ -113,6 +137,20 @@ const consumeMarkMessage = async () => {
 
             console.log("Received Mark Message:", markMessageContent);
 
+            // 중복 확인 후 새로운 센서 데이터만 sensorlists에 저장
+            await SensorListModel.findOneAndUpdate(
+              { sensor_id: markMessageContent.sensor_id }, // sensor_id 중복 확인
+              {
+                $setOnInsert: {
+                  sensor_id: markMessageContent.sensor_id,
+                  latitude: markMessageContent.latitude,
+                  longitude: markMessageContent.longitude,
+                  state: markMessageContent.state,
+                },
+              },
+              { upsert: true, new: true } // 중복된 경우 추가하지 않음
+            );
+            // 중복확인안하고 저장
             const markDoc = new MarkModel(markMessageContent);
             const savedMark = await markDoc.save();
 

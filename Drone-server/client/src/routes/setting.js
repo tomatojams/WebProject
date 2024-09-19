@@ -1,37 +1,48 @@
 import AppHeader from "../components/nav";
 import styled from "styled-components";
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
+import { useRecoilState } from "recoil";
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import { selectedDroneState } from "../atom";
+import { useQuery } from "react-query";
+import { fetchDronePositions } from "../components/api";
 
-const Frame = styled.div`
-  width: 100%;
-  height: 100%;
+const MainContainer = styled.div`
   display: flex;
-  gap: 50px;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f9fbfd;
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  flex: 1;
 `;
 
 const SensorCard = styled.div`
   width: 100%;
-  margin-top: 25px;
+  height: 95%;
+  margin-top: 20px;
   margin-left: 25px;
   margin-bottom: 25px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+  position: relative;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 0px 2px rgba(0, 0, 0, 0.1);
-  position: relative;
-
-  padding-bottom: 20px;
-  color: #555555;
 `;
 // Card 스타일
 const DroneCard = styled.div`
-  width: 500px;
-  margin: 25px;
+  height: 95%;
+
   display: flex;
+  margin-top: 21px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 450px;
+  box-sizing: border-box;
   flex-direction: column;
   align-items: center;
   border: 1px solid #e0e0e0;
@@ -39,7 +50,7 @@ const DroneCard = styled.div`
   background-color: white;
   box-shadow: 0 0px 2px rgba(0, 0, 0, 0.1);
   position: relative;
-  padding-top: 100px;
+  padding-top: 70px;
   padding-bottom: 20px;
   color: #555555;
 `;
@@ -62,160 +73,83 @@ const Title = styled.h2`
   color: #0e43b9;
 `;
 
-// DroneImage 스타일
-const DroneImage = styled.div`
-  position: absolute;
-  top: 60px;
-  left: 20px;
-  width: 100px;
-  height: 100px;
-  background-image: url(${(props) => `${process.env.PUBLIC_URL}/drones/${props.droneName}.jpg`});
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+const SearchInput = styled.input`
+  margin-bottom: 10px;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
-// DroneInfo 스타일
-const DroneInfo = styled.div`
-  position: absolute;
-  top: 60px;
-  left: 180px;
-  display: flex;
-  gap: 15px;
-  flex-direction: column;
-`;
-
-// DroneDetail 스타일
-const DroneDetail = styled.div`
+const Dronelist = styled.ul`
   width: 100%;
-  margin-top: 70px;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
+  padding: 0px 20px;
 `;
 
-const DroneDetailCol = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`;
-
-// 버튼 스타일
-const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: space-around;
+const DroneElement = styled.li`
   width: 100%;
-  margin-top: 10px;
-  padding: 0 15px;
+  height: 36px;
+  padding: 0px 20px;
+  margin: 5px 0px;
 `;
 
-const ToggleButton = styled.button`
-  padding: 3px 0px;
-  font-size: 16px;
-  cursor: pointer;
-  border: 1px solid #bacce4;
-  border-radius: 5px;
-  font-weight: 500;
-  background-color: ${(props) => (props.isActive ? "#667589" : "#f1f5f9")};
-  color: ${(props) => (props.isActive ? "white" : "#667589")};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100px;
-`;
+//
+export default function Setting() {
+  // Query받아옴
+  const { data: latestPositions = [] } = useQuery(["dronePositions"], fetchDronePositions, {
+    refetchInterval: 1000,
+  });
 
-export default function Setting({ selectedDroneData }) {
-  const [droneStates, setDroneStates] = useState({});
+  const { register, watch } = useForm();
 
-  // 드론의 특정 상태를 변경하는 함수
-  const toggleDroneState = (droneId, stateKey) => {
-    setDroneStates((prevState) => ({
-      ...prevState,
-      [droneId]: {
-        ...prevState[droneId],
-        [stateKey]: !prevState[droneId]?.[stateKey],
-      },
-    }));
+  // 선택된 드론 ID를 저장해서 백그라운드 색상을 변경**
+  const [selectedDroneId, setSelectedDroneId] = useRecoilState(selectedDroneState);
+
+  const handleItemClick = (droneId) => {
+    // 클릭된 드론 ID가 현재 선택된 드론과 같으면 선택 해제, 아니면 선택
+    setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
   };
+  const searchTerm = watch("search") || ""; // useState("") 처음 빈문자열 초기화
 
-  // 서버로 드론 제어 명령을 전송하는 함수
-  const sendControlCommand = async (droneId, enumType, isActive) => {
-    try {
-      const command = isActive ? "stop" : "start";
-      const response = await axios.post("/api/drone/control", {
-        droneId: droneId,
-        enum: enumType,
-        command: command,
-      });
-      console.log("Command sent:", response.data);
-    } catch (error) {
-      console.error("Error sending command:", error);
-    }
-  };
+  const filteredDronsList = latestPositions.filter((drone) =>
+    // toLowerCase()를 쓰려면 undefined가 아니어야 하므로 ? 또는 ""로 초기화
+    drone.name.toLowerCase().includes(searchTerm?.toLowerCase())
+  );
   return (
-    <>
-      <AppHeader></AppHeader>
-      <Frame>
+    <MainContainer>
+      <AppHeader />
+      <ContentWrapper>
         <SensorCard>
           <Title>SONSOR SETTING</Title>
         </SensorCard>
         <DroneCard>
-          <Title>DRONE INFO</Title>
-          {selectedDroneData && (
-            <>
-              <DroneImage
-                droneName={selectedDroneData.drone.name.replace(/\s+/g, "_").toLowerCase()}
-              />
-              <DroneInfo>
-                <p>
-                  <strong>Drone ID:</strong>
-                  <br />
-                  <p className="info-drone-value-highlight">{selectedDroneData.drone.droneId}</p>
-                </p>
-                <p>
-                  <strong>Name:</strong>
-                  <br />
-                  <p className="info-drone-status-yes">{selectedDroneData.drone.name}</p>
-                </p>
-              </DroneInfo>
-            </>
-          )}
-          {selectedDroneData ? (
-            <>
-              <DroneDetail>
-                <DroneDetailCol>
-                  <p>
-                    <strong>Frequency:</strong>
-                    <br />
-                    {selectedDroneData.drone.frequency}
-                  </p>
-                  <p>
-                    <strong>Bandwidth:</strong>
-                    <br />
-                    {selectedDroneData.drone.bandwidth}
-                  </p>
-                </DroneDetailCol>
-                <DroneDetailCol>
-                  <p>
-                    <strong>Latitude:</strong>
-                    <br />
-                    {selectedDroneData.drone.location.latitude}
-                  </p>
-                  <p>
-                    <strong>Longitude:</strong>
-                    <br />
-                    {selectedDroneData.drone.location.longitude}
-                  </p>
-                </DroneDetailCol>
-              </DroneDetail>
-              <ButtonGroup></ButtonGroup>
-            </>
+          <Title>DRONE LIST</Title>
+          <SearchInput
+            {...register("search")}
+            type="text"
+            placeholder="드론 이름 검색..."
+            value={searchTerm}
+            className="drone-list-search"
+          />
+          {filteredDronsList.length > 0 ? (
+            <Dronelist>
+              {filteredDronsList.map((drone) => (
+                <DroneElement
+                  key={drone.droneId}
+                  onClick={() => handleItemClick(drone.droneId)}
+                  className={`drone-list-item ${selectedDroneId === drone.droneId ? "selected" : ""}`}>
+                  <span
+                    className={`drone-list-item-name ${searchTerm && drone.name.toLowerCase().includes(searchTerm.toLowerCase()) ? "bold" : ""}`}>
+                    {drone.name}
+                  </span>
+                </DroneElement>
+              ))}
+            </Dronelist>
           ) : (
-            <p className="info-drone-placeholder">드론을 선택해 주세요.</p>
+            <p className="drone-list-placeholder">등록된 드론이 없습니다.</p>
           )}
         </DroneCard>
-      </Frame>
-    </>
+      </ContentWrapper>
+    </MainContainer>
   );
 }

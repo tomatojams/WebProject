@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 const Title = styled.h2`
   width: 100%;
   background-color: #f1f5f9;
-  padding: 8px 30px;
+  padding: 8px 28px;
   margin: 0;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -28,7 +28,7 @@ const Header = styled.header`
 `;
 
 const Logo = styled.img`
-  height: 40px;
+  height: 35px;
 `;
 
 const Nav = styled.nav`
@@ -42,31 +42,29 @@ const Nav = styled.nav`
 
 const NavBox = styled(motion.div)`
   z-index: 99;
-  top: 18px;
+  top: 13px;
   position: absolute;
   width: 80px;
   height: 30px;
   color: #333;
   cursor: pointer;
   font-size: 16px;
-  border: #e2e8f0;
-  background-color: #e2e8f0;
+  border: 1px solid #e2e8f0;
+  background-color: #f1f5f9;
   padding: 5px 10px;
   border-radius: 5px;
   font-weight: 500;
-  &:hover {
-    background-color: #e2e8f0;
-  }
 `;
 
 const MenuSpan = styled.span`
   position: absolute;
-  top: 20px;
+  top: 15px;
   z-index: 1000;
 `;
 
 const NavItem = styled.div`
   display: flex;
+  align-items: start;
   justify-content: center;
   color: #333;
   width: 80px;

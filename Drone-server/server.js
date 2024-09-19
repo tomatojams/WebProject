@@ -1,44 +1,40 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-// 로깅 미들웨어
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
-import { messageBuffer, consumeDroneMessage, consumeMarkMessage } from "./consume func/func.js";
+import { droneStateMessageBuffer, consumeDroneStateMessage, consumeMarkMessage } from "./consume func/funcNew.js";
 import { MarkModel } from "./schema/schema.js";
 
 dotenv.config();
-// 폴더루트 변수선언
 const root = process.cwd();
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 app.use(express.static(root + `/public`));
-
 app.use(morgan("combined"));
 
 // Swagger setup
-
 const swaggerDocument = YAML.load(path.join(root, "openapi.yaml"));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// RabbitMQ 메세지소비
-consumeDroneMessage();
+// RabbitMQ 메세지 소비
+consumeDroneStateMessage(); // 신버전 드론 메시지 소비
 consumeMarkMessage();
 
 // 최근 드론 위치 가져오기
 app.get("/api/positions", (req, res) => {
   try {
     let sliceNumber = process.env.FETCH_COUNT;
-    const recentPositions = messageBuffer.slice(0, sliceNumber);
+    const recentPositions = droneStateMessageBuffer.slice(0, sliceNumber);
 
     const filteredPositions = recentPositions.map((position) => ({
-      droneId: position.drone.droneId,
-      latitude: position.drone.latitude,
-      longitude: position.drone.longitude,
+      droneId: position.drone.drone_id, // 변경된 필드 사용 (droneId -> drone_id)
+      latitude: position.drone.location.latitude,
+      longitude: position.drone.location.longitude,
       name: position.drone.name,
     }));
 
@@ -54,7 +50,7 @@ app.get("/api/drone/:droneId", (req, res) => {
   const { droneId } = req.params;
 
   try {
-    const droneMessage = messageBuffer.find((msg) => msg.drone.droneId === droneId);
+    const droneMessage = droneStateMessageBuffer.find((msg) => msg.drone.drone_id === droneId);
 
     if (!droneMessage) {
       return res.status(404).json({ error: "Drone not found" });
@@ -70,17 +66,15 @@ app.get("/api/drone/:droneId", (req, res) => {
 // 마크 데이터 가져오기
 app.get("/api/marks", async (req, res) => {
   try {
-    // 최신 센서 데이터 1개 조회
     const latestSensor = await MarkModel.findOne().sort({ createdAt: -1 }).exec();
     if (latestSensor) {
-      // 센서 데이터 반환
       const sensor = {
         id: latestSensor.sensor_id,
         lat: latestSensor.latitude,
         lon: latestSensor.longitude,
         state: latestSensor.state,
       };
-      res.json(sensor); // 클라이언트에서 예상하는 형태로 반환
+      res.json(sensor);
     } else {
       res.status(404).json({ error: "서버에 센서 데이터가 없습니다." });
     }

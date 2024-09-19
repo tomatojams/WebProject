@@ -15,14 +15,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(express.static(root + `/public`));
-app.use(morgan("combined"));
-
+// 로그 미들웨어
+// app.use(morgan("combined"));
+// 글로벌로 `droneCommands` 변수를 선언
+let droneCommands = {}; // 각 드론의 활성화된 상태를 저장하는 객체
 // Swagger setup
 const swaggerDocument = YAML.load(path.join(root, "openapi.yaml"));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // RabbitMQ 메세지 소비
-consumeDroneStateMessage(); // 신버전 드론 메시지 소비
+consumeDroneStateMessage(droneCommands); // 신버전 드론 메시지 소비
 consumeMarkMessage();
 
 // 최근 드론 위치 가져오기
@@ -83,6 +85,30 @@ app.get("/api/marks", async (req, res) => {
     res.status(500).json({ error: "센서 데이터를 가져오는 데 실패했습니다." });
   }
 });
+
+
+app.post("/api/drone/control", (req, res) => {
+  const { droneId, enum: enumType, command } = req.body;
+
+  if (!droneId || !enumType || !command) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  // 드론 명령을 처리
+  if (command === "start") {
+    if (!droneCommands[droneId]) {
+      droneCommands[droneId] = {}; // 드론이 처음 등록되었을 때 객체 생성
+    }
+    droneCommands[droneId][enumType] = true; // 해당 enum을 활성화
+  } else if (command === "stop") {
+    if (droneCommands[droneId]) {
+      droneCommands[droneId][enumType] = false; // 해당 enum을 비활성화
+    }
+  }
+
+  return res.status(200).json({ message: "Command processed successfully" });
+});
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

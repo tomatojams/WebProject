@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 // Card 스타일
 const Card = styled.div`
@@ -13,7 +14,9 @@ const Card = styled.div`
   background-color: white;
   box-shadow: 0 0px 2px rgba(0, 0, 0, 0.1);
   position: relative;
-  padding-top: 100px; /* 이미지와 제목 사이 간격 확보 */
+  padding-top: 100px;
+  padding-bottom: 20px;
+  color: #555555;
 `;
 
 // Title 스타일
@@ -34,7 +37,7 @@ const Title = styled.h2`
   color: #0e43b9;
 `;
 
-// DroneImage 스타일: selectedDroneData의 droneName에 따라 이미지를 동적으로 불러옴
+// DroneImage 스타일
 const DroneImage = styled.div`
   position: absolute;
   top: 60px;
@@ -48,16 +51,17 @@ const DroneImage = styled.div`
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 `;
 
-// DroneInfo 스타일: 드론 ID와 이름을 이미지 오른쪽에 배치
+// DroneInfo 스타일
 const DroneInfo = styled.div`
   position: absolute;
   top: 60px;
-  left: 180px; /* 이미지 오른쪽에 배치 */
+  left: 180px;
   display: flex;
+  gap: 15px;
   flex-direction: column;
 `;
 
-// DroneDetail 스타일: 나머지 드론 정보를 하단에 배치
+// DroneDetail 스타일
 const DroneDetail = styled.div`
   width: 100%;
   margin-top: 70px;
@@ -66,7 +70,58 @@ const DroneDetail = styled.div`
   justify-content: space-between;
 `;
 
+const DroneDetailCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
+// 버튼 스타일
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 10px;
+  padding: 0 15px;
+`;
+
+const ToggleButton = styled.button`
+  padding: 3px 0px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid #bacce4;
+  border-radius: 5px;
+  font-weight: 500;
+  background-color: ${(props) => (props.isActive ? "#667589" : "#f1f5f9")};
+  color: ${(props) => (props.isActive ? "white" : "#667589")};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+`;
+
 export default function InfoDrone({ selectedDroneData }) {
+  // 버튼 상태 관리
+  const [isTrackActive, setIsTrackActive] = useState(false);
+  const [isTakeOverActive, setIsTakeOverActive] = useState(false);
+  const [isMigrateActive, setIsMigrateActive] = useState(false);
+
+  // 서버로 드론 제어 명령을 전송하는 함수
+  const sendControlCommand = async (enumType, isActive) => {
+    try {
+      // 활성 상태에 따라 start 또는 stop 명령 전송
+      const command = isActive ? "stop" : "start";
+      const response = await axios.post("/api/drone/control", {
+        droneId: selectedDroneData.drone.droneId,
+        enum: enumType,
+        command: command,
+      });
+      console.log("Command sent:", response.data);
+    } catch (error) {
+      console.error("Error sending command:", error);
+    }
+  };
+
   return (
     <Card>
       <Title>DRONE INFO</Title>
@@ -82,38 +137,67 @@ export default function InfoDrone({ selectedDroneData }) {
             <p>
               <strong>Name:</strong>
               <br />
-              <p className="info-drone-status-yes"> {selectedDroneData.drone.name}</p>
+              <p className="info-drone-status-yes">{selectedDroneData.drone.name}</p>
             </p>
           </DroneInfo>
         </>
       )}
       {selectedDroneData ? (
-        <DroneDetail>
-          <div>
-            <p>
-              <strong>Frequency:</strong>
-              <br />
-              {selectedDroneData.drone.frequency}
-            </p>
-            <p>
-              <strong>Bandwidth:</strong>
-              <br />
-              {selectedDroneData.drone.bandwidth}
-            </p>
-          </div>
-          <div>
-            <p>
-              <strong>Latitude:</strong>
-              <br />
-              {selectedDroneData.drone.location.latitude}
-            </p>
-            <p>
-              <strong>Longitude:</strong>
-              <br />
-              {selectedDroneData.drone.location.longitude}
-            </p>
-          </div>
-        </DroneDetail>
+        <>
+          <DroneDetail>
+            <DroneDetailCol>
+              <p>
+                <strong>Frequency:</strong>
+                <br />
+                {selectedDroneData.drone.frequency}
+              </p>
+              <p>
+                <strong>Bandwidth:</strong>
+                <br />
+                {selectedDroneData.drone.bandwidth}
+              </p>
+            </DroneDetailCol>
+            <DroneDetailCol>
+              <p>
+                <strong>Latitude:</strong>
+                <br />
+                {selectedDroneData.drone.location.latitude}
+              </p>
+              <p>
+                <strong>Longitude:</strong>
+                <br />
+                {selectedDroneData.drone.location.longitude}
+              </p>
+            </DroneDetailCol>
+          </DroneDetail>
+          {/* 버튼 그룹 */}
+          <ButtonGroup>
+            <ToggleButton
+              isActive={isTrackActive}
+              onClick={() => {
+                setIsTrackActive(!isTrackActive);
+                sendControlCommand("Track", isTrackActive);
+              }}>
+              Track
+            </ToggleButton>
+            <ToggleButton
+              isActive={isTakeOverActive}
+              onClick={() => {
+                setIsTakeOverActive(!isTakeOverActive);
+                sendControlCommand("Takeover", isTakeOverActive);
+              }}>
+              Take over
+            </ToggleButton>
+            <ToggleButton
+              isActive={isMigrateActive}
+              onClick={() => {
+                setIsMigrateActive(!isMigrateActive);
+                sendControlCommand("Migrate", isMigrateActive);
+              }}>
+              Migrate
+            </ToggleButton>
+          </ButtonGroup>
+        </>
       ) : (
         <p className="info-drone-placeholder">드론을 선택해 주세요.</p>
       )}

@@ -38,6 +38,7 @@ const DroneStateMessageSchema = new mongoose.Schema(
         "Tracking disconnected",
         "Revert Takeover",
         "Landing Successful",
+        "Migrate",
       ],
       required: true,
     },
@@ -104,13 +105,14 @@ const SensorMessageSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+// SentMessage 스키마는 DroneStateMessageSchema와 동일한 형식을 사용
+const SentMessage = mongoose.model("SentMessage", DroneStateMessageSchema);
 // 익스포트 형식 맞추기
 const DroneStateMessage = mongoose.model("DroneStateMessage", DroneStateMessageSchema);
 const ServerMessage = mongoose.model("ServerMessage", ServerMessageSchema);
 const SensorMessage = mongoose.model("SensorMessage", SensorMessageSchema);
 
-export { DroneStateMessage, ServerMessage, SensorMessage };
+export { DroneStateMessage, ServerMessage, SensorMessage, SentMessage };
 
 // MarkSchema 정의
 const sensorSchema = new mongoose.Schema(

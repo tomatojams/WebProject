@@ -114,9 +114,11 @@ const DropdownItem = styled.div`
 `;
 
 const Logout = styled.div`
+  text-align: end;
+  padding: 5px 30px;
   z-index: 100;
   border-radius: 5px;
-  padding: 2px 10px;
+
   background-color: #f5f5f5;
   &:hover {
     background-color: #f5f5f5;

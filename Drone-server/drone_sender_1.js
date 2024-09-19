@@ -98,9 +98,9 @@ const init = async () => {
 
   // 각 드론마다 고유한 drone_id 사용
   sendDronePosition("64:60:1f:7a:b0:5e", 37.5665, 126.978, "Mavic Air");
-  sendDronePosition("12:34:56:78:9a:bc", 37.5667, 126.9782, "Phantom 4");
-  sendDronePosition("a1:b2:c3:d4:e5:f6", 37.5668, 126.9784, "Inspire 2");
-  sendDronePosition("11:22:33:44:55:66", 37.5669, 126.9786, "Mavic Mini");
+  // sendDronePosition("12:34:56:78:9a:bc", 37.5667, 126.9782, "Phantom 4");
+  // sendDronePosition("a1:b2:c3:d4:e5:f6", 37.5668, 126.9784, "Inspire 2");
+  // sendDronePosition("11:22:33:44:55:66", 37.5669, 126.9786, "Mavic Mini");
 
   await sendSensorPosition(37.5665, 126.978); // 센서 위치를 한 번만 전송
 };

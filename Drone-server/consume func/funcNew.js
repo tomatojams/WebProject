@@ -1,6 +1,6 @@
 import amqp from "amqplib";
 import dotenv from "dotenv";
-import { DroneStateMessage, MarkModel } from "../schema/schema.js";
+import { SentMessage, DroneStateMessage, MarkModel } from "../schema/schema.js";
 
 dotenv.config();
 const amqp_url = process.env.AMQP_URL;
@@ -15,7 +15,7 @@ const droneStateMessageBuffer = [];
 const trackedNewDrones = new Set();
 
 // 신버전 드론 메시지 소비 함수
-const consumeDroneStateMessage = async () => {
+const consumeDroneStateMessage = async (droneCommands) => {
   try {
     const connection = await amqp.connect(amqp_url);
     const channel = await connection.createChannel();
@@ -28,20 +28,16 @@ const consumeDroneStateMessage = async () => {
       queue,
       async (msg) => {
         if (msg !== null) {
-          if (!isReceivingNewFormat) {
-            isReceivingNewFormat = true;
-            printStatusNew("Receiving Drone State message");
-          }
-          resetDroneStateMessageTimeout(); // 타이머 리셋
-
           try {
             const droneStateMessageContent = JSON.parse(msg.content.toString());
+
+            // 원래 되던 기능: 메시지 버퍼에 저장 및 DB에 저장
             droneStateMessageBuffer.unshift(droneStateMessageContent);
             if (droneStateMessageBuffer.length > NEW_BUFFER_SIZE) {
               droneStateMessageBuffer.pop();
             }
 
-            const droneId = droneStateMessageContent.drone.drone_id;
+            const droneId = droneStateMessageContent.drone.droneId;
             if (!trackedNewDrones.has(droneId)) {
               trackedNewDrones.add(droneId);
             }
@@ -49,7 +45,32 @@ const consumeDroneStateMessage = async () => {
             const DroneStateMessageDoc = new DroneStateMessage(droneStateMessageContent);
             const savedDroneStateMessage = await DroneStateMessageDoc.save();
 
-            console.log("Drone state message saved:", savedDroneStateMessage);
+            console.log("Drone state message saved:");
+
+            // 새로운 기능: 클라이언트에서 활성화된 enum에 따라 메시지 수정 및 전송
+            if (droneCommands[droneId]) {
+              const activeEnums = Object.keys(droneCommands[droneId]).filter(
+                (enumType) => droneCommands[droneId][enumType]
+              );
+
+              if (activeEnums.length > 0) {
+                for (const enumType of activeEnums) {
+                  // 메시지 타입을 클라이언트에서 지정한 enum으로 수정
+                  const modifiedMessage = { ...droneStateMessageContent, message_type: enumType };
+
+                  // 1. 전송 전 메시지를 sent_message 콜렉션에 저장 (message_type 만 변경됨)
+                  const sentMessageDoc = new SentMessage(modifiedMessage);
+                  await sentMessageDoc.save(); // DB에 저장
+
+                  // 2. 수정된 메시지를 다시 RabbitMQ로 전송
+                  const targetQueue = `Modified_${queue}`; // 큐 이름을 다르게 설정
+                  await channel.assertQueue(targetQueue, { durable: false });
+                  channel.sendToQueue(targetQueue, Buffer.from(JSON.stringify(modifiedMessage)));
+                  console.log(`Sent modified message with type ${enumType}:`);
+                }
+              }
+            }
+
             channel.ack(msg);
           } catch (error) {
             console.error("Error processing drone state message:", error);

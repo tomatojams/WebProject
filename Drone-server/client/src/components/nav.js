@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useNavigate, useMatch } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Title = styled.h2`
   width: 100%;
@@ -13,7 +14,7 @@ const Title = styled.h2`
   font-size: 14px;
   font-weight: bold;
   font-family: "Satoshi", sans-serif;
-  letter-spacing: 0.36em; /* 자간 36% */
+  letter-spacing: 0.36em;
   color: #0e43b9;
 `;
 
@@ -36,21 +37,44 @@ const Nav = styled.nav`
   display: flex;
   gap: 50px;
   align-items: center;
+  justify-content: center;
 `;
 
-const NavItem = styled.div`
+const NavBox = styled(motion.div)`
+  z-index: 99;
+  top: 18px;
+  position: absolute;
+  width: 80px;
+  height: 30px;
   color: #333;
   cursor: pointer;
   font-size: 16px;
-  border: ${(props) => (props.isActive ? "#E2E8F0" : "transparent")};
-  background-color: ${(props) => (props.isActive ? "#E2E8F0" : "transparent")};
+  border: #e2e8f0;
+  background-color: #e2e8f0;
   padding: 5px 10px;
   border-radius: 5px;
   font-weight: 500;
-
   &:hover {
     background-color: #e2e8f0;
   }
+`;
+
+const MenuSpan = styled.span`
+  position: absolute;
+  top: 20px;
+  z-index: 1000;
+`;
+
+const NavItem = styled.div`
+  display: flex;
+  justify-content: center;
+  color: #333;
+  width: 80px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: 500;
 `;
 
 const TimeDisplay = styled.span`
@@ -63,18 +87,18 @@ const Notification = styled.div`
   cursor: pointer;
 `;
 
-const NotificationMenu = styled.div`
-  display: ${(props) => (props.open ? "block" : "none")};
+const MotionNotificationMenu = styled(motion.div)`
   position: absolute;
   top: 35px;
   right: 0;
   background-color: white;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-
   padding: 0px;
+  pointer-events: ${(props) => (props.open ? "auto" : "none")};
+  display: ${(props) => (props.open ? "block" : "none")};
 `;
 
 const UserMenu = styled.div`
@@ -87,16 +111,18 @@ const UserName = styled.span`
   font-size: 16px;
 `;
 
-const DropdownMenu = styled.div`
-  display: ${(props) => (props.open ? "block" : "none")};
+const MotionDropdownMenu = styled(motion.div)`
   position: absolute;
   top: 35px;
   right: 0;
   background-color: white;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   z-index: 100;
+  padding: 0px;
+  pointer-events: ${(props) => (props.open ? "auto" : "none")};
+  display: ${(props) => (props.open ? "block" : "none")};
 `;
 
 const DropdownItem = styled.div`
@@ -117,8 +143,8 @@ const Logout = styled.div`
   text-align: end;
   padding: 5px 30px;
   z-index: 100;
-  border-radius: 5px;
-
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
   background-color: #f5f5f5;
   &:hover {
     background-color: #f5f5f5;
@@ -132,7 +158,6 @@ const Overlay = styled.div`
   left: 0;
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
-  /* optional: for a slight dim effect */
 `;
 
 export default function AppHeader() {
@@ -196,31 +221,45 @@ export default function AppHeader() {
         <Nav>
           <Logo src={`${process.env.PUBLIC_URL}/logo_hori.svg`} alt="Logo" />
           <Link to="/maininfo" style={{ textDecoration: "none", color: "#414040" }}>
-            <NavItem isActive={matchMonitor}>Monitor</NavItem>
+            <NavItem>
+              {matchMonitor ? <NavBox layoutId="box" /> : null}
+              <MenuSpan>Monitor</MenuSpan>
+            </NavItem>
           </Link>
 
           <Link to="/setting" style={{ textDecoration: "none", color: "#414040" }}>
-            <NavItem isActive={matchSetting}>Setting</NavItem>
+            <NavItem>
+              {matchSetting ? <NavBox layoutId="box" /> : null}
+              <MenuSpan>Setting</MenuSpan>
+            </NavItem>
           </Link>
         </Nav>
         <Nav>
           <TimeDisplay>{currentTime.toLocaleTimeString()}</TimeDisplay>
           <Notification onClick={toggleNotification}>
             Notification
-            <NotificationMenu open={notificationOpen}>
+            <MotionNotificationMenu
+              open={notificationOpen}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: notificationOpen ? 1 : 0, y: notificationOpen ? 0 : -10 }}
+              transition={{ duration: 0.3 }}>
               <DropdownItem>
                 <Title>NOTIFICATION</Title>
               </DropdownItem>
-            </NotificationMenu>
+            </MotionNotificationMenu>
           </Notification>
           <UserMenu>
             <UserName onClick={toggleMenu}>Tomas</UserName>
-            <DropdownMenu open={menuOpen}>
+            <MotionDropdownMenu
+              open={menuOpen}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: menuOpen ? 1 : 0, y: menuOpen ? 0 : -10 }}
+              transition={{ duration: 0.3 }}>
               <DropdownItem>
                 <Title>USER INFORMATION</Title>
                 <Logout onClick={handleLogout}>Logout</Logout>
               </DropdownItem>
-            </DropdownMenu>
+            </MotionDropdownMenu>
           </UserMenu>
         </Nav>
       </Header>

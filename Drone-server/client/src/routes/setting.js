@@ -5,26 +5,32 @@ import axios from "axios";
 
 const Frame = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
+  gap: 50px;
 `;
 
 const SensorCard = styled.div`
   width: 100%;
-  height: 95%;
   margin-top: 25px;
   margin-left: 25px;
   margin-bottom: 25px;
-  padding: 20px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 0px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  padding-bottom: 20px;
+  color: #555555;
 `;
 // Card 스타일
-const Card = styled.div`
-  width: 350px;
-  margin: 16px;
+const DroneCard = styled.div`
+  width: 500px;
+  margin: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -119,8 +125,7 @@ const ToggleButton = styled.button`
   width: 100px;
 `;
 
-export default function Setting({selectedDroneData}) {
-
+export default function Setting({ selectedDroneData }) {
   const [droneStates, setDroneStates] = useState({});
 
   // 드론의 특정 상태를 변경하는 함수
@@ -152,62 +157,64 @@ export default function Setting({selectedDroneData}) {
     <>
       <AppHeader></AppHeader>
       <Frame>
-        <SensorCard></SensorCard>
-        <Card>
-      <Title>DRONE INFO</Title>
-      {selectedDroneData && (
-        <>
-          <DroneImage droneName={selectedDroneData.drone.name.replace(/\s+/g, "_").toLowerCase()} />
-          <DroneInfo>
-            <p>
-              <strong>Drone ID:</strong>
-              <br />
-              <p className="info-drone-value-highlight">{selectedDroneData.drone.droneId}</p>
-            </p>
-            <p>
-              <strong>Name:</strong>
-              <br />
-              <p className="info-drone-status-yes">{selectedDroneData.drone.name}</p>
-            </p>
-          </DroneInfo>
-        </>
-      )}
-      {selectedDroneData ? (
-        <>
-          <DroneDetail>
-            <DroneDetailCol>
-              <p>
-                <strong>Frequency:</strong>
-                <br />
-                {selectedDroneData.drone.frequency}
-              </p>
-              <p>
-                <strong>Bandwidth:</strong>
-                <br />
-                {selectedDroneData.drone.bandwidth}
-              </p>
-            </DroneDetailCol>
-            <DroneDetailCol>
-              <p>
-                <strong>Latitude:</strong>
-                <br />
-                {selectedDroneData.drone.location.latitude}
-              </p>
-              <p>
-                <strong>Longitude:</strong>
-                <br />
-                {selectedDroneData.drone.location.longitude}
-              </p>
-            </DroneDetailCol>
-          </DroneDetail>
-          <ButtonGroup>
-        
-          </ButtonGroup>
-        </>
-      ) : (
-        <p className="info-drone-placeholder">드론을 선택해 주세요.</p>
-      )}
-    </Card>
+        <SensorCard>
+          <Title>SONSOR SETTING</Title>
+        </SensorCard>
+        <DroneCard>
+          <Title>DRONE INFO</Title>
+          {selectedDroneData && (
+            <>
+              <DroneImage
+                droneName={selectedDroneData.drone.name.replace(/\s+/g, "_").toLowerCase()}
+              />
+              <DroneInfo>
+                <p>
+                  <strong>Drone ID:</strong>
+                  <br />
+                  <p className="info-drone-value-highlight">{selectedDroneData.drone.droneId}</p>
+                </p>
+                <p>
+                  <strong>Name:</strong>
+                  <br />
+                  <p className="info-drone-status-yes">{selectedDroneData.drone.name}</p>
+                </p>
+              </DroneInfo>
+            </>
+          )}
+          {selectedDroneData ? (
+            <>
+              <DroneDetail>
+                <DroneDetailCol>
+                  <p>
+                    <strong>Frequency:</strong>
+                    <br />
+                    {selectedDroneData.drone.frequency}
+                  </p>
+                  <p>
+                    <strong>Bandwidth:</strong>
+                    <br />
+                    {selectedDroneData.drone.bandwidth}
+                  </p>
+                </DroneDetailCol>
+                <DroneDetailCol>
+                  <p>
+                    <strong>Latitude:</strong>
+                    <br />
+                    {selectedDroneData.drone.location.latitude}
+                  </p>
+                  <p>
+                    <strong>Longitude:</strong>
+                    <br />
+                    {selectedDroneData.drone.location.longitude}
+                  </p>
+                </DroneDetailCol>
+              </DroneDetail>
+              <ButtonGroup></ButtonGroup>
+            </>
+          ) : (
+            <p className="info-drone-placeholder">드론을 선택해 주세요.</p>
+          )}
+        </DroneCard>
       </Frame>
     </>
   );

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useState } from "react";
 import { useQueryClient } from "react-query";
 import axios from "axios";
 
@@ -39,11 +39,15 @@ const RadiusWrapper = styled.div`
 `;
 
 const RadiusIcon = styled.div`
-  width: 40px;
-  height: 40px;
-  background-color: #f9a825;
+  width: 60px;
+  height: 60px;
+  background-color: #fce2f3;
   border-radius: 50%;
   display: flex;
+  background-image: url(${process.env.PUBLIC_URL}/icon/sensor_icon.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 80%;
   justify-content: center;
   align-items: center;
   margin-right: 10px;
@@ -60,14 +64,43 @@ const SimpleButton = styled.button`
   }
 `;
 
+const RadiusInput = styled.input`
+  width: 60px;
+  padding: 5px;
+  margin-left: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
 const SensorCard = ({ sensor }) => {
   const queryClient = useQueryClient();
+  const [radius, setRadius] = useState(sensor.radius); // 반경 상태 추가
 
+  // 반경 업데이트 핸들러
+  const handleRadiusUpdate = async () => {
+    try {
+      // 반경 값이 숫자 타입인지 확인하고 요청
+      const parsedRadius = Number(radius);
+      if (isNaN(parsedRadius) || parsedRadius <= 0) {
+        console.error("Invalid radius value");
+        return; // 반경 값이 유효하지 않으면 요청하지 않음
+      }
+
+      await axios.put(`/api/sensor/${sensor.sensor_id}`, { radius: parsedRadius });
+      queryClient.invalidateQueries("sensorList"); // 업데이트 후 센서 리스트를 다시 로드
+    } catch (error) {
+      console.error("Error updating radius:", error);
+    }
+  };
+
+  // 센서 삭제 핸들러
   const handleDelete = async () => {
     try {
-      // 삭제 API 호출
       await axios.delete(`/api/sensor/${sensor.sensor_id}`);
-      // 삭제 후 sensorList 쿼리 무효화하여 다시 로드
       queryClient.invalidateQueries("sensorList");
     } catch (error) {
       console.error("Error deleting sensor:", error);
@@ -78,13 +111,18 @@ const SensorCard = ({ sensor }) => {
     <SensorContainer>
       <SensorInfo>
         <SensorTitle>{sensor.sensor_id}</SensorTitle>
-
-        <SimpleButton onClick={handleDelete}>초기화</SimpleButton>
+        <SimpleButton onClick={handleDelete}>삭제</SimpleButton>
       </SensorInfo>
       <RadiusWrapper>
-        <RadiusIcon>📡</RadiusIcon>
+        <RadiusIcon />
         <div>
-          <p>Radius: {sensor.radius} m</p>
+          <label>Radius: </label>
+          <RadiusInput
+            type="number"
+            value={radius}
+            onChange={(e) => setRadius(e.target.value)} // 반경 값 변경
+          />{" "}
+          m<SimpleButton onClick={handleRadiusUpdate}>반경설정</SimpleButton>
         </div>
       </RadiusWrapper>
       <SensorDetails>

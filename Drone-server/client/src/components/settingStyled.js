@@ -18,6 +18,7 @@ const SensorCardWrapper = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
+  background-color: white;
   margin-top: 20px;
   margin-left: 25px;
   margin-bottom: 25px;
@@ -155,7 +156,7 @@ const AlignRight = styled.div`
   width: 100%;
   display: flex;
   justify-content: end;
-  padding: 4px 12px;
+  padding: 4px 15px;
 `;
 
 const SimpleButton = styled.button`

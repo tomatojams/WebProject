@@ -176,6 +176,33 @@ app.delete("/api/sensor/:sensor_id", async (req, res) => {
   }
 });
 
+// 센서 반경 업데이트 API
+app.put("/api/sensor/:sensor_id", async (req, res) => {
+  const { sensor_id } = req.params;
+  const { radius } = req.body;
+  console.log("Received radius value:", radius);
+  // radius가 없거나 숫자가 아니면 오류 반환
+  if (radius == null || typeof radius !== "number" || radius <= 0) {
+    return res.status(400).json({ error: "Invalid radius value." });
+  }
+
+  try {
+    const updatedSensor = await SensorListModel.findOneAndUpdate(
+      { sensor_id },
+      { radius },
+      { new: true }
+    );
+
+    if (updatedSensor) {
+      res.status(200).json({ message: "Radius updated successfully.", sensor: updatedSensor });
+    } else {
+      res.status(404).json({ error: "Sensor not found." });
+    }
+  } catch (error) {
+    console.error("Error updating sensor radius:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

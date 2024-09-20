@@ -1,18 +1,18 @@
-// PopupComponent.js
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion"; // framer-motion import
 
-const PopupOverlay = styled.div`
+const PopupOverlay = styled(motion.div)`
   position: fixed;
   z-index: 99;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.1);
 `;
 
-const PopupContainer = styled.div`
+const PopupContainer = styled(motion.div)`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -21,7 +21,6 @@ const PopupContainer = styled.div`
   padding: 30px;
   border-radius: 10px;
   width: 400px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 `;
 
 const PopupContent = styled.div`
@@ -30,6 +29,7 @@ const PopupContent = styled.div`
   align-items: center;
   gap: 10px;
 `;
+
 const PopupFields = styled.div`
   display: flex;
   flex-direction: column;
@@ -63,13 +63,16 @@ const Title = styled.h2`
   letter-spacing: 0.36em;
   color: #0e43b9;
 `;
+
 const SpanTitle = styled.span`
   font-weight: 500;
 `;
+
 const SpanTitleBlue = styled.span`
   font-weight: 500;
   color: #0e43b9;
 `;
+
 const DroneImage = styled.div`
   width: 150px;
   height: 150px;
@@ -84,14 +87,18 @@ const DroneImage = styled.div`
 const SpanGreen = styled.span`
   color: #28a745;
 `;
+
 const PopupComponent = ({ popupDrone, onClose }) => {
   const popupRef = useRef();
 
-  const handleClickOutside = (e) => {
-    if (popupRef.current && !popupRef.current.contains(e.target)) {
-      onClose();
-    }
-  };
+  const handleClickOutside = useCallback(
+    (e) => {
+      if (popupRef.current && !popupRef.current.contains(e.target)) {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
   useEffect(() => {
     if (popupDrone) {
@@ -102,13 +109,39 @@ const PopupComponent = ({ popupDrone, onClose }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [popupDrone]);
+  }, [popupDrone, handleClickOutside]);
 
   if (!popupDrone) return null;
+
   const droneImageName = popupDrone.name.replace(/\s+/g, "_").toLowerCase();
+
+  // 애니메이션 설정
+  const popupAnimation = {
+    hidden: { opacity: 0, scale: 0.9, y: "-50%", x: "-50%" },
+    visible: { opacity: 1, scale: 1, y: "-50%", x: "-50%" },
+    exit: { opacity: 0, scale: 0.9, y: "-50%", x: "-50%" },
+  };
+
+  const overlayAnimation = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 },
+  };
+
   return (
-    <PopupOverlay>
-      <PopupContainer ref={popupRef}>
+    <PopupOverlay
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      variants={overlayAnimation}
+      transition={{ duration: 0.3 }}>
+      <PopupContainer
+        ref={popupRef}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        variants={popupAnimation}
+        transition={{ duration: 0.3, ease: "easeInOut" }}>
         <PopupContent>
           <Title>{popupDrone.name}</Title>
           <DroneImage droneName={droneImageName} />

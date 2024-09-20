@@ -60,4 +60,17 @@ const deleteDroneList = async () => {
   }
 };
 
-export { fetchDronePositions, fetchMarkData, fetchDroneList, fetchSensorList, deleteDroneList };
+
+
+// Sensor 삭제 API 호출 함수
+const deleteSensor = async (sensorId) => {
+  try {
+    const response = await axios.delete(`/api/sensor/${sensorId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error("Sensor 삭제에 실패했습니다.");
+  }
+};
+
+
+export { fetchDronePositions, fetchMarkData, fetchDroneList, fetchSensorList, deleteDroneList, deleteSensor };

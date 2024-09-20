@@ -157,6 +157,26 @@ app.get("/api/sensorlist", async (req, res) => {
   }
 });
 
+// 센서 삭제 API
+app.delete("/api/sensor/:sensor_id", async (req, res) => {
+  const { sensor_id } = req.params;
+
+  try {
+    // 센서를 sensor_id로 찾아서 삭제
+    const result = await SensorListModel.findOneAndDelete({ sensor_id });
+
+    if (result) {
+      res.status(200).json({ message: `Sensor with ID ${sensor_id} deleted successfully.` });
+    } else {
+      res.status(404).json({ error: "Sensor not found." });
+    }
+  } catch (error) {
+    console.error("Error deleting sensor:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`API doc is http://localhost:${PORT}/docs`);

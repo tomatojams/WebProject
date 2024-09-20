@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
+import axios from "axios";
 // Wrapper 스타일드 컴포넌트
 const Wrapper = styled.div`
   display: flex;
@@ -139,18 +139,28 @@ export default function LogIn() {
     setRememberMe(savedRememberMe); // 기억된 "기억하기" 상태를 설정
   }, []);
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    if (rememberMe) {
-      localStorage.setItem("rememberedId", id);
-      localStorage.setItem("rememberedPassword", password);
-      localStorage.setItem("rememberMe", true);
-    } else {
-      localStorage.removeItem("rememberedId");
-      localStorage.removeItem("rememberedPassword");
-      localStorage.setItem("rememberMe", false); // "기억하기" 상태를 false로 저장
+    try {
+      const response = await axios.post("/api/login", { id, password });
+
+      if (rememberMe) {
+        localStorage.setItem("rememberedId", id);
+        localStorage.setItem("rememberedPassword", password);
+        localStorage.setItem("rememberMe", true);
+      } else {
+        localStorage.removeItem("rememberedId");
+        localStorage.removeItem("rememberedPassword");
+        localStorage.setItem("rememberMe", false);
+      }
+
+      if (response.status === 200) {
+        navigate("/mainInfo");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
     }
-    navigate("/mainInfo");
   };
 
   return (

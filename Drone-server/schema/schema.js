@@ -148,3 +148,13 @@ const MarkModel = mongoose.model("Mark", sensorSchema, "marks");
 // 새로운 센서만 추출해서 저장
 const SensorListModel = mongoose.model("SensorList", sensorSchema, "sensorlists");
 export { MarkModel, SensorListModel };
+
+// 유저스키마
+const userSchema = new mongoose.Schema({
+  id: { type: String, required: true, unique: true },
+  password: { type: String, required: true }
+});
+
+const UserModel = mongoose.model('User', userSchema);
+
+export { UserModel };

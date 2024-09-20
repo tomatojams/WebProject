@@ -29,6 +29,9 @@ const SensorTitle = styled.h3`
 `;
 
 const SensorDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   font-size: 14px;
   color: #555555;
 `;

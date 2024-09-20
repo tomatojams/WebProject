@@ -10,7 +10,7 @@ import {
   consumeDroneStateMessage,
   consumeMarkMessage,
 } from "./consume func/funcNew.js";
-import { MarkModel, DroneHistory, SensorListModel } from "./schema/schema.js";
+import { UserModel, MarkModel, DroneHistory, SensorListModel } from "./schema/schema.js";
 
 dotenv.config();
 const root = process.cwd();
@@ -200,6 +200,31 @@ app.put("/api/sensor/:sensor_id", async (req, res) => {
     }
   } catch (error) {
     console.error("Error updating sensor radius:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// 로그인 API
+app.post("/api/login", async (req, res) => {
+  const { id, password } = req.body;
+
+  try {
+    // MongoDB에서 유저 찾기
+    const user = await UserModel.findOne({ id });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // 비밀번호 비교
+    if (user.password !== password) {
+      return res.status(401).json({ error: "Invalid password" });
+    }
+
+    // 로그인 성공
+    res.status(200).json({ message: "Login successful" });
+  } catch (error) {
+    console.error("Error during login:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

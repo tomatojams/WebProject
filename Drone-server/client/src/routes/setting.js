@@ -1,6 +1,6 @@
 import AppHeader from "../components/nav";
 import styled from "styled-components";
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import { selectedDroneState } from "../atom";
@@ -25,7 +25,6 @@ const SensorCard = styled.div`
   margin-top: 20px;
   margin-left: 25px;
   margin-bottom: 25px;
-
   position: relative;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
@@ -82,20 +81,17 @@ const Dronelist = styled.ul`
   width: 100%;
   max-height: calc(100vh - 200px);
   padding: 0px 20px;
-  max-height: 300px; /* 최대 높이를 설정하여 스크롤 영역을 제한 */
-  overflow-y: auto; /* 세로 스크롤 가능하도록 설정 */
-  scrollbar-width: thin; /* 스크롤바 너비를 얇게 설정 (Firefox 지원) */
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
 
-  /* 스크롤바 스타일 (Webkit 기반 브라우저, Chrome, Safari) */
   &::-webkit-scrollbar {
     width: 8px;
   }
-
   &::-webkit-scrollbar-thumb {
     background-color: #cccccc;
     border-radius: 4px;
   }
-
   &::-webkit-scrollbar-track {
     background-color: #f1f1f1;
   }
@@ -106,38 +102,101 @@ const DroneElement = styled.li`
   height: 36px;
   padding: 0px 20px;
   margin: 5px 0px;
+  cursor: pointer;
+`;
+
+const PopupOverlay = styled.div`
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+const PopupContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+`;
+
+const PopupContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+`;
+
+const PopupField = styled.div`
+  width: 100%;
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
 `;
 
 export default function Setting() {
-  // 새로운 드론 리스트 API로 변경
+  // Drone 리스트 데이터 가져오기
   const { data: droneList = [], refetch } = useQuery("droneList", fetchDroneList, {
-    refetchInterval: 10000, // 10초마다 refetch
+    refetchInterval: 10000,
   });
 
   const { register, watch } = useForm();
-
-  // 선택된 드론 ID를 저장해서 백그라운드 색상을 변경
   const [selectedDroneId, setSelectedDroneId] = useRecoilState(selectedDroneState);
+  const [popupDrone, setPopupDrone] = useState(null); // 팝업으로 표시할 드론 정보
+  const popupRef = useRef();
 
-  const searchTerm = watch("search") || ""; // useState("") 처음 빈문자열 초기화
+  const searchTerm = watch("search") || "";
 
-  // 새로운 API로 받아온 데이터 구조에 맞게 수정
+  // 검색을 적용한 드론 리스트 필터링
   const filteredDronsList = droneList.filter((drone) =>
     drone.name.toLowerCase().includes(searchTerm?.toLowerCase())
   );
 
+  // 팝업 외부 클릭 시 닫기
+  const handleClickOutside = (e) => {
+    if (popupRef.current && !popupRef.current.contains(e.target)) {
+      setPopupDrone(null);
+    }
+  };
+
+  useEffect(() => {
+    if (popupDrone) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [popupDrone]);
+
   const handleDelete = async () => {
     try {
-      await deleteDroneList(); // 드론 삭제 함수 호출
-      refetch(); // 직접 refetch를 호출하여 데이터를 즉시 갱신
+      await deleteDroneList();
+      refetch();
     } catch (error) {
       console.error("Error deleting drones:", error);
     }
   };
+
   const handleItemClick = (droneId) => {
-    // 클릭된 드론 ID가 현재 선택된 드론과 같으면 선택 해제, 아니면 선택
+    // 드론 선택 기능 추가
     setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
+
+    // 선택한 드론 정보 팝업으로 표시
+    const selectedDrone = droneList.find((drone) => drone.droneId === droneId);
+    setPopupDrone(selectedDrone);
   };
+
   return (
     <MainContainer>
       <AppHeader />
@@ -163,11 +222,7 @@ export default function Setting() {
                   onClick={() => handleItemClick(drone.droneId)}
                   className={`drone-list-item ${selectedDroneId === drone.droneId ? "selected" : ""}`}>
                   <span
-                    className={`drone-list-item-name ${
-                      searchTerm && drone.name.toLowerCase().includes(searchTerm.toLowerCase())
-                        ? "bold"
-                        : ""
-                    }`}>
+                    className={`drone-list-item-name ${searchTerm && drone.name.toLowerCase().includes(searchTerm.toLowerCase()) ? "bold" : ""}`}>
                     {drone.name}
                   </span>
                 </DroneElement>
@@ -178,6 +233,52 @@ export default function Setting() {
           )}
         </DroneCard>
       </ContentWrapper>
+
+      {popupDrone && (
+        <PopupOverlay>
+          <PopupContainer ref={popupRef}>
+            <PopupContent>
+              <Title>{popupDrone.name}</Title>
+              <PopupField>
+                <span>Drone ID:</span>
+                <span>{popupDrone.droneId}</span>
+              </PopupField>
+              <PopupField>
+                <span>Class:</span>
+                <span>{popupDrone.class_name}</span>
+              </PopupField>
+              <PopupField>
+                <span>Frequency:</span>
+                <span>{popupDrone.frequency}</span>
+              </PopupField>
+              <PopupField>
+                <span>Bandwidth:</span>
+                <span>{popupDrone.bandwidth}</span>
+              </PopupField>
+              <PopupField>
+                <span>Radio Resources:</span>
+                <span>{popupDrone.radio_resources}</span>
+              </PopupField>
+              <PopupField>
+                <span>Allow Takeover:</span>
+                <span>{popupDrone.allow_takeover ? "Yes" : "No"}</span>
+              </PopupField>
+              <PopupField>
+                <span>Allow Track:</span>
+                <span>{popupDrone.allow_track ? "Yes" : "No"}</span>
+              </PopupField>
+              <PopupField>
+                <span>Created At:</span>
+                <span>{new Date(popupDrone.createdAt).toLocaleString()}</span>
+              </PopupField>
+              <PopupField>
+                <span>Updated At:</span>
+                <span>{new Date(popupDrone.updatedAt).toLocaleString()}</span>
+              </PopupField>
+            </PopupContent>
+          </PopupContainer>
+        </PopupOverlay>
+      )}
     </MainContainer>
   );
 }

@@ -113,13 +113,15 @@ app.post("/api/drone/control", (req, res) => {
 });
 
 // 드론 리스트 가져오기
+
 app.get("/api/dronelist", async (req, res) => {
   try {
     const drones = await DroneHistory.find({}).sort({ createdAt: -1 }).exec(); // 모든 새로운 드론 정보 가져오기
     if (drones.length > 0) {
       res.json(drones);
     } else {
-      res.status(404).json({ error: "No drone data available." });
+      // 데이터가 없을 때 빈 배열을 반환
+      res.status(200).json([]);
     }
   } catch (error) {
     console.error("Error fetching new drones:", error);

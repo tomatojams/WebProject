@@ -4,7 +4,7 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import { selectedDroneState } from "../atom";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { fetchDroneList, deleteDroneList } from "../components/api"; // fetchDroneList API로 변경
 
 const MainContainer = styled.div`
@@ -109,10 +109,8 @@ const DroneElement = styled.li`
 `;
 
 export default function Setting() {
-  const queryClient = useQueryClient();
-
   // 새로운 드론 리스트 API로 변경
-  const { data: latestPositions = [], refetch } = useQuery(["droneList"], fetchDroneList, {
+  const { data: droneList = [], refetch } = useQuery("droneList", fetchDroneList, {
     refetchInterval: 10000, // 10초마다 refetch
   });
 
@@ -121,28 +119,25 @@ export default function Setting() {
   // 선택된 드론 ID를 저장해서 백그라운드 색상을 변경
   const [selectedDroneId, setSelectedDroneId] = useRecoilState(selectedDroneState);
 
-  const handleItemClick = (droneId) => {
-    // 클릭된 드론 ID가 현재 선택된 드론과 같으면 선택 해제, 아니면 선택
-    setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
-  };
-
   const searchTerm = watch("search") || ""; // useState("") 처음 빈문자열 초기화
 
   // 새로운 API로 받아온 데이터 구조에 맞게 수정
-  const filteredDronsList = latestPositions.filter((drone) =>
+  const filteredDronsList = droneList.filter((drone) =>
     drone.name.toLowerCase().includes(searchTerm?.toLowerCase())
   );
 
   const handleDelete = async () => {
     try {
       await deleteDroneList(); // 드론 삭제 함수 호출
-      await queryClient.invalidateQueries(["droneList"]); // 삭제 후 리스트를 다시 불러옴
-      await refetch(); // 직접 refetch를 호출하여 데이터를 즉시 갱신
+      refetch(); // 직접 refetch를 호출하여 데이터를 즉시 갱신
     } catch (error) {
       console.error("Error deleting drones:", error);
     }
   };
-
+  const handleItemClick = (droneId) => {
+    // 클릭된 드론 ID가 현재 선택된 드론과 같으면 선택 해제, 아니면 선택
+    setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
+  };
   return (
     <MainContainer>
       <AppHeader />

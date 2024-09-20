@@ -139,6 +139,7 @@ const sensorSchema = new mongoose.Schema(
     latitude: { type: Number, required: false },
     longitude: { type: Number, required: false },
     state: { type: Boolean, required: false, default: false },
+    radius: { type: Number, required: false, default: 100 },
   },
   { timestamps: true }
 );

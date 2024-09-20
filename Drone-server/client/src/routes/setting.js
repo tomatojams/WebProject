@@ -2,11 +2,10 @@ import AppHeader from "../components/nav";
 import styled from "styled-components";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { selectedDroneState } from "../atom";
-import { useQuery } from "react-query";
-import { fetchDronePositions } from "../components/api";
+import { useQuery, useQueryClient } from "react-query";
+import { fetchDroneList, deleteDroneList } from "../components/api"; // fetchDroneList API로 변경
 
 const MainContainer = styled.div`
   display: flex;
@@ -33,10 +32,9 @@ const SensorCard = styled.div`
   background-color: white;
   box-shadow: 0 0px 2px rgba(0, 0, 0, 0.1);
 `;
-// Card 스타일
+
 const DroneCard = styled.div`
   height: 95%;
-
   display: flex;
   margin-top: 21px;
   margin-left: 20px;
@@ -55,7 +53,6 @@ const DroneCard = styled.div`
   color: #555555;
 `;
 
-// Title 스타일
 const Title = styled.h2`
   position: absolute;
   top: 0;
@@ -83,7 +80,25 @@ const SearchInput = styled.input`
 
 const Dronelist = styled.ul`
   width: 100%;
+  max-height: calc(100vh - 200px);
   padding: 0px 20px;
+  max-height: 300px; /* 최대 높이를 설정하여 스크롤 영역을 제한 */
+  overflow-y: auto; /* 세로 스크롤 가능하도록 설정 */
+  scrollbar-width: thin; /* 스크롤바 너비를 얇게 설정 (Firefox 지원) */
+
+  /* 스크롤바 스타일 (Webkit 기반 브라우저, Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
 `;
 
 const DroneElement = styled.li`
@@ -93,37 +108,51 @@ const DroneElement = styled.li`
   margin: 5px 0px;
 `;
 
-//
 export default function Setting() {
-  // Query받아옴
-  const { data: latestPositions = [] } = useQuery(["dronePositions"], fetchDronePositions, {
-    refetchInterval: 1000,
+  const queryClient = useQueryClient();
+
+  // 새로운 드론 리스트 API로 변경
+  const { data: latestPositions = [], refetch } = useQuery(["droneList"], fetchDroneList, {
+    refetchInterval: 10000, // 10초마다 refetch
   });
 
   const { register, watch } = useForm();
 
-  // 선택된 드론 ID를 저장해서 백그라운드 색상을 변경**
+  // 선택된 드론 ID를 저장해서 백그라운드 색상을 변경
   const [selectedDroneId, setSelectedDroneId] = useRecoilState(selectedDroneState);
 
   const handleItemClick = (droneId) => {
     // 클릭된 드론 ID가 현재 선택된 드론과 같으면 선택 해제, 아니면 선택
     setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
   };
+
   const searchTerm = watch("search") || ""; // useState("") 처음 빈문자열 초기화
 
+  // 새로운 API로 받아온 데이터 구조에 맞게 수정
   const filteredDronsList = latestPositions.filter((drone) =>
-    // toLowerCase()를 쓰려면 undefined가 아니어야 하므로 ? 또는 ""로 초기화
     drone.name.toLowerCase().includes(searchTerm?.toLowerCase())
   );
+
+  const handleDelete = async () => {
+    try {
+      await deleteDroneList(); // 드론 삭제 함수 호출
+      await queryClient.invalidateQueries(["droneList"]); // 삭제 후 리스트를 다시 불러옴
+      await refetch(); // 직접 refetch를 호출하여 데이터를 즉시 갱신
+    } catch (error) {
+      console.error("Error deleting drones:", error);
+    }
+  };
+
   return (
     <MainContainer>
       <AppHeader />
       <ContentWrapper>
         <SensorCard>
-          <Title>SONSOR SETTING</Title>
+          <Title>SENSOR SETTING</Title>
         </SensorCard>
         <DroneCard>
           <Title>DRONE LIST</Title>
+          <button onClick={handleDelete}>초기화</button>
           <SearchInput
             {...register("search")}
             type="text"
@@ -139,7 +168,11 @@ export default function Setting() {
                   onClick={() => handleItemClick(drone.droneId)}
                   className={`drone-list-item ${selectedDroneId === drone.droneId ? "selected" : ""}`}>
                   <span
-                    className={`drone-list-item-name ${searchTerm && drone.name.toLowerCase().includes(searchTerm.toLowerCase()) ? "bold" : ""}`}>
+                    className={`drone-list-item-name ${
+                      searchTerm && drone.name.toLowerCase().includes(searchTerm.toLowerCase())
+                        ? "bold"
+                        : ""
+                    }`}>
                     {drone.name}
                   </span>
                 </DroneElement>

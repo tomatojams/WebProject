@@ -1,0 +1,77 @@
+.drone-list-container {
+  height: 380px;
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  background: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+}
+
+.drone-list-title {
+  margin: 0 0 10px 0;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.drone-list-search {
+  width: 90%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.drone-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.drone-list-item {
+  padding: 8px;
+
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  transition: background-color 0.3s ease; /* 배경색 변화 부드럽게 */
+}
+
+.drone-list-item.selected {
+  background-color: #f1f5f9;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.drone-list-item-name {
+  flex-grow: 1;
+  font-weight: normal;
+  font-size: 1em;
+}
+
+.drone-list-item-name.bold {
+  font-weight: bold;
+}
+
+.drone-list-item-button {
+  margin-left: 10px;
+  padding: 4px 8px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.drone-list-item-button.filtered {
+  background-color: lightcoral;
+}
+
+.drone-list-placeholder {
+  color: #999;
+  text-align: center;
+  font-style: italic;
+}

@@ -6,8 +6,6 @@ export const metadata: Metadata = {
   description: "제품을 판매하는 곳",
 };
 
-
-
 export default function ProductsLayout({
   children,
 }: Readonly<{
@@ -15,6 +13,7 @@ export default function ProductsLayout({
 }>) {
   return (
     <>
+      {/* boy같은걸 쓰면 안됨 기존레이아웃이 깨짐 */}
       <nav className="p-2 bg-gray-200 category ">
         <Link href="/products/woman">여성옷</Link>
         <Link href="/products/man">남성옷</Link>

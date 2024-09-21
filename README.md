@@ -1,7 +1,10 @@
 # 프론트엔드 + 백엔드
 
 - JS나 리액트 계열 웹개발 + 외주 프로젝트
- 
+
+ - 외주
+   ![ScreenShot_20240921134341](https://github.com/user-attachments/assets/e8c7bc27-0517-41a3-a80c-76da7fd04da5)
+
 - 노마드코더 CSS 마스터 과정(졸업)
   ![ScreenShot_20240713043815](https://github.com/user-attachments/assets/04c1f638-c824-47ab-8640-1dc7cde3c0e8)
 

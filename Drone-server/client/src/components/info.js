@@ -68,13 +68,16 @@ const DroneDetail = styled.div`
   width: 100%;
   margin-top: 70px;
   padding: 10px;
+  padding-left: 30px;
+  gap: 65px;
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
 `;
 
 const DroneDetailCol = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: start;
   gap: 15px;
 `;
 

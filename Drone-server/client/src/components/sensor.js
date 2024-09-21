@@ -80,6 +80,7 @@ const RadiusInput = styled.input`
 `;
 
 const SensorCard = ({ sensor }) => {
+  // 자식컴포넌트가 부모컴포넌트를 업데이트 하기위해서
   const queryClient = useQueryClient();
   const [radius, setRadius] = useState(sensor.radius); // 반경 상태 추가
 

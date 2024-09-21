@@ -4,10 +4,16 @@
 - 웹개발은 서브로 공부하는 것이지만, 하다보니 연구용역도 하는 중.
 
  - 연구용역 프로젝트
+ -  사용기술  
+    서버- Node js, MongoDB, mongoose, RabbitMQ 통신  
+    클라이언트 - React( react-query, react-hook-form, Framer-motion, styled-component, recoil, react-leaflet )
+    디자인 - Figma
    ![ScreenShot_20240921134341](https://github.com/user-attachments/assets/e8c7bc27-0517-41a3-a80c-76da7fd04da5)
 
+   ![ScreenShot_20240921134715](https://github.com/user-attachments/assets/d72deab8-ac67-43ce-aabb-5113b43e5a46)
+
 - 학습
-- 
+ 
 - 노마드코더 CSS 마스터 과정(졸업)
   ![ScreenShot_20240713043815](https://github.com/user-attachments/assets/04c1f638-c824-47ab-8640-1dc7cde3c0e8)
 

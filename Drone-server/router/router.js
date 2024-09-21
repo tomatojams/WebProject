@@ -4,10 +4,10 @@ dotenv.config();
 import { droneStateMessageBuffer } from "../consume func/funcNew.js";
 import { MarkModel, SensorListModel, UserModel, DroneHistory } from "../schema/schema.js";
 
-// 드론에 대한 활성화 명령을 전역변수에서 받아서 사용
-import { droneCommands } from "../server.js";
+// import로 받아와도 되지만 매개변수로 받아도 됨
+// import { droneCommands } from "../server.js";
 
-const droneRouter = () => {
+const droneRouter = (droneCommands) => {
   const router = express.Router();
 
   // 최근 드론 위치 가져오기

@@ -121,8 +121,6 @@ const DroneHistorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
-
 // MarkSchema 정의
 const sensorSchema = new mongoose.Schema(
   {
@@ -140,6 +138,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
 });
 
+// 몽고DB collection 연결
 const DroneHistory = mongoose.model("DroneHistory", DroneHistorySchema, "dronehistorylists");
 const SentMessage = mongoose.model("SentMessage", DroneStateMessageSchema);
 const DroneStateMessage = mongoose.model("DroneStateMessage", DroneStateMessageSchema);

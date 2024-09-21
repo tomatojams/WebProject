@@ -24,7 +24,7 @@ function tomato3(x: number | string) {
 // 인스턴스 instanceof 부모
 // typeof, in , instanceof
 
-// assertion - as 사용
+// assertion - as 사용-> union에서 하나 고름
 
 function tomato12(x: number | string) {
   let array: number[] = [];

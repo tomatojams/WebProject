@@ -121,16 +121,7 @@ const DroneHistorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// DroneHistory 모델을 'dronehistorylists'라는 콜렉션에 저장
-const DroneHistory = mongoose.model("DroneHistory", DroneHistorySchema, "dronehistorylists");
 
-// SentMessage 스키마는 DroneStateMessageSchema와 동일한 형식을 사용
-const SentMessage = mongoose.model("SentMessage", DroneStateMessageSchema);
-const DroneStateMessage = mongoose.model("DroneStateMessage", DroneStateMessageSchema);
-const ServerMessage = mongoose.model("ServerMessage", ServerMessageSchema);
-const SensorMessage = mongoose.model("SensorMessage", SensorMessageSchema);
-
-export { DroneStateMessage, ServerMessage, SensorMessage, SentMessage, DroneHistory };
 
 // MarkSchema 정의
 const sensorSchema = new mongoose.Schema(
@@ -143,18 +134,28 @@ const sensorSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-//센서 메세지 그대로 저장
-const MarkModel = mongoose.model("Mark", sensorSchema, "marks");
-// 새로운 센서만 추출해서 저장
-const SensorListModel = mongoose.model("SensorList", sensorSchema, "sensorlists");
-export { MarkModel, SensorListModel };
-
 // 유저스키마
 const userSchema = new mongoose.Schema({
   id: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
 });
 
-const UserModel = mongoose.model('User', userSchema);
+const DroneHistory = mongoose.model("DroneHistory", DroneHistorySchema, "dronehistorylists");
+const SentMessage = mongoose.model("SentMessage", DroneStateMessageSchema);
+const DroneStateMessage = mongoose.model("DroneStateMessage", DroneStateMessageSchema);
+const ServerMessage = mongoose.model("ServerMessage", ServerMessageSchema);
+const SensorMessage = mongoose.model("SensorMessage", SensorMessageSchema);
+const UserModel = mongoose.model("User", userSchema);
+const MarkModel = mongoose.model("Mark", sensorSchema, "marks");
+const SensorListModel = mongoose.model("SensorList", sensorSchema, "sensorlists");
 
-export { UserModel };
+export {
+  MarkModel,
+  SensorListModel,
+  UserModel,
+  DroneStateMessage,
+  ServerMessage,
+  SensorMessage,
+  SentMessage,
+  DroneHistory,
+};

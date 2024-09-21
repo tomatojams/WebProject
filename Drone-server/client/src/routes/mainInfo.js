@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 import { useQuery } from "react-query";
 import { useRecoilValue } from "recoil";

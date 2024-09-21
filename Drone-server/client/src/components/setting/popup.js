@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion"; // framer-motion import
 

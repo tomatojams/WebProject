@@ -1,6 +1,10 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  env: {
+    node: true, // Node.js 전역 객체 사용 허용
+    browser: true,
+    es2020: true,
+  },
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -15,9 +19,6 @@ module.exports = {
     "no-unused-vars": "warn",
     "react/prop-types": "warn",
     "react/jsx-no-target-blank": "off",
-    "react-refresh/only-export-components": [
-      "warn",
-      { allowConstantExport: true },
-    ],
+    "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
   },
 };

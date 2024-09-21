@@ -1,5 +1,5 @@
 import AppHeader from "../components/nav";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { useForm } from "react-hook-form";
 import { selectedDroneState } from "../atom";

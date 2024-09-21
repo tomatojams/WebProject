@@ -1,10 +1,13 @@
 # 프론트엔드 + 백엔드
 
-- JS나 리액트 계열 웹개발 + 외주 프로젝트
+- JS나 리액트 계열 웹개발 + 연구용역 프로젝트
+- 웹개발은 서브로 공부하는 것이지만, 하다보니 연구용역도 하는 중.
 
- - 외주
+ - 연구용역 프로젝트
    ![ScreenShot_20240921134341](https://github.com/user-attachments/assets/e8c7bc27-0517-41a3-a80c-76da7fd04da5)
 
+- 학습
+- 
 - 노마드코더 CSS 마스터 과정(졸업)
   ![ScreenShot_20240713043815](https://github.com/user-attachments/assets/04c1f638-c824-47ab-8640-1dc7cde3c0e8)
 

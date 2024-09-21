@@ -5,9 +5,9 @@
 
  - 연구용역 프로젝트
  -  사용기술  
-    서버- Node js, MongoDB, mongoose, RabbitMQ 통신  
-    클라이언트 - React( react-query, react-hook-form, Framer-motion, styled-component, recoil, react-leaflet )
-    디자인 - Figma
+    - 서버- Node js, MongoDB, mongoose, RabbitMQ 통신  
+    - 클라이언트 - React( react-query, react-hook-form, Framer-motion, styled-component, recoil, react-leaflet )
+    - 디자인 - Figma
    ![ScreenShot_20240921134341](https://github.com/user-attachments/assets/e8c7bc27-0517-41a3-a80c-76da7fd04da5)
 
    ![ScreenShot_20240921134715](https://github.com/user-attachments/assets/d72deab8-ac67-43ce-aabb-5113b43e5a46)

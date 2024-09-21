@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { MapContainer, TileLayer, Marker, Circle, useMap } from "react-leaflet";
 import { useRecoilState } from "recoil";
-import { selectedDroneState } from "../atom";
+import { selectedDroneState } from "../../atom";
 import { customCombinedIcon, getCustomMarkerIcon } from "./customIcon";
 import { isDroneInEventRange } from "./calculate";
 import styled from "styled-components";
@@ -24,8 +24,6 @@ export default function MapBox({
   latestPositions,
   filteredDrons,
   customMarkers,
-  handleDroneSelect,
-  droneCount,
   setDroneCount,
   radius,
 }) {
@@ -34,7 +32,6 @@ export default function MapBox({
 
   const handleMarkerClick = async (droneId) => {
     setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
-    handleDroneSelect(droneId);
   };
 
   const handleToggleAutoCenter = () => {

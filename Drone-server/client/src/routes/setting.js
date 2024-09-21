@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { selectedDroneState } from "../atom";
 import { useQuery } from "react-query";
 import { fetchDroneList, fetchSensorList, deleteDroneList } from "../components/api";
-import SensorCard from "../components/sensor";
-import PopupComponent from "../components/popup";
+import SensorCard from "../components/setting/sensor";
+import PopupComponent from "../components/setting/popup";
 
 import {
   MainContainer,
@@ -21,7 +21,7 @@ import {
   AlignRight,
   SimpleButton,
   DroneElement,
-} from "../components/settingStyled";
+} from "../components/setting/settingStyled";
 
 export default function Setting() {
   const { data: droneList = [], refetch } = useQuery("droneList", fetchDroneList, {

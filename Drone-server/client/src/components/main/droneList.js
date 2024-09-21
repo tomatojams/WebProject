@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { selectedDroneState } from "../atom";
+import { selectedDroneState } from "../../atom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -88,12 +88,7 @@ const FilterSwitch = styled(motion.span)`
   box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.1);
 `;
 
-export default function DroneList({
-  latestPositions,
-  handleDroneSelect,
-  handleFilterDrone,
-  filteredDrons,
-}) {
+export default function DroneList({ latestPositions, handleFilterDrone, filteredDrons }) {
   // useForm
   const { register, watch } = useForm();
 
@@ -103,7 +98,7 @@ export default function DroneList({
   const handleItemClick = (droneId) => {
     // 클릭된 드론 ID가 현재 선택된 드론과 같으면 선택 해제, 아니면 선택
     setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
-    handleDroneSelect(droneId); // 드론을 선택할 때 호출
+    // handleDroneSelect(droneId); // 드론을 선택할 때 호출
   };
   const searchTerm = watch("search") || ""; // useState("") 처음 빈문자열 초기화
 

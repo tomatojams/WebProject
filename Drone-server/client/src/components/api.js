@@ -17,6 +17,12 @@ const fetchDronePositions = async () => {
   }
 };
 
+// 개별 드론 정보 가져옴
+const fetchSelectedDroneData = async (droneId) => {
+  const res = await axios.get(`/api/drone/${droneId}`);
+  return res.data;
+};
+
 // 마크 데이터를 가져오는 함수
 const fetchMarkData = async () => {
   try {
@@ -73,4 +79,4 @@ const deleteSensor = async (sensorId) => {
 };
 
 
-export { fetchDronePositions, fetchMarkData, fetchDroneList, fetchSensorList, deleteDroneList, deleteSensor };
+export { fetchDronePositions,fetchSelectedDroneData, fetchMarkData, fetchDroneList, fetchSensorList, deleteDroneList, deleteSensor };

@@ -1,15 +1,17 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
-import axios from "axios";
 import { useQuery } from "react-query";
+import { useRecoilValue } from "recoil";
+import { selectedDroneState } from "../atom";
 
-import InfoDrone from "../components/info";
-import DroneList from "../components/droneList";
-import EventRadius from "../components/eventRadius";
-import MapBox from "../components/mapBox";
+import InfoDrone from "../components/main/info";
+import DroneList from "../components/main/droneList";
+import EventRadius from "../components/main/eventRadius";
+import MapBox from "../components/main/mapBox";
 import AppHeader from "../components/nav";
-import { fetchDronePositions, fetchMarkData } from "../components/api";
+// from api
+import { fetchDronePositions, fetchSelectedDroneData, fetchMarkData } from "../components/api";
 
 const MainContainer = styled.div`
   display: flex;
@@ -32,15 +34,11 @@ const Sidebar = styled.div`
   padding: 10px;
 `;
 
-// 개별 드론 정보를 가져오는 함수
-const fetchSelectedDroneData = async (droneId) => {
-  const res = await axios.get(`/api/drone/${droneId}`);
-  return res.data;
-};
-
 // 컴포넌트
 export default function MainInfo() {
-  const [selectedDroneId, setSelectedDroneId] = useState(null);
+  // 전역변수
+  const selectedDroneId = useRecoilValue(selectedDroneState);
+  //
   const [filteredDrons, setFilteredDrons] = useState([]);
   const [customMarkers, setCustomMarkers] = useState([]);
   const [droneCount, setDroneCount] = useState(0);
@@ -61,6 +59,7 @@ export default function MainInfo() {
     ["selectedDroneData", selectedDroneId],
     () => fetchSelectedDroneData(selectedDroneId),
     {
+      // !! 두번이면 존재여부를 boolean 으로 변환해줌
       enabled: !!selectedDroneId, // selectedDroneId가 있을 때만 쿼리 실행
       refetchInterval: 1000, // 1초마다 업데이트
     }
@@ -81,10 +80,6 @@ export default function MainInfo() {
     setCustomMarkers(() => [newMarker]);
   }, [sensorMark]);
 
-  const handleDroneSelect = (droneId) => {
-    setSelectedDroneId(droneId); // 드론 선택 시 ID 업데이트
-  };
-
   const handleFilterDrone = (droneId) => {
     setFilteredDrons((prev) =>
       prev.includes(droneId) ? prev.filter((id) => id !== droneId) : [...prev, droneId]
@@ -100,8 +95,6 @@ export default function MainInfo() {
             latestPositions={latestPositions}
             filteredDrons={filteredDrons}
             customMarkers={customMarkers}
-            handleDroneSelect={handleDroneSelect}
-            droneCount={droneCount}
             setDroneCount={setDroneCount}
             radius={radius} // 반경 전달
             setRadius={setRadius} // 반경 조절 함수 전달
@@ -118,7 +111,6 @@ export default function MainInfo() {
               />
               <DroneList
                 latestPositions={latestPositions}
-                handleDroneSelect={handleDroneSelect}
                 handleFilterDrone={handleFilterDrone}
                 filteredDrons={filteredDrons}
               />

@@ -22,30 +22,44 @@ const generateMockDronePosition = (droneId, name, latitude, longitude) => {
   };
 };
 
-// 가상 센서 데이터를 생성하는 함수
-const generateMockSensorData = () => {
+// 가상 센서 좌표 데이터를 생성하는 함수 (단일 좌표)
+const generateMockSensorPosition = () => {
+  const now = new Date();
   return {
-    id: `sensor-${Date.now()}`, // 서버에서 보내는 sensor_id는 id로 변환
+    id: `sensor-${now.getTime()}`, // 고유 ID 생성
     lat: 37.5665, // 센서를 드론의 고정된 중심 좌표에 고정
     lon: 126.978, // 고정된 longitude
     state: Math.random() > 0.5, // 상태는 랜덤으로 설정
+    createdAt: now.toISOString(), // 생성 시간 추가
+  };
+};
+
+// 가상 센서 리스트 데이터를 생성하는 함수
+const generateMockSensorListData = (sensorId, latitude, longitude) => {
+  const now = new Date();
+  return {
+    sensor_id: sensorId,
+    latitude,
+    longitude,
+    state: Math.random() > 0.5, // 상태는 랜덤으로 설정
+    radius: 100, // 기본 반경 값
+    createdAt: now.toISOString(), // 생성 시간 추가
   };
 };
 
 // 드론 위치 데이터를 가상으로 생성하는 함수
 const fetchDronePositions = async () => {
   try {
-    // 가상 드론 데이터 생성
     const mockData = [
       generateMockDronePosition("64:60:1f:7a:b0:5e", "Mavic Air", 37.5665, 126.978),
       generateMockDronePosition("12:34:56:78:9a:bc", "Phantom 4", 37.5667, 126.9782),
       generateMockDronePosition("a1:b2:c3:d4:e5:f6", "Inspire 2", 37.5668, 126.9784),
       generateMockDronePosition("11:22:33:44:55:66", "Mavic Mini", 37.5669, 126.9786),
-      generateMockDronePosition("a7:b8:c9:d0:e1:f2", "DJI Spark", 37.567, 126.9788), // 추가된 드론
-      generateMockDronePosition("b3:c4:d5:e6:f7:g8", "DJI Matrice", 37.5671, 126.979), // 추가된 드론
+      generateMockDronePosition("a7:b8:c9:d0:e1:f2", "DJI Spark", 37.567, 126.9788),
+      generateMockDronePosition("b3:c4:d5:e6:f7:g8", "DJI Matrice", 37.5671, 126.979),
     ];
 
-    return mockData.sort((a, b) => a.droneId.localeCompare(b.droneId)); // 드론 ID를 기준으로 정렬된 배열을 반환
+    return mockData.sort((a, b) => a.droneId.localeCompare(b.droneId));
   } catch (error) {
     console.error("Error fetching drone positions:", error);
     throw error;
@@ -55,14 +69,13 @@ const fetchDronePositions = async () => {
 // 개별 드론 정보 가져오기 함수
 const fetchSelectedDroneData = async (droneId) => {
   try {
-    const droneStateMessageBuffer = await fetchDronePositions(); // 위치 정보로부터 버퍼 생성
+    const droneStateMessageBuffer = await fetchDronePositions();
     const droneMessage = droneStateMessageBuffer.find((drone) => drone.droneId === droneId);
 
     if (!droneMessage) {
       throw new Error("Drone not found");
     }
 
-    // 서버 형식에 맞춰서 세부 드론 정보 제공
     const droneDetail = {
       message_type: "Update Info",
       sender_id: "2acc44fa47a63222241391a15a0d086365da5aa8efd1d505d99beb5e2436ed85",
@@ -90,13 +103,30 @@ const fetchSelectedDroneData = async (droneId) => {
   }
 };
 
-// 가상 마크 데이터를 생성하는 함수 (단일 객체로 반환)
+// 가상 센서 좌표 데이터를 생성하는 함수
 const fetchMarkData = async () => {
   try {
-    const mockData = generateMockSensorData(); // 객체로 반환
+    const mockData = generateMockSensorPosition();
     return mockData;
   } catch (error) {
     console.error("Error fetching mark data:", error);
+    throw error;
+  }
+};
+
+// 가상 센서 리스트 데이터를 생성하는 함수
+const fetchSensorList = async () => {
+  try {
+    const mockSensorList = [
+      generateMockSensorListData("sensor-134546436256", 37.5665, 126.978),
+      generateMockSensorListData("sensor-256756245226", 37.567, 126.979),
+      generateMockSensorListData("sensor-564343235235", 37.568, 126.98),
+      generateMockSensorListData("sensor-898234238293", 37.569, 126.981),
+      generateMockSensorListData("sensor-423423423423", 37.57, 126.982),
+    ];
+    return mockSensorList;
+  } catch (error) {
+    console.error("Error fetching sensor list:", error);
     throw error;
   }
 };
@@ -108,17 +138,6 @@ const fetchDroneList = async () => {
     return mockData;
   } catch (error) {
     console.error("Error fetching drone list:", error);
-    throw error;
-  }
-};
-
-// 가상 센서 리스트를 가져오는 함수
-const fetchSensorList = async () => {
-  try {
-    const mockData = [generateMockSensorData()]; // 단일 고정 센서 데이터 반환
-    return mockData;
-  } catch (error) {
-    console.error("Error fetching sensor list:", error);
     throw error;
   }
 };

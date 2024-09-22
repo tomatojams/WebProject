@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+// import axios from "axios";
 
 // Card 스타일
 const Card = styled.div`
@@ -126,13 +126,13 @@ export default function InfoDrone({ selectedDroneData }) {
   // 서버로 드론 제어 명령을 전송하는 함수
   const sendControlCommand = async (droneId, enumType, isActive) => {
     try {
-      const command = isActive ? "stop" : "start";
-      const response = await axios.post("/api/drone/control", {
-        droneId: droneId,
-        enum: enumType,
-        command: command,
-      });
-      console.log("Command sent:", response.data);
+      // const command = isActive ? "stop" : "start";
+      // const response = await axios.post("/api/drone/control", {
+      //   droneId: droneId,
+      //   enum: enumType,
+      //   command: command,
+      // });
+      console.log(droneId, enumType, isActive);
     } catch (error) {
       console.error("Error sending command:", error);
     }

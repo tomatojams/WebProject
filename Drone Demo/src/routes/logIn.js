@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -59,15 +58,6 @@ const Logo = styled.div`
   background-position: center;
 `;
 
-const Input = styled.input`
-  width: calc(100% - 20px);
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
-`;
-
 const SNT = styled.div`
   position: absolute;
   top: 30px;
@@ -95,25 +85,6 @@ const LoginButton = styled.button`
   &:hover {
     background-color: #1e2f6a;
   }
-`;
-
-const RememberMeWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  margin-top: 0px;
-  margin-left: 20px;
-`;
-
-const RememberMeLabel = styled.label`
-  color: #777;
-  margin-left: 8px;
-  font-size: 14px;
-`;
-
-const CheckBox = styled.input`
-  color: #777;
-  checked: true;
 `;
 
 const LoginForm = styled.form`

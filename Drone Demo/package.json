@@ -19,7 +19,6 @@
     "recoil": "^0.7.7",
     "styled-components": "^6.1.13"
   },
-  "proxy": "http://localhost:5000",
   "scripts": {
     "start": "react-scripts start",
     "dev": "react-scripts start",
@@ -47,7 +46,6 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "eslint": "^8.57.1",
     "tailwindcss": "^3.4.10"
   }
 }

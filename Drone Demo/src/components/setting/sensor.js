@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, { useState } from "react";
-import { useQueryClient } from "react-query";
-import axios from "axios";
+// import { useQueryClient } from "react-query";
+// import axios from "axios";
 
 const SensorContainer = styled.div`
   margin: 20px 30px;
@@ -81,7 +81,7 @@ const RadiusInput = styled.input`
 
 const SensorCard = ({ sensor }) => {
   // 자식컴포넌트가 부모컴포넌트를 업데이트 하기위해서
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const [radius, setRadius] = useState(sensor.radius); // 반경 상태 추가
 
   // 반경 업데이트 핸들러
@@ -94,8 +94,8 @@ const SensorCard = ({ sensor }) => {
         return; // 반경 값이 유효하지 않으면 요청하지 않음
       }
 
-      await axios.put(`/api/sensor/${sensor.sensor_id}`, { radius: parsedRadius });
-      queryClient.invalidateQueries("sensorList"); // 업데이트 후 센서 리스트를 다시 로드
+      // await axios.put(`/api/sensor/${sensor.sensor_id}`, { radius: parsedRadius });
+      // queryClient.invalidateQueries("sensorList"); // 업데이트 후 센서 리스트를 다시 로드
     } catch (error) {
       console.error("Error updating radius:", error);
     }
@@ -104,8 +104,8 @@ const SensorCard = ({ sensor }) => {
   // 센서 삭제 핸들러
   const handleDelete = async () => {
     try {
-      await axios.delete(`/api/sensor/${sensor.sensor_id}`);
-      queryClient.invalidateQueries("sensorList");
+      // await axios.delete(`/api/sensor/${sensor.sensor_id}`);
+      // queryClient.invalidateQueries("sensorList");
     } catch (error) {
       console.error("Error deleting sensor:", error);
     }

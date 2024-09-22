@@ -115,7 +115,7 @@ const SensorCard = ({ sensor }) => {
     <SensorContainer>
       <SensorInfo>
         <SensorTitle>{sensor.sensor_id}</SensorTitle>
-        <SimpleButton onClick={handleDelete}>삭제</SimpleButton>
+        <SimpleButton onClick={handleDelete}>Demo</SimpleButton>
       </SensorInfo>
       <RadiusWrapper>
         <RadiusIcon />
@@ -126,7 +126,7 @@ const SensorCard = ({ sensor }) => {
             value={radius}
             onChange={(e) => setRadius(e.target.value)} // 반경 값 변경
           />{" "}
-          m<SimpleButton onClick={handleRadiusUpdate}>반경설정</SimpleButton>
+          m<SimpleButton onClick={handleRadiusUpdate}>Demo</SimpleButton>
         </div>
       </RadiusWrapper>
       <SensorDetails>

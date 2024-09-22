@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -113,6 +113,7 @@ const RememberMeLabel = styled.label`
 
 const CheckBox = styled.input`
   color: #777;
+  checked: true;
 `;
 
 const LoginForm = styled.form`
@@ -124,42 +125,16 @@ const LoginForm = styled.form`
 
 export default function LogIn() {
   const navigate = useNavigate();
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
 
-  // 로그인에 성공할 아이디와 비밀번호를 미리 정의
-  const correctId = "tomato";
-  const correctPassword = "aa112!!1a";
-
-  useEffect(() => {
-    const savedId = localStorage.getItem("rememberedId");
-    const savedPassword = localStorage.getItem("rememberedPassword");
-    const savedRememberMe = localStorage.getItem("rememberMe") === "true";
-
-    if (savedId) setId(savedId);
-    if (savedPassword) setPassword(savedPassword);
-    setRememberMe(savedRememberMe); // 기억된 "기억하기" 상태를 설정
-  }, []);
+  // 로그인 필드 초기값 설정
+  const id = "tomato";
+  const password = "aa112!!1a";
+  const rememberMe = true; // 자동 로그인 체크
 
   const handleClick = (e) => {
     e.preventDefault();
-
-    // 입력한 아이디와 비밀번호가 올바른지 확인
-    if (id === correctId && password === correctPassword) {
-      if (rememberMe) {
-        localStorage.setItem("rememberedId", id);
-        localStorage.setItem("rememberedPassword", password);
-        localStorage.setItem("rememberMe", true);
-      } else {
-        localStorage.removeItem("rememberedId");
-        localStorage.removeItem("rememberedPassword");
-        localStorage.setItem("rememberMe", false);
-      }
-      navigate("/mainInfo"); // 로그인 성공 시 페이지 이동
-    } else {
-      alert("로그인 실패: 아이디 또는 비밀번호가 잘못되었습니다.");
-    }
+    // 항상 로그인 성공 처리
+    navigate("/mainInfo");
   };
 
   return (
@@ -167,36 +142,12 @@ export default function LogIn() {
       <SNT />
       <Title>
         <BigTitle>All about embedded device security and digital forensics</BigTitle>
-        <SmallTitle>
-          An integrated system for tracking drones, collecting information, and managing sensors
-        </SmallTitle>
+        <SmallTitle>기능데모로 보안상 일부기능은 지원하지 않습니다.</SmallTitle>
       </Title>
       <LoginBox>
         <Logo />
         <LoginForm>
-          <Input
-            name="id"
-            type="text"
-            placeholder="로그인 아이디"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-          />
-          <Input
-            name="password"
-            type="password"
-            placeholder="비밀번호"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <RememberMeWrapper>
-            <CheckBox
-              type="checkbox"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-            />
-            <RememberMeLabel>아이디와 비밀번호 기억하기</RememberMeLabel>
-          </RememberMeWrapper>
-          <LoginButton onClick={handleClick}>로그인</LoginButton>
+          <LoginButton onClick={handleClick}>드론테스트</LoginButton>
         </LoginForm>
       </LoginBox>
     </Wrapper>

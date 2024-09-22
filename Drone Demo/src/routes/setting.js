@@ -77,7 +77,7 @@ export default function Setting() {
           <DroneCardList>
             <Title>DRONE LIST</Title>
             <AlignRight>
-              <SimpleButton onClick={handleDelete}>초기화</SimpleButton>
+              <SimpleButton onClick={handleDelete}>Demo</SimpleButton>
             </AlignRight>
 
             <SearchInput

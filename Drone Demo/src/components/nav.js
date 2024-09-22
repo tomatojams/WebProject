@@ -160,7 +160,7 @@ const Overlay = styled.div`
 
 export default function AppHeader() {
   const navigate = useNavigate();
-  const matchMonitor = useMatch("/mainInfo");
+  const matchMonitor = useMatch("/");
   const matchSetting = useMatch("/setting");
 
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -194,7 +194,7 @@ export default function AppHeader() {
   }, []);
 
   const handleLogout = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   const toggleMenu = () => {
@@ -218,7 +218,7 @@ export default function AppHeader() {
       <Header>
         <Nav>
           <Logo src={`${process.env.PUBLIC_URL}/logo_hori.svg`} alt="Logo" />
-          <Link to="/maininfo" style={{ textDecoration: "none", color: "#414040" }}>
+          <Link to="/" style={{ textDecoration: "none", color: "#414040" }}>
             <NavItem>
               {matchMonitor ? <NavBox layoutId="box" /> : null}
               <MenuSpan>Monitor</MenuSpan>

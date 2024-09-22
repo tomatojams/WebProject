@@ -126,15 +126,10 @@ const LoginForm = styled.form`
 export default function LogIn() {
   const navigate = useNavigate();
 
-  // 로그인 필드 초기값 설정
-  const id = "tomato";
-  const password = "aa112!!1a";
-  const rememberMe = true; // 자동 로그인 체크
-
   const handleClick = (e) => {
     e.preventDefault();
     // 항상 로그인 성공 처리
-    navigate("/mainInfo");
+    navigate("/");
   };
 
   return (
@@ -147,7 +142,7 @@ export default function LogIn() {
       <LoginBox>
         <Logo />
         <LoginForm>
-          <LoginButton onClick={handleClick}>드론테스트</LoginButton>
+          <LoginButton onClick={handleClick}>START</LoginButton>
         </LoginForm>
       </LoginBox>
     </Wrapper>

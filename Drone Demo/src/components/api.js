@@ -65,16 +65,23 @@ const fetchDronePositions = async () => {
     throw error;
   }
 };
-
-// 개별 드론 정보 가져오기 함수
+// 개별 드론 정보 가져오기 함수 (위치 변동 반영)
 const fetchSelectedDroneData = async (droneId) => {
   try {
+    // 현재 드론 위치 데이터를 다시 불러와서
     const droneStateMessageBuffer = await fetchDronePositions();
     const droneMessage = droneStateMessageBuffer.find((drone) => drone.droneId === droneId);
 
     if (!droneMessage) {
       throw new Error("Drone not found");
     }
+
+    // 위치 정보도 다시 변동시킴
+    const updatedLocation = {
+      latitude: droneMessage.latitude + (Math.random() - 0.5) * 0.0002, // 위치를 새로 변동
+      longitude: droneMessage.longitude + (Math.random() - 0.5) * 0.0002,
+      altitude: Math.random() * 100, // 랜덤 고도 값
+    };
 
     const droneDetail = {
       message_type: "Update Info",
@@ -89,10 +96,10 @@ const fetchSelectedDroneData = async (droneId) => {
         allow_takeover: droneMessage.allow_takeover,
         class_name: droneMessage.class_name,
         radio_resources: droneMessage.radio_resources,
-        location: droneMessage.location,
-        speed_ms: droneMessage.speed_ms,
-        ground_or_sky: droneMessage.ground_or_sky,
-        rssi: droneMessage.rssi,
+        location: updatedLocation, // 변동된 위치 반영
+        speed_ms: Math.random() * 15, // 임의의 속도 값
+        ground_or_sky: 1, // 하늘 상태로 설정
+        rssi: Math.random() * 100, // 신호 강도 값
       },
     };
 

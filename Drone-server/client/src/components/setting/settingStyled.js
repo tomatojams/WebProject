@@ -119,7 +119,7 @@ const Title = styled.h2`
 `;
 
 const SearchInput = styled.input`
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 
   padding: 8px;
 

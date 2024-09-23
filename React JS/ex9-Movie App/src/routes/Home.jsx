@@ -19,12 +19,10 @@ export default function Home() {
   //   getMovies();
   // }, []);
   // console.log(movies);
-
+  // -> 다음처럼 바꿀 수 있음
   useEffect(() => {
     // 시작할때 한번실행의 의미로 쓸수있음
-    fetch(
-      `https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year`
-    )
+    fetch(`https://yts.mx/api/v2/list_movies.json?minimum_rating=9&sort_by=year`)
       .then((response) => response.json()) // 제이슨 형을 JS 객체로 파싱
       .then((json) => {
         // 파싱된 데이타로 json 이 아닌 JS 객체임

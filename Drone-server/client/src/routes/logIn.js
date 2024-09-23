@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
+import { loginfunc } from "../components/api";
+import { useSetRecoilState } from "recoil";
+import { userNameState } from "../atom";
 // Wrapper 스타일드 컴포넌트
 const Wrapper = styled.div`
   display: flex;
@@ -124,6 +126,8 @@ const LoginForm = styled.form`
 `;
 
 export default function LogIn() {
+  const setUesername = useSetRecoilState(userNameState);
+
   const navigate = useNavigate();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
@@ -139,10 +143,11 @@ export default function LogIn() {
     setRememberMe(savedRememberMe); // 기억된 "기억하기" 상태를 설정
   }, []);
 
-  const handleClick = async (e) => {
+  const tyrLogin = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post("/api/login", { id, password });
+      const response = await loginfunc(id, password);
 
       if (rememberMe) {
         localStorage.setItem("rememberedId", id);
@@ -155,6 +160,7 @@ export default function LogIn() {
       }
 
       if (response.status === 200) {
+        setUesername(id);
         navigate("/mainInfo");
       }
     } catch (error) {
@@ -197,7 +203,7 @@ export default function LogIn() {
             />
             <RememberMeLabel>아이디와 비밀번호 기억하기</RememberMeLabel>
           </RememberMeWrapper>
-          <LoginButton onClick={handleClick}>로그인</LoginButton>
+          <LoginButton onClick={tyrLogin}>로그인</LoginButton>
         </LoginForm>
       </LoginBox>
     </Wrapper>

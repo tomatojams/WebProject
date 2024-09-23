@@ -93,7 +93,7 @@ export default function MapBox({
         {autoCenter ? "Auto-Center ON" : "Auto-Center OFF"}
       </button>
 
-      <MapContainer className="h-full w-full" center={[37.5665, 126.978]} zoom={13}>
+      <MapContainer className="h-full w-full" center={[37.5665, 126.978]} zoom={18}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"

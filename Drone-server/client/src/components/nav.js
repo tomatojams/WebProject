@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, useNavigate, useMatch } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useRecoilValue } from "recoil";
+import { userNameState } from "../atom";
 
 const Title = styled.h2`
   width: 100%;
@@ -159,6 +161,8 @@ const Overlay = styled.div`
 `;
 
 export default function AppHeader() {
+  const userName = useRecoilValue(userNameState);
+
   const navigate = useNavigate();
   const matchMonitor = useMatch("/mainInfo");
   const matchSetting = useMatch("/setting");
@@ -247,7 +251,7 @@ export default function AppHeader() {
             </MotionNotificationMenu>
           </Notification>
           <UserMenu>
-            <UserName onClick={toggleMenu}>Tomas</UserName>
+            <UserName onClick={toggleMenu}>{userName ? userName : "anonymous"}</UserName>
             <MotionDropdownMenu
               open={menuOpen}
               initial={{ opacity: 0, y: -10 }}

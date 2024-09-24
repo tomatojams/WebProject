@@ -9,7 +9,7 @@ function tomato2(x) {
 }
 console.log(tomato2(3));
 function tomato3(x) {
-    let array = [];
+    var array = [];
     if (typeof x === "number") {
         array[0] = x;
     }
@@ -21,19 +21,19 @@ function tomato3(x) {
 // 속성명 in 오브젝트 자료
 // 인스턴스 instanceof 부모
 // typeof, in , instanceof
-// assertion - as 사용
+// assertion - as 사용-> union에서 하나 고름
 function tomato12(x) {
-    let array = [];
+    var array = [];
     // 타입 덮어쓰기
     array[0] = x;
 }
 // 1. Narrowing할때 확정용으로 사용, 변경은 안됨
-let namee = "toma";
+var namee = "toma";
 // namee as number; // 에러남
 // 2. 타입에 대해서 100% 확실할때 - 버그를 캐취 못함 (타입을 회피하는거라 if가 더 나음)
 //Q1
 function clean(array) {
-    let result = array.map((item) => {
+    var result = array.map(function (item) {
         if (typeof item === "string") {
             return parseInt(item);
         }
@@ -43,12 +43,12 @@ function clean(array) {
     });
     return result;
 }
-let result = clean([1, 2, 3, "5", "7", 9]);
+var result = clean([1, 2, 3, "5", "7", 9]);
 console.log(result);
 // 다른 방식
 function clean2(a) {
-    let result = [];
-    a.forEach((b) => {
+    var result = [];
+    a.forEach(function (b) {
         if (typeof b === "string") {
             result.push(parseFloat(b));
         }
@@ -60,9 +60,9 @@ function clean2(a) {
 }
 console.log(clean2([123, "3"]));
 //Q2
-let t1 = { subject: "math" };
-let t2 = { subject: ["science", "english"] };
-let t3 = { subject: ["science", "art", "korean"] };
+var t1 = { subject: "math" };
+var t2 = { subject: ["science", "english"] };
+var t3 = { subject: ["science", "art", "korean"] };
 function subject(teacher) {
     if (typeof teacher["subject"] === "string") {
         return teacher.subject;
@@ -77,4 +77,3 @@ function subject(teacher) {
     }
 }
 console.log(subject(t3));
-export {};

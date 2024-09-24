@@ -7,8 +7,11 @@ console.log("const numbers1:", numbers1);
 var numbers = [1, 2, 3, 4];
 numbers.push(5);
 console.log("readonly number", numbers);
-// 4. tuple 정해진 형식의 array
+// 4. tuple 타입 순서가 정해진 형식의 array
 ["tomato", 12, true];
 var player3 = ["tomato", 12, true];
 player3[0] = 1;
 player3[1] = 10;
+// 5. undefined - (선언됨, 초기화 안됨) null - 비어있음 , 명시적 표현 object
+var a = undefined;
+var b = null;

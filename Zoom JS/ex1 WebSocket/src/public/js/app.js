@@ -2,7 +2,10 @@ const messageList = document.querySelector('ul');
 const nickForm = document.querySelector('#nick');
 const messageForm = document.querySelector('#message');
 const frontSocket = new WebSocket(`ws://${window.location.host}`);
+// window.location.host는 현재 웹 페이지의 호스트 주소를 반환
 
+
+// 이벤트마다 핸들러 만듬
 frontSocket.addEventListener('open', () => {
   console.log('open 이벤트 발생: 서버에 연결됨');
   // const clientName = prompt(" 이름을 입력하세요:");

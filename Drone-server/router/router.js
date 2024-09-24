@@ -13,18 +13,30 @@ const droneRouter = (droneCommands) => {
   // 최근 드론 위치 가져오기
   router.get("/api/positions", (req, res) => {
     try {
-      let sliceNumber = process.env.FETCH_COUNT;
+      const currentTime = Date.now(); // 현재 시간 (Unix timestamp)
+      const sliceNumber = process.env.FETCH_COUNT || 10; // 가져올 메시지 개수 (기본값 10)
+      const expirationTime = process.env.DRONE_EXPIRATION_TIME || 30000; // 드론 데이터 유효 시간 (기본값 30초)
+
+      // 최신 sliceNumber 만큼의 메시지 가져오기
       const recentPositions = droneStateMessageBuffer.slice(0, sliceNumber);
 
-      // 드론 위치 필드를 droneId로 변경
-      const filteredPositions = recentPositions.map((position) => ({
-        droneId: position.drone.droneId,
-        latitude: position.drone.location.latitude,
-        longitude: position.drone.location.longitude,
-        name: position.drone.name,
-      }));
+      // expirationTime 이내의 메시지만 필터링 후, 배열의 뒤에서부터 덮어씌움
+      const filteredPositions = recentPositions
+        .filter((position) => currentTime - position.timestamp <= expirationTime) // 설정된 시간 이내 데이터만 남김
+        .reduceRight((acc, position) => {
+          // reduceRight를 사용하여 뒤에서부터 처리
+          const { droneId } = position.drone;
+          acc[droneId] = {
+            droneId,
+            latitude: position.drone.location.latitude,
+            longitude: position.drone.location.longitude,
+            name: position.drone.name,
+          };
+          return acc;
+        }, {});
 
-      res.json(filteredPositions);
+      // 객체의 값들을 배열로 변환하여 응답
+      res.json(Object.values(filteredPositions));
     } catch (error) {
       console.error("Error fetching drone positions:", error);
       res.status(500).json({ error: "Internal Server Error" });

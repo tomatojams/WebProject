@@ -5,5 +5,5 @@
   "scss.hover.references": false,
   "html.hover.references": false,
   "typescript.suggest.enabled": true,
-  "compile-hero.disable-compile-files-on-did-save-code": false
+  "compile-hero.disable-compile-files-on-did-save-code": true
 }

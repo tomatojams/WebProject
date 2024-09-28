@@ -25,7 +25,7 @@ wsServer.on('connection', (socket) => {
   socket.onAny((e) => console.log(`Socket event: ${e}`));
   // 모든 이벤트에대해서 로그출력
   // console.log(socket);
-
+  console.log(wsServer.socket.adapter);
   // "Enter_room"은 임의로 만들어진 이벤트이름
 
 

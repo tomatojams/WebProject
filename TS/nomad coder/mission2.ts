@@ -9,8 +9,8 @@ let dict: Words = {
 
 class Word {
   constructor(
-    public term: string,
-    public def: string
+    public readonly term: string,
+    public readonly def: string
   ) {}
 }
 
@@ -71,3 +71,5 @@ const tomatojams = new Word("tomatojams", "마이 닉네임");
 const myDic = new Dict();
 myDic.add(tomatojams);
 console.log(myDic);
+
+tomatojams.def ='salt'

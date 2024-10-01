@@ -1,7 +1,7 @@
 // 1. unknown 타입미정
-var aa;
+let aa;
 if (typeof aa === "number") {
-    var b = aa + 1;
+    let b = aa + 1;
 }
 if (typeof aa === "string") {
     aa.toUpperCase();
@@ -10,7 +10,7 @@ if (typeof aa === "string") {
 function hello() {
     console.log("hello");
 }
-var a = hello();
+const a = hello();
 a.toUpperCase();
 // 3. never
 // 에러를 생성할때는 never를 써도 됨

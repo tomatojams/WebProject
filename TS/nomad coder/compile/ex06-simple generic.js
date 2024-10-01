@@ -4,22 +4,22 @@ import { useState } from "react";
 function simplePrint(a, b) {
     return a[0];
 }
-var value10 = simplePrint([1, "a", true, 0.1], "a");
-var value11 = simplePrint([1, 2, 3, 4], 3);
-var value12 = simplePrint([true, false, true], false);
+const value10 = simplePrint([1, "a", true, 0.1], "a");
+const value11 = simplePrint([1, 2, 3, 4], 3);
+const value12 = simplePrint([true, false, true], false);
 // generic에 object도 넣어도됨
-var toamto = {
+const toamto = {
     name: "tomato1",
-    extraInfo: { juicy: "really" }
+    extraInfo: { juicy: "really" },
 };
-var toamto2 = {
+const toamto2 = {
     name: "tomato1",
-    extraInfo: { juicy: "really" }
+    extraInfo: { juicy: "really" },
 };
-var num = [1, 2, 3, 4];
+let num = [1, 2, 3, 4];
 function printAll(arr) {
     return arr[0];
 }
 // 7 React
 // 훅에서 <T> generic을 설정해서 씀
-var _a = useState(0), number = _a[0], setNumber = _a[1];
+const [number, setNumber] = useState(0);

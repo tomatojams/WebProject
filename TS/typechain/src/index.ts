@@ -1,9 +1,6 @@
-const hello = () => "hi";
+import { init, exit } from "./myPackage";
 
-class Block {
-  constructor(private data: string) {}
+const initial = init({ url: "/tomato.com/" });
+exit(1);
 
-  static hello() {
-    return "tomato";
-  }
-}
+localStorage.clear;

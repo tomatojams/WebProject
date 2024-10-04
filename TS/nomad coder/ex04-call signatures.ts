@@ -13,6 +13,8 @@ type Add2 = {
   (a: number, b: string): number;
 };
 
+
+
 const add2: Add2 = (a, b) => a + b;
 
 const add3: Add2 = (a, b) => {

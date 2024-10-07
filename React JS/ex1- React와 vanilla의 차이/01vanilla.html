@@ -5,17 +5,22 @@
     <span>Total clicks:0</span>
     <button id="btn">Click me</button>
   </body>
+
   <script>
-    let counter = 0; // 쌩 JS
+    let counter = 0;
+    //1. 요소를 잡고
     const button = document.getElementById("btn"); // ID로 찾기
     const span = document.querySelector("span"); // 생성
-    button.addEventListener("click", handleClick); // 클릭 이벤트 추가
+
+    // 3. 함수로 업데이트
     function handleClick() {
       // 클릭 이벤트 함수
       counter++;
       console.log("Button clicked");
+      // innerText, innerHTML, textContent
       span.textContent = `Total clicks: ${counter}`;
     }
-    button.addEventListener("click", handleClick);
+    //2.리스너
+    button.addEventListener("click", handleClick); // 클릭 이벤트 추가
   </script>
 </html>

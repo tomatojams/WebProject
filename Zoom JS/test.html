@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>드론 모니터링 UI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+        }
+        .navigation ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+        .navigation ul li {
+            margin-right: 15px;
+        }
+        .navigation ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .main-container {
+            display: flex;
+        }
+        .map-section {
+            flex: 2;
+            position: relative;
+        }
+        #map {
+            width: 100%;
+            height: 600px;
+        }
+        .auto-center {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .sidebar {
+            flex: 1;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .event-radius, .drone-list, .drone-info {
+            margin-bottom: 20px;
+        }
+        .drone-actions button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">SNTWORKS</div>
+        <nav class="navigation">
+            <ul>
+                <li><a href="#">모니터</a></li>
+                <li><a href="#">설정</a></li>
+                <li><a href="#">기술 대 모</a></li>
+            </ul>
+        </nav>
+        <div class="user-info">
+            <span>알림</span>
+            <span>토마스</span>
+        </div>
+    </header>
+    <main class="main-container">
+        <section class="map-section">
+            <div id="map" class="map"></div>
+            <div class="auto-center">자동 중심 맞추기 ON</div>
+        </section>
+        <aside class="sidebar">
+            <div class="event-radius">
+                <h3>이벤트 반경</h3>
+                <p>반경: <span>100 m</span></p>
+                <p>이벤트 내: <span>1</span></p>
+            </div>
+            <div class="drone-list">
+                <h3>드론 목록</h3>
+                <input type="text" placeholder="드론 이름 검색...">
+                <ul>
+                    <li><label><input type="checkbox"> 매빅 미니</label></li>
+                    <li><label><input type="checkbox"> 팬텀 4</label></li>
+                    <li><label><input type="checkbox"> 매빅 에어</label></li>
+                    <li><label><input type="checkbox"> 인스파이어 2</label></li>
+                    <li><label><input type="checkbox"> DJI 스파크</label></li>
+                </ul>
+            </div>
+            <div class="drone-info">
+                <h3>드론 정보</h3>
+                <p><strong>드론 ID:</strong> 64:60:1f:7a:b0:5e</p>
+                <p><strong>이름:</strong> 매빅 에어</p>
+                <p><strong>주파수:</strong> 2452</p>
+                <p><strong>대역폭:</strong> 5</p>
+                <p><strong>위도:</strong> 37.568127799699965</p>
+                <p><strong>경도:</strong> 126.97790248520528</p>
+                <div class="drone-actions">
+                    <button>추적</button>
+                    <button>제어권 인수</button>
+                    <button>이동</button>
+                </div>
+            </div>
+        </aside>
+    </main>
+    <script>
+        var map = L.map('map').setView([37.5665, 126.9780], 16);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Example drone marker
+        L.marker([37.5665, 126.9780]).addTo(map).bindPopup('팬텀 4').openPopup();
+    </script>
+</body>
+</html>

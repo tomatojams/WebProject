@@ -9,9 +9,16 @@
   <script>
     const root = document.getElementById("root"); // ID로 찾기
     const span = React.createElement("h3", null, "Hello, I'm a span");
-    const btn = React.createElement("button", null, "Click me"); // 두개를 생성
-
-    const container = React.createElement("div", null, [span, btn]); // 컨테이너 생성
+    const btn = React.createElement(
+      // 바로 이벤트 리스터를 붙이고 함수설정가능
+      "button",
+      {
+        onClick: () => console.log("clicked"),
+      },
+      "Click me"
+    ); // 두개를 생성
+    // 컨테이너 생성
+    const container = React.createElement("div", null, [span, btn]);
     ReactDOM.createRoot(root).render(container); // 렌더링
   </script>
 </html>

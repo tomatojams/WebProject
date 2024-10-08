@@ -11,6 +11,9 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
+      const kmToMilesFactor = 0.621371;
+      const milesToKmFactor = 1.60934;
+
       function MinutesToHours() {
         // amount, flipped 상태 변수 선언 및 초기화
         const [amount, setAmount] = React.useState("");
@@ -26,7 +29,7 @@
           setAmount(""); // 0대신 ""로 하면 입력이 편리함
         };
 
-        // 플립 핸들러 
+        // 플립 핸들러
         const _onFlip = () => {
           _onReset();
           setFlipped((current) => !current);
@@ -96,7 +99,7 @@
             <div className="input-group">
               <label htmlFor="KiloMeter">KiloMeter:</label>
               <input
-                value={flipped ? amount * 1.609343502101154 : amount}
+                value={flipped ? amount * milesToKmFactor : amount}
                 id="KiloMeter"
                 placeholder="KiloMeter"
                 type="number"
@@ -108,9 +111,71 @@
 
               <label htmlFor="Miles">Miles:</label>
               <input
-                value={flipped ? amount : amount * 0.621371}
+                value={flipped ? amount : amount * kmToMilesFactor}
                 id="Miles"
                 placeholder="Miles"
+                type="number"
+                onChange={_onChange}
+                onFocus={() => setAmount("")} // 포커스 시 초기화
+                disabled={!flipped}
+                className="input-field"
+              />
+            </div>
+
+            <div className="buttons">
+              <button onClick={_onReset} className="btn">
+                Reset
+              </button>
+              <button onClick={_onFlip} className="btn">
+                Flip
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      function KgToPound() {
+        const KgtoPound = 2.20462;
+        const PoundToKg = 0.453592;
+        const [amount, setAmount] = React.useState("");
+        const [flipped, setFlipped] = React.useState(false);
+
+        // 입력 값 변경 핸들러
+        const _onChange = (event) => {
+          setAmount(event.target.value);
+        };
+
+        // 리셋 핸들러
+        const _onReset = () => {
+          setAmount(""); // 0대신 ""로 하면 입력이 편리함
+        };
+
+        // 플립 핸들러
+        const _onFlip = () => {
+          _onReset();
+          setFlipped((current) => !current);
+        };
+
+        return (
+          <div id="container">
+            <div className="input-group">
+              <label htmlFor="Kg">Kg:</label>
+              <input
+                value={flipped ? amount * PoundToKg : amount}
+                id="Kg"
+                placeholder="Kg"
+                type="number"
+                onChange={_onChange}
+                onFocus={() => setAmount("")} // 포커스 시 초기화
+                disabled={flipped === true}
+                className="input-field"
+              />
+
+              <label htmlFor="Pounds">Pounds:</label>
+              <input
+                value={flipped ? amount : amount * KgtoPound}
+                id="Pounds"
+                placeholder="Pounds"
                 type="number"
                 onChange={_onChange}
                 onFocus={() => setAmount("")} // 포커스 시 초기화
@@ -151,9 +216,12 @@
             >
               <option value="0">Minutes & Hours</option>
               <option value="1">Km to Miles</option>
+              <option value="2">Kg to Pound</option>
             </select>
+            {/*직접적인 상태값이므로 리렌더링 보장*/}
             {index === "0" ? <MinutesToHours /> : null}
             {index === "1" ? <KmToMiles /> : null}
+            {index === "2" ? <KgToPound /> : null}
           </div>
         );
       }

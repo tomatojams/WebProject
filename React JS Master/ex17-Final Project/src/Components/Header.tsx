@@ -37,6 +37,7 @@ function Header() {
   const inputAnimaion = useAnimation();
   const navAnimation = useAnimation();
   const navAnimation2 = useAnimation();
+  const [black, setBlack] = useState(false);
   const navigate = useNavigate();
   const { scrollY } = useScroll();
   // input 모니터링
@@ -55,9 +56,11 @@ function Header() {
     scrollY.on("change", () => {
       // console.log(scrollY.get());
       if (scrollY.get() > 80) {
+        setBlack(true);
         navAnimation2.start("scroll"); // Varient의 라벨주입
         navAnimation.start({ backgroundColor: "rgba(0,0,0,1)" }); // useAnimation 상태 객체주입
       } else {
+        setBlack(false);
         navAnimation2.start("top");
         navAnimation.start({ backgroundColor: "rgba(0,0,0,0)" });
       }
@@ -85,16 +88,18 @@ function Header() {
         variants={navVarients}
         animate={
           //방법1
-          // 상태변수 + 일반객체 - > 안될 수있음
+          // 상태변수.get() + 일반객체 - > 안될 수있음
+          // scrollY.get()가  직접적인 상태값이 아니기때문
           // scrollY.get() > 80
           //   ? { backgroundColor: "rgba(0,0,0,1)" }
           //   : { backgroundColor: "rgba(0,0,0,0)" }
-          // 방법2 -> 안될수있음
-          // 상태변수 +  상태Varients
-          // scrollY.get() > 80 ? "scroll" : "top"
+
+          // 방법2 -> 직접적인 상태값일때는 비교문으로 리렌더링이 잘 작동한
+          black ? { backgroundColor: "rgba(0,0,0,1)" } : { backgroundColor: "rgba(0,0,0,0)" }
+
           // 방법3
           // useAnimation 으로 객체주입 + useEffect
-          navAnimation
+          // navAnimation
           // 방법4
           // Variants + useEffect + useAnimation
           // navAnimation2

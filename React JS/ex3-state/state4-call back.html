@@ -15,22 +15,25 @@
       const [counter, setCounter] = React.useState(0);
       const onClick = () => {
         // setCounter(counter + 1); // 원하는 값 계산함.
+
+        // 위의 방법은 의도대로 안될수있다. 따라서 현재상태 => 새로운상태가 더 좋은방법
         setCounter((counter) => counter + 1); // 현재상태 => 새로운상태 내부가 function
 
-        // 아래가 더 좋은 방법 앞의 값이 현재값이라는것을 명시적으로 알려줌
-
-        //         1. 값으로 여러번
+        // 1. 값으로 여러번
         // function onClick() {
         // setCounter(counter + 1);  현재 counter값을 할당
         // setCounter(counter + 1);
         // }
-        // 2. 함수로 여러번
+        // 1번으로 돌렸을 경우에는 setCounter를 몇번을 호출해도 한 번만 실행되는 걸 볼수 있음
+        // (counter가 1만 증가)
+
+        // 2. 콜백 여러번
         // function onClick() {
         // setCounter(current => current+ 1);  현재 counter값에 1을 더한 값을 다시 counter에 할당
         // setCounter(current => current+ 1);
         // }
-        // 1번으로 돌렸을 경우에는 setCounter를 몇번을 호출해도 한 번만 실행되는 걸 보실 수 있고(counter가 1만 증가)
         // 2번으로 돌렸을 경우에는 setCounter가 호출된 만큼 counter가 증가된 걸 볼 수 있습니다.
+        
       };
       console.log("rendered");
       console.log(counter);

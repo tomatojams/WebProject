@@ -2,18 +2,19 @@
 // 메타데이타는 서버컴포넌트에만 있음
 
 import axios from "axios";
+import Link from "next/link";
 
 export const metadata = {
   title: "Home",
 };
 
-const URL = "https://nomad-movies.nomadcoders.workers.dev/movies";
+const API_URL = "https://nomad-movies.nomadcoders.workers.dev/movies";
 
 async function getMovies() {
   // 서버에서 작업을 하고있으면 메뉴조차 볼수없게 된다.
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  const res = await axios(URL);
+  const res = await axios(API_URL);
   return res.data;
 }
 
@@ -23,5 +24,14 @@ export default async function TomatoHome() {
   // const movies = (await axios(URL)).data
   const movies = await getMovies();
 
-  return <>{movies && movies.map((movie) => <p key={movie.id}>{movie.title}</p>)}</>;
+  return (
+    <>
+      {movies &&
+        movies.map((movie) => (
+          <li key={movie.id}>
+            <Link href={`/movies/${movie.id}`}>{movie.title}</Link>
+          </li>
+        ))}
+    </>
+  );
 }

@@ -16,7 +16,7 @@
       // input value와 연결해서 스테이트 함수생성
 
       const _onChange = (event) => {
-        // console.log(event); // 가짜 React 이벤트 객체
+        // console.log(event); // 가짜 - React는 이벤트를 최적화시킴
         // console.log(event.target.value); // 실제 input 값
         setMinutes((minutes) => event.target.value);
         // useState로 받아와서 업데이트를 해줘야 함
@@ -33,7 +33,7 @@
             <h1>Super Converter</h1>
             <label htmlFor="minutes">Minutes:</label>
             <input
-              value={minutes} // ustState와 연결
+              value={minutes} // ustState와 연결하면, input value를 언제든지 수정가능 setValue("")
               id="minutes"
               placeholder="Minutes"
               type="number"

@@ -27,6 +27,7 @@ export default function Home() {
         <strong>Loading</strong>
       ) : (
         <div>
+          <></>
           {char.length === 0
             ? null
             : char.map(

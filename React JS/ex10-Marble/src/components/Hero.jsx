@@ -39,7 +39,9 @@ const HeroTitle = styled.div`
   font-style: normal;
   color: black; /* 글자 색상 */
   margin-bottom: 20px;
-  text-shadow: 2px 2px 10px rgba(255, 255, 255, 1); /* 하얀색 반투명 그림자 */
+  text-shadow:
+    -2px -2px 10px rgba(255, 255, 255, 1),
+    2px 2px 10px rgba(255, 255, 255, 1); /* 하얀색 반투명 그림자 */
 `;
 
 const CardNumber = styled.div`
@@ -57,8 +59,16 @@ const Header = styled.div`
   flex-direction: column;
 `;
 
-export default function Movie({ id, title, summary, genres, coverImg, number }) {
-  const fallbackImage = "https://vqstrategies.com/wp-content/uploads/2020/02/top-secret-stamp.jpg"; // 대체 이미지 경로 설정
+export default function Movie({
+  id,
+  title,
+  summary,
+  genres,
+  coverImg,
+  number,
+}) {
+  const fallbackImage =
+    "https://vqstrategies.com/wp-content/uploads/2020/02/top-secret-stamp.jpg"; // 대체 이미지 경로 설정
 
   // const fallbackImage = "/top-secret-stamp.webp";
 

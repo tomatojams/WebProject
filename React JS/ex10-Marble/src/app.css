@@ -1,8 +1,6 @@
 a {
   text-decoration: none;
-}
-:visited {
-  color: violet;
+  color: #551a8b;
 }
 
 .summary {
@@ -14,9 +12,11 @@ a {
 }
 
 body {
+  margin: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  background-color: white;
+  background-color: black;
 }
 
 .Movie {

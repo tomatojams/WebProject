@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.7.7",
     "ex5-vite-app": "file:",
     "gh-pages": "^6.1.1",
     "prop-types": "^15.8.1",

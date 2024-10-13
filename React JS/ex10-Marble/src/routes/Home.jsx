@@ -1,6 +1,8 @@
 import Hero from "../components/Hero";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
+import axios from "axios";
 
 const Back = styled.div`
   display: flex;
@@ -24,33 +26,26 @@ const Header = styled.div`
 `;
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-  const [char, setChar] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  // const [char, setChar] = useState([]);
 
-  useEffect(() => {
-    // 시작할때 한번실행의 의미로 쓸수있음
-    fetch(
-      `https://marvel-proxy.nomadcoders.workers.dev/v1/public/characters?limit=50&orderBy=modified&series=24229,1058,2023`
-    )
-      .then((response) => response.json()) // 제이슨 형을 JS 객체로 파싱
-      .then((json) => {
-        // 파싱된 데이타로 json 이 아닌 JS 객체임
-        //
-        console.log(json.data.results);
-        setChar(json.data.results);
-        setLoading(false); // response 받은 다음에 해야함 외부에 하면 로딩없이 false 세팅이 됨
-      });
-    // .then((json) => console.log(json.data.movies));
-  }, []);
-  // console.log(movies);
+  const { data: char, isLoading } = useQuery(["characters"], async () => {
+    return await axios
+      .get(
+        `https://marvel-proxy.nomadcoders.workers.dev/v1/public/characters?limit=50&orderBy=modified&series=24229,1058,2023`
+      )
+      .then((res) => res.data.data.results);
+  });
+
+
+  console.log(char);
   return (
     <Back>
-      {loading ? (
+      {isLoading ? (
         <strong>Loading</strong>
       ) : (
         <>
           <Header>
-            {" "}
             <img
               src="https://i0.wp.com/moviesgamesandtech.com/wp-content/uploads/2013/09/Marvel-Heroes-Logo.png?fit=782%2C294&quality=80&ssl=1"
               alt=""
@@ -59,7 +54,7 @@ export default function Home() {
 
           <MainContainer>
             <></>
-            {char.length === 0
+            {isLoading
               ? null
               : char.map(
                   (char, index) => (

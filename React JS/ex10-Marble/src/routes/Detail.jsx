@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 const CardNumber = styled.div`
   font-family: "Shadows Into Light", cursive;
@@ -14,19 +16,17 @@ const CardNumber = styled.div`
 export default function Detail() {
   const param = useParams();
   const id = param.id;
-  const [hero, setHero] = useState({});
   console.log(id);
-  const getHero = async () => {
-    const json = await (
-      await fetch(`https://marvel-proxy.nomadcoders.workers.dev/v1/public/characters/${id}`)
-    ).json();
-    console.log(json.data.results);
-    setHero(json.data.results);
-  };
-  useEffect(() => {
-    getHero(); // async에서만 await를 쓰므로 다른 함수를 만들어서 실행하고 세팅한후에
-    // useEffect로 한번만 실행
-  }, []);
+
+ 
+  const { data: hero, isLoading } = useQuery(["characters"], async () => {
+    return await axios
+      .get(
+        `https://marvel-proxy.nomadcoders.workers.dev/v1/public/characters/${id}`
+      )
+      .then((res) => res.data.data.results);
+  });
+
   console.log(hero);
   return (
     <div>

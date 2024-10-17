@@ -1,5 +1,5 @@
 import Hero from "../components/Hero";
-import { useEffect, useState } from "react";
+
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import axios from "axios";
@@ -15,6 +15,7 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 30px 30px;
   flex-wrap: wrap;
   padding: 0px 50px;
@@ -37,7 +38,6 @@ export default function Home() {
       .then((res) => res.data.data.results);
   });
 
-
   console.log(char);
   return (
     <Back>
@@ -47,6 +47,7 @@ export default function Home() {
         <>
           <Header>
             <img
+              width="400px"
               src="https://i0.wp.com/moviesgamesandtech.com/wp-content/uploads/2013/09/Marvel-Heroes-Logo.png?fit=782%2C294&quality=80&ssl=1"
               alt=""
             />
@@ -56,20 +57,18 @@ export default function Home() {
             <></>
             {isLoading
               ? null
-              : char.map(
-                  (char, index) => (
-                    <Hero
-                      id={char.id}
-                      key={char.id} // 맵내에서 사용, 추가로 입력함 반복생성을 위한 키
-                      coverImg={char.thumbnail.path}
-                      title={char.name}
-                      genres={char.name}
-                      summary={char.description}
-                      number={index + 1}
-                    />
-                  )
-                  // 새로운 리스트로 돌려주고 그 형식을 지정
-                )}
+              : char.map((char, index) => (
+                  <Hero
+                    id={char.id}
+                    key={char.id}
+                    coverImg={char.thumbnail.path}
+                    extension={char.thumbnail.extension}
+                    title={char.name}
+                    genres={char.name}
+                    summary={char.description}
+                    number={index + 1}
+                  />
+                ))}
           </MainContainer>
         </>
       )}

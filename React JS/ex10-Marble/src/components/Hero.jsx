@@ -22,9 +22,9 @@ const Charactor = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  width: 300px; /* 원하는 너비 */
-  height: 300px; /* 원하는 높이 */
-  overflow: hidden; /* 이미지가 컨테이너를 넘지 않도록 숨김 */
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
 
   img {
     width: 100%;
@@ -59,38 +59,28 @@ const Header = styled.div`
   flex-direction: column;
 `;
 
-export default function Movie({
-  id,
-  title,
-  summary,
-  genres,
-  coverImg,
-  number,
-}) {
-  const fallbackImage =
-    "https://vqstrategies.com/wp-content/uploads/2020/02/top-secret-stamp.jpg"; // 대체 이미지 경로 설정
-
-  // const fallbackImage = "/top-secret-stamp.webp";
+export default function Movie({ id, title, coverImg, number, extension }) {
+  const fallbackImage = "https://vqstrategies.com/wp-content/uploads/2020/02/top-secret-stamp.jpg"; // 대체 이미지 경로 설정
 
   const isImageAvailable = !coverImg.includes("image_not_available");
 
   return (
-    <Charactor>
-      <Header>
-        <CardNumber>Hero.{number}</CardNumber>
-      </Header>
-      <HeroTitle>
-        <Link to={`/movie/${id}`}>{title}</Link>
-      </HeroTitle>
+    <Link to={`/movie/${id}`}>
+      <Charactor>
+        <Header>
+          <CardNumber>Hero.{number}</CardNumber>
+        </Header>
+        <HeroTitle>{title}</HeroTitle>
 
-      <ImageContainer>
-        <img
-          src={isImageAvailable ? `${coverImg}.jpg` : fallbackImage} // 이미지가 없을 때 대체 이미지 사용
-          alt={title}
-          height="250px"
-        />
-      </ImageContainer>
-    </Charactor>
+        <ImageContainer>
+          <img
+            src={isImageAvailable ? `${coverImg}.${extension}` : fallbackImage} // 이미지가 없을 때 대체 이미지 사용
+            alt={title}
+            height="250px"
+          />
+        </ImageContainer>
+      </Charactor>
+    </Link>
   );
 }
 
@@ -99,7 +89,8 @@ Movie.propTypes = {
 
   title: PropTypes.string.isRequired,
   coverImg: PropTypes.string.isRequired,
-
+  number: PropTypes.number.isRequired,
   summary: PropTypes.string.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
+  extension: PropTypes.string.isRequired,
 };

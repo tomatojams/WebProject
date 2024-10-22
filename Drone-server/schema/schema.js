@@ -147,6 +147,12 @@ const SensorMessage = mongoose.model("SensorMessage", SensorMessageSchema);
 const UserModel = mongoose.model("User", userSchema);
 const MarkModel = mongoose.model("Mark", sensorSchema, "marks");
 const SensorListModel = mongoose.model("SensorList", sensorSchema, "sensorlists");
+// 추가된부분
+const OneTimeSentMessage = mongoose.model(
+  "OneTimeSentMessage",
+  DroneStateMessageSchema,
+  "onetimesentmessages"
+);
 
 export {
   MarkModel,
@@ -157,4 +163,6 @@ export {
   SensorMessage,
   SentMessage,
   DroneHistory,
+  // 추가된부품
+  OneTimeSentMessage,
 };

@@ -36,6 +36,21 @@ const sendControlCommand = async (droneId, enumType, isActive) => {
   }
 };
 
+// 추가부분
+const sendControlCommand2 = async (droneId, enumType, isActive) => {
+  try {
+    const command = isActive ? "stop" : "start";
+    const response = await axios.post("/api/drone/control2", {
+      droneId: droneId,
+      enum: enumType,
+      command: command,
+    });
+    console.log("Command sent:", response.data);
+  } catch (error) {
+    console.error("Error sending command:", error);
+  }
+};
+
 // 개별 드론 정보 가져옴
 const fetchSelectedDroneData = async (droneId) => {
   const res = await axios.get(`/api/drone/${droneId}`);
@@ -108,7 +123,6 @@ const loginfunc = async (id, password) => {
 
 // 로그인 정보 가져오기 (서버 미구현)
 const getSession = async (id) => {
-
   const response = await axios.post("/api/getsession", { id });
   return response;
 };
@@ -122,6 +136,8 @@ export {
   deleteDroneList,
   deleteSensor,
   sendControlCommand,
+  // 추가부분
+  sendControlCommand2,
   loginfunc,
   getSession,
 };

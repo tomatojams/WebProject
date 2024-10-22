@@ -1,8 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
+import amqp from "amqplib";
 dotenv.config();
+
+const amqp_url = process.env.AMQP_URL;
+
+
 import { droneStateMessageBuffer } from "../consume func/funcNew.js";
-import { MarkModel, SensorListModel, UserModel, DroneHistory } from "../schema/schema.js";
+import { MarkModel, SensorListModel, UserModel, DroneHistory, OneTimeSentMessage } from "../schema/schema.js";
 
 // import로 받아와도 되지만 매개변수로 받아도 됨
 // import { droneCommands } from "../server.js";
@@ -42,6 +47,9 @@ const droneRouter = (droneCommands) => {
       res.status(500).json({ error: "Internal Server Error" });
     }
   });
+
+
+  
 
   router.get("/api/drone/:droneId", (req, res) => {
     const { droneId } = req.params;
@@ -104,6 +112,72 @@ const droneRouter = (droneCommands) => {
     return res.status(200).json({ message: "Command processed successfully" });
   });
 
+  router.post("/api/drone/control2", async (req, res) => {
+    const { droneId, enum: enumType, command } = req.body;
+  
+    if (!droneId || !enumType || !command) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+  
+    try {
+      // 1. 드론 정보를 DB에서 조회
+      const droneInfo = await DroneHistory.findOne({ droneId });
+  
+      if (!droneInfo) {
+        return res.status(404).json({ error: "Drone not found" });
+      }
+  
+      // 2. 드론 정보를 사용해 나머지 필드 채우기
+      const commandRecord = new OneTimeSentMessage({
+        message_type: enumType,
+        sender_id: "Client", // 송신자 정보
+        timestamp: Date.now(), 
+        drone: {
+          droneId: droneInfo.droneId,
+          name: droneInfo.name,
+          frequency: droneInfo.frequency,
+          bandwidth: droneInfo.bandwidth,
+          allow_track: droneInfo.allow_track,
+          allow_takeover: droneInfo.allow_takeover,
+          class_name: droneInfo.class_name,
+          radio_resources: droneInfo.radio_resources,
+          location: droneInfo.location, 
+          operator_location: droneInfo.operator_location, 
+          home_location: droneInfo.home_location, 
+          speed_ms: droneInfo.speed_ms, 
+          ground_or_sky: droneInfo.ground_or_sky, 
+          rssi: droneInfo.rssi, 
+        },
+      });
+  
+      // 3. 명령을 DB에 저장
+      await commandRecord.save();
+  
+      // 4. RabbitMQ로 메시지 전송
+      const connection = await amqp.connect(amqp_url);
+      const channel = await connection.createChannel();
+      const queue = "Client_message";
+  
+      await channel.assertQueue(queue, { durable: false });
+  
+      const messageToSend = {
+        droneId,
+        enum: enumType,
+        command,
+        timestamp: Date.now(),
+      };
+  
+      channel.sendToQueue(queue, Buffer.from(JSON.stringify(messageToSend)));
+      console.log(`Sent message to RabbitMQ: ${JSON.stringify(messageToSend)}`);
+  
+      return res.status(200).json({ message: "Command processed and sent to RabbitMQ successfully" });
+    } catch (error) {
+      console.error("Error processing drone control command:", error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+  
+  
   // 드론 리스트 가져오기
 
   router.get("/api/dronelist", async (req, res) => {

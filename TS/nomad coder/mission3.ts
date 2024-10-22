@@ -27,7 +27,7 @@ Documentation: https://developer.mozilla.org/en-US/docs/Web/API/Geolocation */
 abstract class Storagee<T> {
   abstract setItem(key: string, value: T): void;
   abstract clearItem(key: string): void;
-  abstract getItem(key: string): T;
+  abstract getItem(key: string): T | undefined;
   abstract clear(): void;
 }
 
@@ -45,7 +45,7 @@ class localStorages<T> implements Storagee<T> {
   clearItem(key: string) {
     delete this.storgae[key];
   }
-  getItem(key: string): T {
+  getItem(key: string): T | undefined {
     return this.storgae[key];
   }
 

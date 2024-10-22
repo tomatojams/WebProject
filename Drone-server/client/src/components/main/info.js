@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import { sendControlCommand } from "../api";
+import { sendControlCommand, sendControlCommand2 } from "../api";
 // Card 스타일
 const Card = styled.div`
   width: 350px;
@@ -113,14 +113,35 @@ export default function InfoDrone({ selectedDroneData }) {
   const [droneStates, setDroneStates] = useState({});
 
   // 드론의 특정 상태를 변경하는 함수
-  const toggleDroneState = (droneId, stateKey) => {
+  // const toggleDroneState = (droneId, stateKey) => {
+  //   setDroneStates((prevState) => ({
+  //     ...prevState,
+  //     [droneId]: {
+  //       ...prevState[droneId],
+  //       [stateKey]: !prevState[droneId]?.[stateKey],
+  //     },
+  //   }));
+  // };
+  const toggleDroneStateTemporarily = (droneId, stateKey) => {
+    // 버튼을 잠시 활성화했다가 원래 상태로 되돌리기
     setDroneStates((prevState) => ({
       ...prevState,
       [droneId]: {
         ...prevState[droneId],
-        [stateKey]: !prevState[droneId]?.[stateKey],
+        [stateKey]: true, // 버튼 활성화
       },
     }));
+
+    // 0.5초 후에 버튼 상태를 다시 비활성화
+    setTimeout(() => {
+      setDroneStates((prevState) => ({
+        ...prevState,
+        [droneId]: {
+          ...prevState[droneId],
+          [stateKey]: false, // 버튼 비활성화
+        },
+      }));
+    }, 500); // 0.5초 후 상태 복귀
   };
 
   return (
@@ -175,30 +196,26 @@ export default function InfoDrone({ selectedDroneData }) {
             <ToggleButton
               isActive={droneStates[selectedDroneData.drone.droneId]?.isTrackActive || false}
               onClick={() => {
-                const isActive =
-                  droneStates[selectedDroneData.drone.droneId]?.isTrackActive || false;
-                toggleDroneState(selectedDroneData.drone.droneId, "isTrackActive");
-                sendControlCommand(selectedDroneData.drone.droneId, "Track", isActive);
+                sendControlCommand2(selectedDroneData.drone.droneId, "Track", false);
+                toggleDroneStateTemporarily(selectedDroneData.drone.droneId, "isTrackActive");
               }}>
               Track
             </ToggleButton>
+
             <ToggleButton
               isActive={droneStates[selectedDroneData.drone.droneId]?.isTakeOverActive || false}
               onClick={() => {
-                const isActive =
-                  droneStates[selectedDroneData.drone.droneId]?.isTakeOverActive || false;
-                toggleDroneState(selectedDroneData.drone.droneId, "isTakeOverActive");
-                sendControlCommand(selectedDroneData.drone.droneId, "Takeover", isActive);
+                sendControlCommand2(selectedDroneData.drone.droneId, "Takeover", false);
+                toggleDroneStateTemporarily(selectedDroneData.drone.droneId, "isTakeOverActive");
               }}>
               Take over
             </ToggleButton>
+
             <ToggleButton
               isActive={droneStates[selectedDroneData.drone.droneId]?.isMigrateActive || false}
               onClick={() => {
-                const isActive =
-                  droneStates[selectedDroneData.drone.droneId]?.isMigrateActive || false;
-                toggleDroneState(selectedDroneData.drone.droneId, "isMigrateActive");
-                sendControlCommand(selectedDroneData.drone.droneId, "Migrate", isActive);
+                sendControlCommand2(selectedDroneData.drone.droneId, "Migrate", false);
+                toggleDroneStateTemporarily(selectedDroneData.drone.droneId, "isMigrateActive");
               }}>
               Migrate
             </ToggleButton>

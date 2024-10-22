@@ -25,7 +25,7 @@ let dict: Words = {
 class Word {
   constructor(
     public readonly term: string,
-    public readonly def: string
+    public def: string
   ) {}
 }
 
@@ -75,9 +75,9 @@ class Dict {
     bulk.forEach((item) => (this.words[item.term] = item.def));
   }
 
-  bulkDelete(bulk: Word[]) {
-    bulk.forEach((item) => {
-      delete this.words[item.term];
+  bulkDelete(bulk: string[]) {
+    bulk.forEach((term) => {
+      delete this.words[term];
     });
   }
 }
@@ -85,6 +85,5 @@ class Dict {
 const tomatojams = new Word("tomatojams", "마이 닉네임");
 const myDic = new Dict();
 myDic.add(tomatojams);
-console.log(myDic);
+myDic.showAll();
 
-tomatojams.def ='salt'

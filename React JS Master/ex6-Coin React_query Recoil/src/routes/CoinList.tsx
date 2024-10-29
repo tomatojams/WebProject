@@ -2,8 +2,9 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet";
-import { useThemeMode } from "../atoms";
+import { useThemeMode,isDarkAtom } from "../atoms";
 import { Container, Header, Img, Title, Coin, CoinsList } from "./styledComp";
+import { useSetRecoilState } from "recoil";
 interface ICoin {
   id: string;
   name: string;
@@ -15,6 +16,7 @@ interface ICoin {
 }
 
 export default function Coins() {
+  // const setDarkAtom = useSetRecoilState(isDarkAtom);
   const { toggleMode } = useThemeMode();
 
   // 1. state 저장, 2. 로딩 여부 3. 캐싱 4. useEffect의 한번 실행 효과
@@ -30,6 +32,7 @@ export default function Coins() {
       <Title style={{ display: "flex" }}>
         코인{" "}
         <button className="simplebutton-reversed" onClick={toggleMode}>
+        {/* <button className="simplebutton-reversed" onClick={()=> setDarkAtom((prev)=>(!prev))}> */}
           ToggleMode
         </button>
       </Title>

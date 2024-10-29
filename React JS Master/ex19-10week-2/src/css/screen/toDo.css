@@ -1,0 +1,17 @@
+.todo_box {
+  display: flex;
+}
+
+.todo_box_section {
+  width: 700px;
+}
+
+.todo_box_frame {
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+  gap: 25px;
+}

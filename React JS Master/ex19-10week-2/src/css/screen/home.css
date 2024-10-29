@@ -1,0 +1,25 @@
+#mainbox {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 0px;
+}
+
+.mainbox_logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+}
+
+.todo_box {
+  display: flex;
+}
+
+.todo_box_section {
+  width: 700px;
+}

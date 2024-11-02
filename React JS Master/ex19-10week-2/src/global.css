@@ -1,20 +1,13 @@
 @import "./css/variable.css";
 @import "./css/components/button.css";
 @import "./css/components/write-form.css";
-@import "./css/screen/list.css";
-@import "./css/screen/home.css";
-@import "./css/screen/detail.css";
-@import "./css/screen/navi.css";
-@import "./css/screen/login.css";
-@import "./css/screen/join.css";
-@import "./css/screen/toDo.css";
 
 body {
   margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #333; /* 상속해주는 텍스트 색상*/
+  color: #666; /* 상속해주는 텍스트 색상*/
 }
 
 a {
@@ -27,4 +20,17 @@ label {
   font-size: 16px;
   color: #555;
   margin-bottom: 5px;
+}
+.frame h3 {
+  color: #333;
+  font-family: "Arial", sans-serif; /* 원하는 폰트 */
+  font-size: 20px; /* 원하는 크기 */
+  font-weight: bold; /* 굵기 조정 */
+}
+
+.frame h4 {
+  color: #333;
+  font-family: "Arial", sans-serif; /* 원하는 폰트 */
+  font-size: 15px;
+  font-weight: 500;
 }

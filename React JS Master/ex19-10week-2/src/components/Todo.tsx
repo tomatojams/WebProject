@@ -9,7 +9,6 @@ export default function ToDo({ text, category, id }: IToDo) {
   const changeCategory = useChangeToDo();
   const deleteItem = useDelete();
 
-  //
   const _onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const {
       currentTarget: { name },
@@ -42,10 +41,7 @@ export default function ToDo({ text, category, id }: IToDo) {
               )
             );
           })}
-          <button
-            className="simplebutton-log"
-            name={Category.DONE}
-            onClick={_onDelete}>
+          <button className="simplebutton-log" name={Category.LIKE} onClick={_onDelete}>
             Delete
           </button>
         </div>

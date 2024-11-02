@@ -1,5 +1,5 @@
 export enum Category {
-  "TO_DO" = "TO_DO",
-  "DOING" = "DOING",
-  "DONE" = "DONE",
+  "가고싶다" = "가고싶다",
+  "가본나라" = "가본나라",
+  "LIKE" = "❤️",
 }

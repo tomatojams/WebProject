@@ -1,16 +1,12 @@
 import { useForm } from "react-hook-form";
-
 import { useAddToDo } from "./atoms";
 import { IForm } from "../types/IForm";
 
 export default function CreateTodo() {
   const {
     register,
-
     handleSubmit,
-
     formState: { errors },
-
     setValue,
   } = useForm<IForm>({});
 
@@ -26,23 +22,22 @@ export default function CreateTodo() {
       <input
         id="comment_input"
         {...register("toDo", {
-          required: "해야할 일을 입력해주세요.",
+          required: "나라명을 입력해주세요.",
 
           validate: {
-            noCool: (value) =>
-              value?.includes("cool") ? "No cool allowed" : true,
+            noCool: (value) => (value?.includes("fuck") ? "No fuck allowed" : true),
           },
           minLength: {
-            value: 1,
-            message: "할일을 작성해주세요.",
+            value: 2,
+            message: "나라명을 입력해주세요.",
           },
         })}
         type="text"
         placeholder="Write to do"
       />
       <button className="simplebutton-log">가자!</button>
-
-      <span>{errors?.toDo?.message}</span>
+      <br></br>
+      <span style={{ color: "orange" }}>{errors?.toDo?.message}</span>
     </form>
   );
 }

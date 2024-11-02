@@ -1,12 +1,12 @@
 import CreateTodo from "./CreateTodo";
+import { useRecoilValue } from "recoil";
 import { toGoSelector } from "./atoms";
 import ToDo from "./Todo";
 
 export default function TodoList() {
-  const toGoSel = toGoSelector();
-  const likeToGos = toGoSel("TO_DO");
-  const alreadyGone = toGoSel("DOING");
-  const likeCountry = toGoSel("DONE");
+  const likeToGos = useRecoilValue(toGoSelector("가고싶다"));
+  const alreadyGone = useRecoilValue(toGoSelector("가본나라"));
+  const likeCountry = useRecoilValue(toGoSelector("❤️"));
 
   return (
     <div className="frame">

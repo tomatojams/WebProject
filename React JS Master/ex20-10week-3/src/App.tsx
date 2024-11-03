@@ -1,106 +1,95 @@
-import styled from "styled-components";
-import "./global.css";
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { minutesSelector, secondsSelector, toCount, roundState, goalState } from "./atoms";
+import {
+  BigWrapper,
+  UpWrapper,
+  LowWrapper,
+  Circle,
+  Box,
+  StyledIcon,
+  Colon,
+  ViewBox,
+} from "./styled";
 
-import { AnimatePresence, motion, Variants } from "framer-motion";
-import { useState } from "react";
-
-const BigWrapper = styled(motion.div)`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-
-  background: #e34336;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 300px;
-  box-sizing: border-box;
-`;
-const Wrapper = styled(motion.div)`
-  height: 50vh;
-  width: 100vw;
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  align-items: center;
-`;
-const Circle = styled(motion.div)`
-  background-color: rgba(0, 0, 0, 0.3);
-  height: 150px;
-  width: 150px;
-  border-radius: 75px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-
-  box-shadow:
-    0 2px 3px rgba(0, 0, 0, 0.1),
-    0 10px 20px rgba(0, 0, 0, 0.06);
-`;
-const Box = styled(motion.div)`
-  box-sizing: border-box;
-  // 밀림현상방지
-  font-size: 8rem;
-  color: #e34336;
-  width: 250px;
-  height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 30px;
-  box-shadow:
-    0 2px 3px rgba(0, 0, 0, 0.1),
-    0 10px 20px rgba(0, 0, 0, 0.06);
-`;
-
-const StyledIcon = styled(motion.svg)`
-  fill: currentColor;
-  transform: translateX(5px); // 오른쪽으로 이동
-  width: 120px; // 원하는 크기로 설정
-  height: 120px;
-`;
-
-const Colon = styled(motion.div)`
-  font-size: 7rem;
-  color: rgba(255, 255, 255, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: translateY(-10%);
-`;
+const ClockTimer = 5;
 
 export default function App() {
-  const [minutes, setMinutes] = useState(30);
-  const [seconds, setSeconds] = useState(0);
-  const [clicked, setClicked] = useState(false);
-  const _toggle = () => {
-    setClicked((prev) => !prev);
+  const minutes = useRecoilValue(minutesSelector);
+  const seconds = useRecoilValue(secondsSelector);
+
+  const [time, setTime] = useRecoilState(toCount);
+  const [round, setRound] = useRecoilState(roundState);
+  const [goal, setGoal] = useRecoilState(goalState);
+  const [isRunning, setIsRunning] = useState(false);
+
+  const incrementGoal = () => {
+    if (goal !== 12) {
+      setGoal((prev) => prev + 1);
+    } else {
+      setGoal(0);
+      setIsRunning(false);
+    }
   };
 
+  useEffect(() => {
+    if (!isRunning) return;
+
+    const timer = setTimeout(() => {
+      if (time === 0) {
+        if (round === 3) {
+          incrementGoal();
+          setTime(ClockTimer);
+          setRound(0);
+        } else {
+          setTime(ClockTimer);
+          setRound((prev) => prev + 1);
+        }
+        return;
+      }
+
+      setTime((prev) => prev - 1);
+    }, 1000);
+
+    // 중복 실행 방지를 위해 타이머 클리어
+    return () => clearTimeout(timer);
+  }, [isRunning, time]);
+
+  // 타이머 상태를 토글하는 함수
+  const toggleTimer = () => setIsRunning((prev) => !prev);
+  const iconPath = isRunning
+    ? "M5.75 3a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75V3.75A.75.75 0 0 0 7.25 3h-1.5ZM12.75 3a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75V3.75a.75.75 0 0 0-.75-.75h-1.5Z"
+    : "M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.891a1.5 1.5 0 0 0 0-2.538L6.3 2.841Z";
+
   return (
-    <>
-      <BigWrapper>
-        <Wrapper onClick={_toggle}>
-          <Box>{minutes}</Box>
-          <Colon>
-            <span>:</span>
-          </Colon>
-          <Box>{seconds}</Box>
-        </Wrapper>
-        <Circle>
-          <StyledIcon
-            data-slot="icon"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true">
-            <path d="M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.891a1.5 1.5 0 0 0 0-2.538L6.3 2.841Z"></path>
-          </StyledIcon>
-        </Circle>
-      </BigWrapper>
-    </>
+    <BigWrapper>
+      <UpWrapper>
+        <Box>{minutes}</Box>
+        <Colon>
+          <span>:</span>
+        </Colon>
+        <Box>{seconds}</Box>
+      </UpWrapper>
+      <Circle onClick={toggleTimer}>
+        <StyledIcon
+          data-slot="icon"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true">
+          <path d={iconPath}></path>
+        </StyledIcon>
+      </Circle>
+      <LowWrapper>
+        <ViewBox>
+          <span>{round}/4</span>
+          <span>ROUND</span>
+        </ViewBox>
+        <ViewBox>
+          <span>{goal}/12</span>
+          <span>GOAL</span>
+        </ViewBox>
+      </LowWrapper>
+    </BigWrapper>
   );
 }

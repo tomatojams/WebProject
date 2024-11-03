@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { minutesSelector, secondsSelector, toCount, roundState, goalState } from "./atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { minutesSelector, secondsSelector, timeManagerSelector } from "./atoms";
 import {
   BigWrapper,
   UpWrapper,
@@ -12,50 +12,23 @@ import {
   ViewBox,
 } from "./styled";
 
-const ClockTimer = 5;
-
 export default function App() {
   const minutes = useRecoilValue(minutesSelector);
   const seconds = useRecoilValue(secondsSelector);
-
-  const [time, setTime] = useRecoilState(toCount);
-  const [round, setRound] = useRecoilState(roundState);
-  const [goal, setGoal] = useRecoilState(goalState);
+  const { round, goal } = useRecoilValue(timeManagerSelector);
+  const setTimerState = useSetRecoilState(timeManagerSelector);
   const [isRunning, setIsRunning] = useState(false);
-
-  const incrementGoal = () => {
-    if (goal !== 12) {
-      setGoal((prev) => prev + 1);
-    } else {
-      setGoal(0);
-      setIsRunning(false);
-    }
-  };
 
   useEffect(() => {
     if (!isRunning) return;
 
     const timer = setTimeout(() => {
-      if (time === 0) {
-        if (round === 3) {
-          incrementGoal();
-          setTime(ClockTimer);
-          setRound(0);
-        } else {
-          setTime(ClockTimer);
-          setRound((prev) => prev + 1);
-        }
-        return;
-      }
-
-      setTime((prev) => prev - 1);
+      setTimerState((prev) => prev); // 내부 로직이 자동으로 실행됨
     }, 1000);
 
-    // 중복 실행 방지를 위해 타이머 클리어
     return () => clearTimeout(timer);
-  }, [isRunning, time]);
+  }, [isRunning, setTimerState, seconds]);
 
-  // 타이머 상태를 토글하는 함수
   const toggleTimer = () => setIsRunning((prev) => !prev);
   const iconPath = isRunning
     ? "M5.75 3a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75V3.75A.75.75 0 0 0 7.25 3h-1.5ZM12.75 3a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75V3.75a.75.75 0 0 0-.75-.75h-1.5Z"

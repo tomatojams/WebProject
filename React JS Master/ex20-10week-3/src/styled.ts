@@ -10,7 +10,7 @@ const BigWrapper = styled(motion.div)`
   background: #e34336;
   justify-content: center;
   align-items: center;
-  padding-bottom: 300px;
+  padding-top: 50px;
   box-sizing: border-box;
   gap: 30px;
 `;

@@ -1,7 +1,7 @@
-import { atom, selector, atomFamily } from "recoil";
+import { atom, selector } from "recoil";
 
 // 1. 시간(초) 상태 변수 및 초기값 설정
-const ClockTimer = 5;
+const ClockTimer = 25 * 60;
 
 export const toCount = atom({
   key: "time",

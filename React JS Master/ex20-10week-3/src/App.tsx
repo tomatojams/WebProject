@@ -11,6 +11,7 @@ import {
   Colon,
   ViewBox,
 } from "./styled";
+import { motion, useAnimation } from "framer-motion";
 
 export default function App() {
   const minutes = useRecoilValue(minutesSelector);
@@ -18,6 +19,20 @@ export default function App() {
   const { round, goal } = useRecoilValue(timeManagerSelector);
   const setTimerState = useSetRecoilState(timeManagerSelector);
   const [isRunning, setIsRunning] = useState(false);
+
+  const minutesBoxAnimation = useAnimation();
+  const secondsBoxAnimation = useAnimation();
+  const circleAnimation = useAnimation();
+
+  useEffect(() => {
+    // 분이 변할 때 애니메이션 실행
+    minutesBoxAnimation.start({ scale: [0.8, 1], transition: { duration: 0.3 } });
+  }, [minutes, minutesBoxAnimation]);
+
+  useEffect(() => {
+    // 초가 변할 때 애니메이션 실행
+    secondsBoxAnimation.start({ scale: [0.8, 1], transition: { duration: 0.3 } });
+  }, [seconds, secondsBoxAnimation]);
 
   useEffect(() => {
     if (!isRunning) return;
@@ -29,7 +44,10 @@ export default function App() {
     return () => clearTimeout(timer);
   }, [isRunning, setTimerState, seconds]);
 
-  const toggleTimer = () => setIsRunning((prev) => !prev);
+  const toggleTimer = () => {
+    circleAnimation.start({ scale: [0.8, 1], transition: { duration: 0.3 } });
+    setIsRunning((prev) => !prev);
+  };
   const iconPath = isRunning
     ? "M5.75 3a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75V3.75A.75.75 0 0 0 7.25 3h-1.5ZM12.75 3a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h1.5a.75.75 0 0 0 .75-.75V3.75a.75.75 0 0 0-.75-.75h-1.5Z"
     : "M6.3 2.84A1.5 1.5 0 0 0 4 4.11v11.78a1.5 1.5 0 0 0 2.3 1.27l9.344-5.891a1.5 1.5 0 0 0 0-2.538L6.3 2.841Z";
@@ -37,13 +55,17 @@ export default function App() {
   return (
     <BigWrapper>
       <UpWrapper>
-        <Box>{minutes}</Box>
+        <Box as={motion.div} animate={minutesBoxAnimation}>
+          {minutes}
+        </Box>
         <Colon>
           <span>:</span>
         </Colon>
-        <Box>{seconds}</Box>
+        <Box as={motion.div} animate={secondsBoxAnimation}>
+          {seconds}
+        </Box>
       </UpWrapper>
-      <Circle onClick={toggleTimer}>
+      <Circle as={motion.div} animate={circleAnimation} onClick={toggleTimer}>
         <StyledIcon
           data-slot="icon"
           fill="currentColor"

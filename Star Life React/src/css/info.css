@@ -1,0 +1,54 @@
+.info-drone-container {
+  width: 350px;
+  height: 300px;
+  flex: 1;
+  padding: 20px;
+  background: #ffffff;
+  border-top: 1px solid #ddd;
+  margin-top: auto;
+  box-sizing: border-box;
+}
+
+.info-drone-content {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  color: #333;
+}
+
+.info-drone-section {
+  flex: 1;
+}
+
+.info-drone-section p {
+  margin-bottom: 10px;
+}
+
+.info-drone-strong {
+  font-weight: bold;
+}
+
+.info-drone-value {
+  color: #555;
+}
+
+.info-drone-value-highlight {
+  color: #007bff;
+  display: inline-block;
+  min-width: 120px; /* 최소 너비를 설정하여 일정한 길이 유지 */
+  word-wrap: break-word; /* 단어가 길 경우 줄 바꿈 처리 */
+}
+
+.info-drone-status-yes {
+  color: #28a745;
+}
+
+.info-drone-status-no {
+  color: #dc3545;
+}
+
+.info-drone-placeholder {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}

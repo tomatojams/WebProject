@@ -1,0 +1,130 @@
+@import "css/info.css";
+@import "css/list.css";
+@import "css/nav.css";
+
+/* global.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  user-select: none;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 최신 마커의 스타일 */
+
+.marker-latest {
+  filter: brightness(1); /* 최신 마커는 기본 밝기 */
+}
+
+/* 과거 마커의 스타일 */
+.marker-past {
+  filter: brightness(1); /* 과거 마커는 어두운 색상 */
+  opacity: 0.3; /* 과거 마커의 투명도 */
+  transform: scale(0.5); /* 과거 마커의 크기를 1/2로 조절 */
+  transform-origin: bottom center; /* 크기 조절의 기준 위치 */
+}
+
+.custom-marker-label {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 2px 5px;
+  font-size: 12px;
+  text-align: center;
+}
+.leaflet-marker-icon {
+  transition: transform 1s linear;
+}
+
+.leaflet-interactive {
+  transition: transform 1s linear; /* 위치가 바뀔 때 부드럽게 이동 */
+}
+
+.custom-marker-label {
+  display: inline-block;
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 2px 5px;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+}
+
+.custom-marker-label.animated {
+  transform: scale(1); /* 예시로 크기 변화 애니메이션 */
+}
+
+.custom-marker-icon {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.base-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.animated-icon {
+  position: absolute;
+  top: 0;
+  left: -5px;
+  width: 100%;
+  height: 100%;
+  animation: pulse 1.5s infinite; /* 간단한 애니메이션 효과 */
+  opacity: 0.9;
+}

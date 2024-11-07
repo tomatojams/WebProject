@@ -52,7 +52,33 @@ const SubFullContent = styled.div`
   position: relative;
   overflow: hidden;
 `;
+//  플로팅 버튼 스타일
+const FloatingButton = styled.a`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 110px;
+  height: 55px;
+  background-color: #ffe812;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  text-decoration: none;
+  font-size: 20px;
+  gap: 10px;
 
+  &:hover {
+    background-color: #ffd700;
+  }
+
+  img {
+    width: 32px;
+    height: 32px;
+  }
+`;
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -330,13 +356,20 @@ export default function MainInfo() {
             <StyledButton>강의 신청</StyledButton>
           </TextContainer>
         </RowContainer>
+
         <Footer>
-          <FooterText>주소: 서울특별시 강남구 테헤란로 123</FooterText>
-          <FooterText>연락처: 010-1234-5678 대표: 원장:김경환</FooterText>
-          <FooterText>이메일: example@example.com</FooterText>
+          <FooterText>주소: 수원시 영통구 태장로 81, 501호 스타평생교육원 </FooterText>
+          <FooterText>연락처: 031-202-0074 대표: 원장:김경환</FooterText>
           <Copyright>© 2024 스타 평생 교육원. All rights reserved.</Copyright>
         </Footer>
       </ContentWrapper>
+      <FloatingButton
+        href="https://open.kakao.com/o/gF91oLYg"
+        target="_blank"
+        rel="noopener noreferrer">
+        <img src="/icon/kakao1.png" alt="카카오톡 오픈채팅" />
+        상담
+      </FloatingButton>
     </MainContainer>
   );
 }

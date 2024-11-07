@@ -9,6 +9,7 @@ const Container = styled.div`
   margin: 0 auto;
   padding: 20px;
 `;
+//  플로팅 버튼 스타일
 
 const Header = styled.h1`
   text-align: center;

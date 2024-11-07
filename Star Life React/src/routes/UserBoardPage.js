@@ -1,10 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import useBoardFunctions from "./useBoardFunctions";
 import { useLocation } from "react-router-dom";
 import AppHeader from "../components/nav";
 
 const ITEMS_PER_PAGE = 10; // 한 페이지에 표시할 게시글 수
+
+// 플로팅 버튼 스타일
+const FloatingButton = styled.a`
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 110px;
+  height: 55px;
+  background-color: #ffe812;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  text-decoration: none;
+  font-size: 20px;
+  gap: 10px;
+
+  &:hover {
+    background-color: #ffd700;
+  }
+
+  img {
+    width: 32px;
+    height: 32px;
+  }
+`;
 
 const MainContainer = styled.div`
   display: flex;
@@ -149,7 +177,28 @@ const Image = styled.img`
     margin-bottom: 20px;
   }
 `;
+const Footer = styled.footer`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  // background-color: #333;
+  color: #333;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.5;
+`;
 
+const FooterText = styled.div`
+  margin: 5px 0;
+`;
+
+const Copyright = styled.div`
+  margin-top: 10px;
+  font-size: 12px;
+  color: #aaa;
+`;
 const TextContainer = styled.div`
   max-width: 600px;
   line-height: 1.6;
@@ -192,13 +241,17 @@ const UserBoardPage = () => {
     handlePostSubmit,
     handleDeletePost,
   } = useBoardFunctions();
-  const location = useLocation();
 
+  const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
 
+  // FormSection에 대한 ref 생성
+  const formSectionRef = useRef(null);
+
   useEffect(() => {
-    if (location.state?.fromLecture) {
-      window.scrollTo({ top: 300, behavior: "smooth" });
+    if (location.state?.fromLecture && formSectionRef.current) {
+      // 특정 링크에서 오면 FormSection 위치로 스크롤
+      formSectionRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [location]);
 
@@ -237,7 +290,8 @@ const UserBoardPage = () => {
       <Container>
         <Header>강의신청, 문의 게시판</Header>
 
-        <FormSection>
+        {/* FormSection에 ref 추가 */}
+        <FormSection ref={formSectionRef}>
           <Input placeholder="이름" value={name} onChange={(e) => setName(e.target.value)} />
           <TextArea
             placeholder="내용"
@@ -296,6 +350,19 @@ const UserBoardPage = () => {
           </PageButton>
         </PaginationContainer>
       </Container>
+      <FloatingButton
+        href="https://open.kakao.com/o/gF91oLYg"
+        target="_blank"
+        rel="noopener noreferrer">
+        <img src="/icon/kakao1.png" alt="카카오톡 오픈채팅" />
+        상담
+      </FloatingButton>
+
+      <Footer>
+        <FooterText>주소: 수원시 영통구 태장로 81, 501호 스타평생교육원 </FooterText>
+        <FooterText>연락처: 031-202-0074 대표: 원장:김경환</FooterText>
+        <Copyright>© 2024 스타 평생 교육원. All rights reserved.</Copyright>
+      </Footer>
     </MainContainer>
   );
 };

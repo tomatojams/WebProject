@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 // import "leaflet/dist/leaflet.css";
-
+import { Link } from "react-router-dom";
 import AppHeader from "../components/nav";
 // from api
 
@@ -112,7 +112,8 @@ const TextContainer = styled.div`
 `;
 
 // 버튼 스타일
-const StyledButton = styled.button`
+// 버튼 스타일을 `Link` 컴포넌트로 교체
+const StyledButtonLink = styled(Link)`
   padding: 10px 20px;
   font-size: 14px;
   color: #333;
@@ -120,7 +121,9 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  text-align: center;
   margin-top: 15px;
+  display: inline-block; /* 스타일을 버튼처럼 유지 */
 
   @media (max-width: 768px) {
     font-size: 12px;
@@ -139,28 +142,30 @@ export default function MainInfo() {
           <TextContainer>
             <h2>자격증 과정</h2>
             <p>
-              노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지
-              등을 미술 매체로 미술 수업할 수 있는 노인종이조형 심리 미술지도사
-              자격증. 미술치료 이론을 배우고 실습을 통해 심리미술치료를 알아가는
-              과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각 운동 기능을
-              항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도
-              제공해줄 수 있는 수업.
+              노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지 등을 미술 매체로
+              미술 수업할 수 있는 노인종이조형 심리 미술지도사 자격증. 미술치료 이론을 배우고 실습을
+              통해 심리미술치료를 알아가는 과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각
+              운동 기능을 항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도 제공해줄
+              수 있는 수업.
             </p>
-            <StyledButton>강의 신청</StyledButton>
+            <StyledButtonLink to="/board" state={{ fromLecture: true }}>
+              강의 신청
+            </StyledButtonLink>
           </TextContainer>
         </RowContainer>
         <RowContainer>
           <TextContainer>
             <h2>자격증 과정</h2>
             <p>
-              노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지
-              등을 미술 매체로 미술 수업할 수 있는 노인종이조형 심리 미술지도사
-              자격증. 미술치료 이론을 배우고 실습을 통해 심리미술치료를 알아가는
-              과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각 운동 기능을
-              항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도
-              제공해줄 수 있는 수업.
+              노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지 등을 미술 매체로
+              미술 수업할 수 있는 노인종이조형 심리 미술지도사 자격증. 미술치료 이론을 배우고 실습을
+              통해 심리미술치료를 알아가는 과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각
+              운동 기능을 항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도 제공해줄
+              수 있는 수업.
             </p>
-            <StyledButton>강의 신청</StyledButton>
+            <StyledButtonLink to="/board" state={{ fromLecture: true }}>
+              강의 신청
+            </StyledButtonLink>
           </TextContainer>
           <Image src="/Forest/Forest1.webp" alt="자격증 과정" />
         </RowContainer>

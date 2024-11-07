@@ -11,7 +11,7 @@ const SubFullWidthImage = styled.div`
   justify-content: end;
   align-items: end;
   width: 100%;
-  height: 90vh;
+  height: 70vh;
   background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
@@ -47,7 +47,7 @@ const SubFullContent = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 90vh;
+  height: 60vh;
 
   position: relative;
   overflow: hidden;
@@ -66,16 +66,6 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column; // 세로 방향 정렬
   overflow-y: visible;
-`;
-
-const CenteredText = styled.div`
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5); // 반투명 배경
-  padding: 20px 40px;
-  border-radius: 40px;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
 `;
 
 const EdgeText = styled.div`
@@ -255,97 +245,26 @@ export default function MainInfo() {
         <SubFullContent>
           <EdgeTextBlack>
             <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
-            <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
+            <EdgeSubBlack>산림치유</EdgeSubBlack>
             <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
+            산림치유는 자연 속에서 몸과 마음을 치유하는 특별한 경험입니다. 숲에서의 산책과 다양한
+            프로그램을 통해 스트레스를 해소하고 심신의 균형을 되찾을 수 있습니다. 자연의 소리와
+            향기, 맑은 공기 속에서 힐링을 경험하며 건강을 증진해 보세요. 산림치유 전문가들이
+            함께하며 맞춤형 프로그램을 제공합니다. 자연과 하나 되는 산림치유로 건강한 삶을 시작해
+            보세요.
           </EdgeTextBlack>
         </SubFullContent>
-        <SubFullWidthImage image="/Paper/Paper1.webp">
+        <SubFullWidthImage image="/Forest/forest2.webp">
           <EdgeText>
             <EdgeTitle> Teacher ★'s classes</EdgeTitle>
             <EdgeSub>산림치유</EdgeSub>
           </EdgeText>
         </SubFullWidthImage>
-        <SubFullContent>
-          <EdgeTextBlack>
-            <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
-            <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
-            <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
-          </EdgeTextBlack>
-        </SubFullContent>{" "}
-        <SubFullWidthImage image="/Paper/Paper1.webp">
-          <EdgeText>
-            <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>종이접기</EdgeSub>
-          </EdgeText>
-        </SubFullWidthImage>
-        <SubFullContent>
-          <EdgeTextBlack>
-            <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
-            <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
-            <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
-          </EdgeTextBlack>
-        </SubFullContent>{" "}
-        <SubFullWidthImage image="/Paper/Paper1.webp">
-          <EdgeText>
-            <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>종이접기</EdgeSub>
-          </EdgeText>
-        </SubFullWidthImage>
-        <SubFullContent>
-          <EdgeTextBlack>
-            <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
-            <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
-            <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
-          </EdgeTextBlack>
-        </SubFullContent>
-        <SubFullWidthImage image="/Paper/Paper1.webp">
-          <EdgeText>
-            <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>종이접기</EdgeSub>
-          </EdgeText>
-        </SubFullWidthImage>
-        <SubFullContent>
-          <EdgeTextBlack>
-            <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
-            <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
-            <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
-          </EdgeTextBlack>
-        </SubFullContent>
-        <RowContainer>
-          <Image src="/Paper/Paper1.webp" alt="자격증 과정" />
-          <TextContainer>
-            <h2>자격증 과정</h2>
-            <p>
-              노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지
-              등을 미술 매체로 미술 수업할 수 있는 노인종이조형 심리 미술지도사
-              자격증. 미술치료 이론을 배우고 실습을 통해 심리미술치료를 알아가는
-              과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각 운동 기능을
-              항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도
-              제공해줄 수 있는 수업.
-            </p>
-            <StyledButton>강의 신청</StyledButton>
-          </TextContainer>
-        </RowContainer>
+        <SubFullWidthImage image="/Forest/forest3.webp"></SubFullWidthImage>
+        <SubFullWidthImage image="/Forest/forest4.webp"></SubFullWidthImage>
+        <SubFullWidthImage image="/Forest/forest5.webp"></SubFullWidthImage>
+        <SubFullWidthImage image="/Forest/forest6.webp"></SubFullWidthImage>
+
         <Footer>
           <FooterText>주소: 서울특별시 강남구 테헤란로 123</FooterText>
           <FooterText>연락처: 010-1234-5678 대표: 원장:김경환</FooterText>

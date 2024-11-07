@@ -2,11 +2,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./routes/Home";
 import Paper from "./routes/Paper";
 // import LogIn from "./routes/logIn";
-import Setting from "./routes/setting";
+
 import Forest from "./routes/Forest";
 import Craft from "./routes/Craft";
 import Picture from "./routes/Picture";
 import Lecture from "./routes/Lecture";
+import LotcBoard from "./routes/BoardPage";
+import UserBoard from "./routes/UserBoardPage";
 export default function App() {
   return (
     <BrowserRouter>
@@ -15,9 +17,11 @@ export default function App() {
         <Route path="/paper" element={<Paper />} />
         <Route path="/forest" element={<Forest />} />
         <Route path="/craft" element={<Craft />} />
-        <Route path="/setting" element={<Setting />} />
+
         <Route path="/picture" element={<Picture />} />
         <Route path="/lecture" element={<Lecture />} />
+        <Route path="/board" element={<UserBoard />} />
+        <Route path="/lotcBoard" element={<LotcBoard />} />
       </Routes>
     </BrowserRouter>
   );

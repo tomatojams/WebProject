@@ -10,7 +10,7 @@ const FullWidthImage = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 90vh;
+  height: 70vh;
   background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
@@ -47,7 +47,7 @@ const SubFullWidthImage = styled.div`
   justify-content: end;
   align-items: end;
   width: 100%;
-  height: 90vh;
+  height: 70vh;
   background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
@@ -183,25 +183,25 @@ export default function MainInfo() {
         <SubFullWidthImage image="/Home/Home3.webp">
           <EdgeText>
             <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>공예</EdgeSub>
+            <EdgeSub>쿠키클레이</EdgeSub>
           </EdgeText>
         </SubFullWidthImage>
         <SubFullWidthImage image="/Home/Home4.webp">
           <EdgeText>
             <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>공예</EdgeSub>
+            <EdgeSub>종이접기</EdgeSub>
           </EdgeText>
         </SubFullWidthImage>
         <SubFullWidthImage image="/Home/Home5.webp">
-        <EdgeText>
+          <EdgeText>
             <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>공예</EdgeSub>
+            <EdgeSub>산림치유</EdgeSub>
           </EdgeText>
         </SubFullWidthImage>
         <SubFullWidthImage image="/Home/Home6.webp">
           <EdgeText>
             <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>공예</EdgeSub>
+            <EdgeSub>미술치료</EdgeSub>
           </EdgeText>
         </SubFullWidthImage>
         {/* 푸터 컴포넌트 추가 */}

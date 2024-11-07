@@ -41,18 +41,6 @@ const SubFullWidthImage = styled.div`
   }
 `;
 
-const SubFullContent = styled.div`
-  padding: 30px 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 90vh;
-
-  position: relative;
-  overflow: hidden;
-`;
-
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -66,16 +54,6 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column; // 세로 방향 정렬
   overflow-y: visible;
-`;
-
-const CenteredText = styled.div`
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5); // 반투명 배경
-  padding: 20px 40px;
-  border-radius: 40px;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
 `;
 
 const EdgeText = styled.div`
@@ -103,32 +81,6 @@ const EdgeSub = styled.div`
 
   border-radius: 40px;
   font-size: 40px;
-  font-weight: bold;
-  text-align: center;
-`;
-
-const EdgeTitleBlack = styled.div`
-  color: #555;
-
-  border-radius: 40px;
-  font-size: 20px;
-  // font-weight: bold;
-  text-align: center;
-`;
-const EdgeSubBlack = styled.div`
-  color: #555;
-
-  border-radius: 40px;
-  font-size: 40px;
-  font-weight: bold;
-  text-align: center;
-`;
-const EdgeTextBlack = styled.div`
-  color: #555;
-  // background-color: rgba(0, 0, 0, 0.5); // 반투명 배경
-  padding: 20px 40px;
-  border-radius: 40px;
-  font-size: 24px;
   font-weight: bold;
   text-align: center;
 `;
@@ -163,189 +115,234 @@ const Copyright = styled.div`
 `;
 // 컴포넌트
 
-// 좌우 배치를 담당하는 메인 컨테이너
-const RowContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const SixContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
   padding: 20px;
-  max-width: 1200px;
-  margin: auto;
 
-  /* 해상도가 일정 이하로 내려가면 세로 배치로 변경 */
+  /* 반응형으로 화면 크기가 줄어들면 1열 또는 2열로 정렬 */
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 8px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  overflow: hidden;
+  text-align: center;
+  padding: 20px;
+`;
+
+const SmallImage = styled.img`
+  width: 100%;
+  height: 100%;
+  /* max-height: 200px; */
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+`;
+
+const Title = styled.h3`
+  margin: 15px 0 10px;
+  font-size: 21px;
+  font-weight: bold;
+  color: #333;
+`;
+
+const Description = styled.p`
+  font-size: 20px;
+  color: #666;
+  line-height: 1.5;
+`;
+// 2:1 비율로 배치하는 컨테이너
+const TwoToOneContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  align-items: stretch; /* 두 카드의 상단 위치를 동일하게 맞춤 */
+
+  /* 반응형 설정: 화면이 작아지면 세로 배치 */
   @media (max-width: 768px) {
     flex-direction: column;
   }
 `;
 
-// 이미지 스타일
-const Image = styled.img`
+const LargeCard = styled.div`
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  padding: 20px;
+  height: 100%; /* 높이 고정 */
+`;
+
+const SmallCard = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  padding: 20px;
+  height: 100%; /* 높이 고정 */
+`;
+
+const CardImage = styled.img`
   width: 100%;
-  max-width: 500px;
   height: auto;
-  border-radius: 10px;
-  margin-right: 20px;
-
-  @media (max-width: 768px) {
-    margin-right: 0;
-    margin-bottom: 20px;
-  }
-`;
-
-// 텍스트 컨테이너
-const TextContainer = styled.div`
-  max-width: 600px;
-  line-height: 1.6;
-  color: #333;
-
-  /* 반응형 폰트 크기 조절 */
-  h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    @media (max-width: 768px) {
-      font-size: 20px;
-    }
-    @media (max-width: 480px) {
-      font-size: 18px;
-    }
-  }
-
-  p {
-    font-size: 16px;
-    color: #666;
-    @media (max-width: 768px) {
-      font-size: 14px;
-    }
-    @media (max-width: 480px) {
-      font-size: 12px;
-    }
-  }
-`;
-
-// 버튼 스타일
-const StyledButton = styled.button`
-  padding: 10px 20px;
-  font-size: 14px;
-  color: #333;
-  background-color: #f0f0f0;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 15px;
-
-  @media (max-width: 768px) {
-    font-size: 12px;
-  }
-  @media (max-width: 480px) {
-    font-size: 10px;
-  }
+  height: 400px; /* 이미지 높이 고정 */
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
 `;
 export default function MainInfo() {
   return (
     <MainContainer>
       <StickyHeader />
       <ContentWrapper>
-        <SubFullWidthImage image="/Craft/Craft01.webp">
+        <SubFullWidthImage image="/Craft/craft00.webp">
           <EdgeText>
             <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>산림치유</EdgeSub>
+            <EdgeSub>토탈공예</EdgeSub>
           </EdgeText>
         </SubFullWidthImage>
-        <SubFullContent>
-          <EdgeTextBlack>
-            <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
-            <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
-            <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
-          </EdgeTextBlack>
-        </SubFullContent>
-        <SubFullWidthImage image="/Paper/Paper1.webp">
-          <EdgeText>
-            <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>산림치유</EdgeSub>
-          </EdgeText>
-        </SubFullWidthImage>
-        <SubFullContent>
-          <EdgeTextBlack>
-            <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
-            <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
-            <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
-          </EdgeTextBlack>
-        </SubFullContent>{" "}
-        <SubFullWidthImage image="/Paper/Paper1.webp">
-          <EdgeText>
-            <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>종이접기</EdgeSub>
-          </EdgeText>
-        </SubFullWidthImage>
-        <SubFullContent>
-          <EdgeTextBlack>
-            <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
-            <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
-            <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
-          </EdgeTextBlack>
-        </SubFullContent>{" "}
-        <SubFullWidthImage image="/Paper/Paper1.webp">
-          <EdgeText>
-            <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>종이접기</EdgeSub>
-          </EdgeText>
-        </SubFullWidthImage>
-        <SubFullContent>
-          <EdgeTextBlack>
-            <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
-            <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
-            <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
-          </EdgeTextBlack>
-        </SubFullContent>
-        <SubFullWidthImage image="/Paper/Paper1.webp">
-          <EdgeText>
-            <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>종이접기</EdgeSub>
-          </EdgeText>
-        </SubFullWidthImage>
-        <SubFullContent>
-          <EdgeTextBlack>
-            <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
-            <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
-            <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
-          </EdgeTextBlack>
-        </SubFullContent>
-        <RowContainer>
-          <Image src="/Paper/Paper1.webp" alt="자격증 과정" />
-          <TextContainer>
-            <h2>자격증 과정</h2>
-            <p>
-              노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지
-              등을 미술 매체로 미술 수업할 수 있는 노인종이조형 심리 미술지도사
-              자격증. 미술치료 이론을 배우고 실습을 통해 심리미술치료를 알아가는
-              과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각 운동 기능을
-              항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도
-              제공해줄 수 있는 수업.
-            </p>
-            <StyledButton>강의 신청</StyledButton>
-          </TextContainer>
-        </RowContainer>
+        <SixContainer>
+          <Card>
+            <SmallImage src="/Craft/craft01.jpg" />
+            <Title>점핑 클레이</Title>
+            <Description>
+              다양한 색감과 디테일이 돋보이는 미니어처 도시락 공예작품입니다. 삼각김밥, 핫도그, 곰
+              인형 등 귀여운 소품들이 도시락을 한층 더 매력적으로 만들어줍니다
+            </Description>
+          </Card>
+          <Card>
+            <SmallImage src="/Craft/craft02.jpg" />
+            <Title>석고공예</Title>
+            <Description>
+              선명한 꽃과 나비, 하트 무늬가 돋보이는 석고 공예 작품입니다. 동물 모양 장식들이 더해져
+              귀엽고 아기자기한 매력이 가득합니다.
+            </Description>
+          </Card>
+          <Card>
+            <SmallImage src="/Craft/craft03.jpg" />
+            <Title>목재공예</Title>
+            <Description>
+              전통 배를 모티브로 한 나무 조립 공예 작품입니다. 정교하게 재현된 돛과 노의 디테일이
+              인상적이며, 자연스러운 나무 질감이 고풍스러운 매력을 더합니다.
+            </Description>
+          </Card>
+          <Card>
+            <SmallImage src="/Craft/craft04.jpg" />
+            <Title>지끈공예</Title>
+            <Description>
+              꽃 모양을 연상시키는 원형의 지끈 공예 작품입니다. 간결한 디자인과 자연스러운 색감이
+              따뜻한 분위기를 자아내며, 테이블 매트나 장식용으로 활용하기 좋습니다
+            </Description>
+          </Card>
+          <Card>
+            <SmallImage src="/Craft/craft05.jpg" />
+            <Title>향초공예-1</Title>
+            <Description>
+              알록달록한 드라이 플라워가 장식된 향초 공예 작품입니다. 따뜻한 색감과 고급스러운 유리
+              용기가 어우러져 공간을 화사하게 밝혀줄 아이템입니다
+            </Description>
+          </Card>
+          <Card>
+            <SmallImage src="/Craft/craft06.jpg" />
+            <Title>향초공예-2</Title>
+            <Description>
+              초밥 모양으로 만든 향초는 독특한 디자인으로 시각적 즐거움을 줍니다. 손으로 만든 각
+              재료가 섬세하게 표현되어, 불을 켤 때마다 은은한 향과 함께 재미를 더해줍니다
+            </Description>
+          </Card>
+        </SixContainer>
+        <TwoToOneContainer>
+          <LargeCard>
+            <CardImage src="/Craft/craft08.jpg" />
+            <Title>미니어처공예 -1</Title>
+            <Description>
+              "귀여운 디테일이 돋보이는 미니어처 도시락 공예 작품입니다. 알록달록한 김밥과 동물 모양
+              반찬들이 아기자기한 매력을 더해줍니다.
+            </Description>
+          </LargeCard>
+
+          <SmallCard>
+            <CardImage src="/Craft/craft07.jpg" />
+            <Title>미니어처 공예 -2</Title>
+            <Description>
+              버섯 지붕과 라쿤 캐릭터가 돋보이는 아기자기한 미니어처 공예 작품입니다. 동화 속 장면을
+              연상시키는 따뜻한 색감과 디테일이 보는 이에게 즐거움을 선사합니다.
+            </Description>
+          </SmallCard>
+        </TwoToOneContainer>
+        <TwoToOneContainer>
+          <SmallCard>
+            <CardImage src="/Craft/craft09.jpg" />
+            <Title>가죽공예</Title>
+            <Description>
+              다양한 디자인의 가죽 소품들은 실용성과 귀여움을 겸비한 작품들입니다. 고양이 얼굴
+              모양의 카드홀더와 사랑스러운 캐릭터 키링 등은 가죽공예로 만들어진 개성 넘치는
+              아이템들로, 각자의 취향과 스타일을 표현하기에 적합합니다
+            </Description>
+          </SmallCard>
+          <LargeCard>
+            <CardImage src="/Craft/craft10.jpg" />
+            <Title>냅킨아트</Title>
+            <Description>
+              딸기 일러스트가 돋보이는 냅킨아트입니다. 부드러운 색감과 감각적인 디자인으로 소품
+              수납에 유용합니다
+            </Description>
+          </LargeCard>
+        </TwoToOneContainer>
+
+        <TwoToOneContainer>
+          <LargeCard>
+            <CardImage src="/Craft/craft11.jpg" />
+            <Title>레진아트 공예</Title>
+            <Description>
+              각기 다른 형태의 나무판 위에 레진으로 표현된 작은 바다 풍경이 담겨 있습니다. 파도와
+              모래, 조개껍질 등 바다의 요소들이 어우러져 미니어처 같은 감성을 전해줍니다.
+            </Description>
+          </LargeCard>
+
+          <SmallCard>
+            <CardImage src="/Craft/craft12.jpg" />
+            <Title>양말 목공예</Title>
+            <Description>
+              굵은 실로 손뜨개하여 만든 니트백은 포근하고 자연스러운 매력을 지니고 있습니다. 진주
+              장식과 가죽 손잡이가 더해져 세련되면서도 개성 있는 디자인으로 완성되었습니다
+            </Description>
+          </SmallCard>
+        </TwoToOneContainer>
+        <TwoToOneContainer>
+          <SmallCard>
+            <CardImage src="/Craft/craft14.jpg" />
+            <Title>아동요리</Title>
+            <Description>
+              아이들이 직접 만든 피자는 신선한 채소와 고기를 듬뿍 올려 건강하게 완성되었습니다.
+              다양한 색감의 재료가 어우러져 보는 재미와 먹는 즐거움을 동시에 선사합니다
+            </Description>
+          </SmallCard>
+          <LargeCard>
+            <CardImage src="/Craft/craft13.jpg" />
+            <Title>북아트그림</Title>
+            <Description>
+              다양한 색과 질감의 전통 한지를 사용해 정성스럽게 엮은 북아트 작품들입니다. 손바느질로
+              연결된 책들은 각기 다른 색감과 패턴으로 개성을 뽐내며, 고유의 한국적 미와 함께
+              실용성을 더합니다.
+            </Description>
+          </LargeCard>
+        </TwoToOneContainer>
         <Footer>
           <FooterText>주소: 서울특별시 강남구 테헤란로 123</FooterText>
           <FooterText>연락처: 010-1234-5678 대표: 원장:김경환</FooterText>

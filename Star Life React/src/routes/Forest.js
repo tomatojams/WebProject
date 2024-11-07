@@ -107,12 +107,20 @@ const EdgeTitleBlack = styled.div`
 `;
 const EdgeSubBlack = styled.div`
   color: #555;
-
   border-radius: 40px;
   font-size: 40px;
   font-weight: bold;
   text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 30px; // 태블릿 이하 해상도에서 폰트 크기 조정
+  }
+
+  @media (max-width: 480px) {
+    font-size: 20px; // 모바일 해상도에서 폰트 크기 조정
+  }
 `;
+
 const EdgeTextBlack = styled.div`
   color: #555;
   // background-color: rgba(0, 0, 0, 0.5); // 반투명 배경

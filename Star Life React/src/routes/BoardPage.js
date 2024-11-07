@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import useBoardFunctions from "./useBoardFunctions";
+
+const ITEMS_PER_PAGE = 10; // 한 페이지에 표시할 게시글 수
 
 const Container = styled.div`
   max-width: 800px;
@@ -114,6 +116,32 @@ const AdminComment = styled.p`
   font-weight: bold;
 `;
 
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+`;
+
+const PageButton = styled.button`
+  background-color: ${(props) => (props.active ? "#333" : "#eee")};
+  color: ${(props) => (props.active ? "white" : "#333")};
+  border: none;
+  padding: 8px 12px;
+  margin: 0 4px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) => (props.active ? "#333" : "#ccc")};
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+`;
+
 const BoardPage = () => {
   const {
     posts,
@@ -139,6 +167,20 @@ const BoardPage = () => {
     handleLogout,
   } = useBoardFunctions();
 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(posts.length / ITEMS_PER_PAGE);
+
+  const currentPosts = posts.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" }); // 페이지 전환 시 스크롤을 상단으로 이동
+  };
+
   return (
     <Container>
       <Header>게시판</Header>
@@ -156,12 +198,24 @@ const BoardPage = () => {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleLogin();
+              }
+            }}
           />
           <Input
             type="password"
             placeholder="Password"
             value={userPassword}
             onChange={(e) => setUserPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleLogin();
+              }
+            }}
           />
           <CheckboxLabel>
             <input
@@ -193,8 +247,8 @@ const BoardPage = () => {
         <Button onClick={handlePostSubmit}>Post</Button>
       </FormSection>
 
-      {/* 게시글 리스트 */}
-      {posts.map(({ id, data }) => (
+      {/* 게시글 리스트 (현재 페이지의 게시글만 표시) */}
+      {currentPosts.map(({ id, data }) => (
         <PostContainer key={id}>
           <PostHeader>{data.name}</PostHeader>
           <PostContent>{data.content}</PostContent>
@@ -203,10 +257,6 @@ const BoardPage = () => {
               <strong> Teacher ★:</strong> {data.adminComment}
             </AdminComment>
           )}
-
-          {/* 글 삭제 버튼 */}
-
-          {/* 관리자 댓글 작성 UI */}
           {user && (
             <>
               <Input
@@ -220,6 +270,34 @@ const BoardPage = () => {
           )}
         </PostContainer>
       ))}
+
+      {/* 페이지네이션 */}
+      <PaginationContainer>
+        <PageButton onClick={() => handlePageChange(1)} disabled={currentPage === 1}>
+          {"<<"}
+        </PageButton>
+        <PageButton onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+          {"<"}
+        </PageButton>
+        {[...Array(totalPages)].map((_, index) => (
+          <PageButton
+            key={index}
+            onClick={() => handlePageChange(index + 1)}
+            active={currentPage === index + 1}>
+            {index + 1}
+          </PageButton>
+        ))}
+        <PageButton
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}>
+          {">"}
+        </PageButton>
+        <PageButton
+          onClick={() => handlePageChange(totalPages)}
+          disabled={currentPage === totalPages}>
+          {">>"}
+        </PageButton>
+      </PaginationContainer>
     </Container>
   );
 };

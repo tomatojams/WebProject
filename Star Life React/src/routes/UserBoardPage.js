@@ -1,29 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import useBoardFunctions from "./useBoardFunctions";
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import AppHeader from "../components/nav";
-// from api
+
+const ITEMS_PER_PAGE = 10; // 한 페이지에 표시할 게시글 수
 
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  // height: 100vh;
-
   background-color: #f9fbfd;
-  overflow-y: auto; // 세로 스크롤 가능하게 설정
+  overflow-y: auto;
 `;
 
 const StickyHeader = styled(AppHeader)`
-  position: sticky; // 스크롤 시 고정
+  position: sticky;
   top: 0;
-  z-index: 1000; // 헤더가 다른 요소 위에 나타나도록 설정
-  background-color: white; // 스크롤 시 배경색 유지
+  z-index: 1000;
+  background-color: white;
 `;
 
-// 컴포넌트
-// 스타일 정의
 const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
@@ -72,7 +68,7 @@ const Button = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #333;
   }
 
   &:not(:last-child) {
@@ -101,6 +97,33 @@ const AdminComment = styled.p`
   color: #555;
   font-weight: bold;
 `;
+
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+`;
+
+const PageButton = styled.button`
+  background-color: ${(props) => (props.active ? "#333" : "#eee")};
+  color: ${(props) => (props.active ? "white" : "#333")};
+  border: none;
+  padding: 8px 12px;
+  margin: 0 4px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) => (props.active ? "#333" : "#ccc")};
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+`;
+
 const RowContainer = styled.div`
   display: flex;
   align-items: center;
@@ -109,13 +132,11 @@ const RowContainer = styled.div`
   max-width: 1200px;
   margin: auto;
 
-  /* 해상도가 일정 이하로 내려가면 세로 배치로 변경 */
   @media (max-width: 768px) {
     flex-direction: column;
   }
 `;
 
-// 이미지 스타일
 const Image = styled.img`
   width: 100%;
   max-width: 500px;
@@ -129,13 +150,11 @@ const Image = styled.img`
   }
 `;
 
-// 텍스트 컨테이너
 const TextContainer = styled.div`
   max-width: 600px;
   line-height: 1.6;
   color: #333;
 
-  /* 반응형 폰트 크기 조절 */
   h2 {
     font-size: 24px;
     font-weight: bold;
@@ -175,12 +194,26 @@ const UserBoardPage = () => {
   } = useBoardFunctions();
   const location = useLocation();
 
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
-    // state가 fromLecture인 경우에만 스크롤 실행
     if (location.state?.fromLecture) {
       window.scrollTo({ top: 300, behavior: "smooth" });
     }
   }, [location]);
+
+  const totalPages = Math.ceil(posts.length / ITEMS_PER_PAGE);
+
+  const currentPosts = posts.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <MainContainer>
       <StickyHeader />
@@ -204,7 +237,6 @@ const UserBoardPage = () => {
       <Container>
         <Header>강의신청, 문의 게시판</Header>
 
-        {/* 글 작성 UI */}
         <FormSection>
           <Input placeholder="이름" value={name} onChange={(e) => setName(e.target.value)} />
           <TextArea
@@ -222,8 +254,7 @@ const UserBoardPage = () => {
           <Button onClick={handlePostSubmit}>Post</Button>
         </FormSection>
 
-        {/* 게시글 리스트 */}
-        {posts.map(({ id, data }) => (
+        {currentPosts.map(({ id, data }) => (
           <PostContainer key={id}>
             <PostHeader>{data.name}:</PostHeader>
             <PostContent>{data.content}</PostContent>
@@ -232,17 +263,38 @@ const UserBoardPage = () => {
                 <strong> Teacher ★:</strong> {data.adminComment}
               </AdminComment>
             )}
-
-            {/* 글 삭제 버튼 */}
-
-            {/* 관리자 댓글 작성 UI (로그인 없는 유저 게시판에는 댓글 UI가 필요하지 않다면 생략 가능) */}
-            {user && (
-              <>
-                <Button onClick={() => handleDeletePost(id, data.password)}>Delete</Button>
-              </>
-            )}
+            {user && <Button onClick={() => handleDeletePost(id, data.password)}>Delete</Button>}
           </PostContainer>
         ))}
+
+        <PaginationContainer>
+          <PageButton onClick={() => handlePageChange(1)} disabled={currentPage === 1}>
+            {"<<"}
+          </PageButton>
+          <PageButton
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}>
+            {"<"}
+          </PageButton>
+          {[...Array(totalPages)].map((_, index) => (
+            <PageButton
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              active={currentPage === index + 1}>
+              {index + 1}
+            </PageButton>
+          ))}
+          <PageButton
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}>
+            {">"}
+          </PageButton>
+          <PageButton
+            onClick={() => handlePageChange(totalPages)}
+            disabled={currentPage === totalPages}>
+            {">>"}
+          </PageButton>
+        </PaginationContainer>
       </Container>
     </MainContainer>
   );

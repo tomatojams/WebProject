@@ -68,16 +68,6 @@ const ContentWrapper = styled.div`
   overflow-y: visible;
 `;
 
-const CenteredText = styled.div`
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5); // 반투명 배경
-  padding: 20px 40px;
-  border-radius: 40px;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-`;
-
 const EdgeText = styled.div`
   color: white;
   display: flex;
@@ -257,10 +247,9 @@ export default function MainInfo() {
             <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
             <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
             <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
+            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다. [강의 효과] 소근육을
+            자극, 두뇌개발을 도와주고 평면 종이가 입체로 완성되어가는 과정에서 수학, 과학에 대한
+            이해와 기하학적 공간 개념을 알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
           </EdgeTextBlack>
         </SubFullContent>
         <SubFullWidthImage image="/Paper/Paper1.webp">
@@ -274,10 +263,9 @@ export default function MainInfo() {
             <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
             <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
             <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
+            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다. [강의 효과] 소근육을
+            자극, 두뇌개발을 도와주고 평면 종이가 입체로 완성되어가는 과정에서 수학, 과학에 대한
+            이해와 기하학적 공간 개념을 알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
           </EdgeTextBlack>
         </SubFullContent>{" "}
         <SubFullWidthImage image="/Paper/Paper1.webp">
@@ -291,10 +279,9 @@ export default function MainInfo() {
             <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
             <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
             <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
+            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다. [강의 효과] 소근육을
+            자극, 두뇌개발을 도와주고 평면 종이가 입체로 완성되어가는 과정에서 수학, 과학에 대한
+            이해와 기하학적 공간 개념을 알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
           </EdgeTextBlack>
         </SubFullContent>{" "}
         <SubFullWidthImage image="/Paper/Paper1.webp">
@@ -308,10 +295,9 @@ export default function MainInfo() {
             <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
             <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
             <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
+            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다. [강의 효과] 소근육을
+            자극, 두뇌개발을 도와주고 평면 종이가 입체로 완성되어가는 과정에서 수학, 과학에 대한
+            이해와 기하학적 공간 개념을 알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
           </EdgeTextBlack>
         </SubFullContent>
         <SubFullWidthImage image="/Paper/Paper1.webp">
@@ -325,10 +311,9 @@ export default function MainInfo() {
             <EdgeTitleBlack> Teacher ★'s classes</EdgeTitleBlack>
             <EdgeSubBlack>종이접기 교실</EdgeSubBlack>
             <br />
-            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다.
-            [강의 효과] 소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로
-            완성되어가는 과정에서 수학, 과학에 대한 이해와 기하학적 공간 개념을
-            알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
+            유아, 어린이, 청소년부터 성인까지 누구나 할 수 있는 종이활동입니다. [강의 효과] 소근육을
+            자극, 두뇌개발을 도와주고 평면 종이가 입체로 완성되어가는 과정에서 수학, 과학에 대한
+            이해와 기하학적 공간 개념을 알게 하여 논리력과 창의력, 집중력 향상에 도움을 줍니다.
           </EdgeTextBlack>
         </SubFullContent>
         <RowContainer>
@@ -336,12 +321,11 @@ export default function MainInfo() {
           <TextContainer>
             <h2>자격증 과정</h2>
             <p>
-              노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지
-              등을 미술 매체로 미술 수업할 수 있는 노인종이조형 심리 미술지도사
-              자격증. 미술치료 이론을 배우고 실습을 통해 심리미술치료를 알아가는
-              과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각 운동 기능을
-              항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도
-              제공해줄 수 있는 수업.
+              노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지 등을 미술 매체로
+              미술 수업할 수 있는 노인종이조형 심리 미술지도사 자격증. 미술치료 이론을 배우고 실습을
+              통해 심리미술치료를 알아가는 과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각
+              운동 기능을 항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도 제공해줄
+              수 있는 수업.
             </p>
             <StyledButton>강의 신청</StyledButton>
           </TextContainer>

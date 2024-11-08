@@ -7,7 +7,7 @@ import Forest from "./routes/Forest";
 import Craft from "./routes/Craft";
 import Picture from "./routes/Picture";
 import Lecture from "./routes/Lecture";
-import LotcBoard from "./routes/BoardPage";
+import LotcBoard from "./routes/AdminBoardPage";
 import UserBoard from "./routes/UserBoardPage";
 export default function App() {
   return (
@@ -17,7 +17,6 @@ export default function App() {
         <Route path="/paper" element={<Paper />} />
         <Route path="/forest" element={<Forest />} />
         <Route path="/craft" element={<Craft />} />
-
         <Route path="/picture" element={<Picture />} />
         <Route path="/lecture" element={<Lecture />} />
         <Route path="/board" element={<UserBoard />} />

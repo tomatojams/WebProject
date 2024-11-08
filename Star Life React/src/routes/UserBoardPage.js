@@ -1,232 +1,34 @@
 import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import useBoardFunctions from "./useBoardFunctions";
+import {
+  Container,
+  Header,
+  FormSection,
+  Input,
+  TextArea,
+  Button,
+  PostContainer,
+  PostHeader,
+  PostContent,
+  AdminComment,
+  PaginationContainer,
+  PageButton,
+} from "../components/board_styles";
+import {
+  MainContainer,
+  Footer,
+  FooterText,
+  Copyright,
+  FloatingButton,
+  StickyBar,
+  RowContainer,
+  Image,
+  TextContainer,
+} from "../components/styles";
+import useBoardFunctions from "../components/useBoardFunctions";
 import { useLocation } from "react-router-dom";
 import AppHeader from "../components/nav";
 
 const ITEMS_PER_PAGE = 10; // 한 페이지에 표시할 게시글 수
-
-// 플로팅 버튼 스타일
-const FloatingButton = styled.a`
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 110px;
-  height: 55px;
-  background-color: #ffe812;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-  text-decoration: none;
-  font-size: 20px;
-  gap: 10px;
-
-  &:hover {
-    background-color: #ffd700;
-  }
-
-  img {
-    width: 32px;
-    height: 32px;
-  }
-`;
-
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: #f9fbfd;
-  overflow-y: auto;
-`;
-
-const StickyHeader = styled(AppHeader)`
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: white;
-`;
-
-const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-`;
-
-const Header = styled.h1`
-  text-align: center;
-  color: #333;
-`;
-
-const FormSection = styled.div`
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-`;
-
-const TextArea = styled.textarea`
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  resize: none;
-`;
-
-const Button = styled.button`
-  padding: 5px 10px;
-  font-size: 16px;
-  color: white;
-  background-color: #555;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #333;
-  }
-
-  &:not(:last-child) {
-    margin-right: 10px;
-  }
-`;
-
-const PostContainer = styled.div`
-  background-color: #fff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-`;
-
-const PostHeader = styled.h3`
-  color: #333;
-  margin: 0;
-`;
-
-const PostContent = styled.p`
-  color: #555;
-`;
-
-const AdminComment = styled.p`
-  color: #555;
-  font-weight: bold;
-`;
-
-const PaginationContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
-`;
-
-const PageButton = styled.button`
-  background-color: ${(props) => (props.active ? "#333" : "#eee")};
-  color: ${(props) => (props.active ? "white" : "#333")};
-  border: none;
-  padding: 8px 12px;
-  margin: 0 4px;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${(props) => (props.active ? "#333" : "#ccc")};
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-`;
-
-const RowContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  max-width: 1200px;
-  margin: auto;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
-const Image = styled.img`
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  border-radius: 10px;
-  margin-right: 20px;
-
-  @media (max-width: 768px) {
-    margin-right: 0;
-    margin-bottom: 20px;
-  }
-`;
-const Footer = styled.footer`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  // background-color: #333;
-  color: #333;
-  font-size: 14px;
-  text-align: center;
-  line-height: 1.5;
-`;
-
-const FooterText = styled.div`
-  margin: 5px 0;
-`;
-
-const Copyright = styled.div`
-  margin-top: 10px;
-  font-size: 12px;
-  color: #aaa;
-`;
-const TextContainer = styled.div`
-  max-width: 600px;
-  line-height: 1.6;
-  color: #333;
-
-  h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    @media (max-width: 768px) {
-      font-size: 20px;
-    }
-    @media (max-width: 480px) {
-      font-size: 18px;
-    }
-  }
-
-  p {
-    font-size: 16px;
-    color: #666;
-    @media (max-width: 768px) {
-      font-size: 14px;
-    }
-    @media (max-width: 480px) {
-      font-size: 12px;
-    }
-  }
-`;
 
 const UserBoardPage = () => {
   const {
@@ -269,7 +71,9 @@ const UserBoardPage = () => {
 
   return (
     <MainContainer>
-      <StickyHeader />
+      <StickyBar>
+        <AppHeader />
+      </StickyBar>
       <RowContainer>
         <Image src="/Paper/Paper6.jpg" alt="자격증 과정" />
         <TextContainer>

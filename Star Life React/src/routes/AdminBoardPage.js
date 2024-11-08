@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import useBoardFunctions from "./useBoardFunctions";
+import useBoardFunctions from "../components/useBoardFunctions";
 
 const ITEMS_PER_PAGE = 10; // 한 페이지에 표시할 게시글 수
 
@@ -18,7 +18,7 @@ const Header = styled.h1`
 
 const FormSection = styled.div`
   background-color: #f9f9f9;
-  padding: 20px;
+  padding: 30px;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
@@ -97,7 +97,7 @@ const CheckboxLabel = styled.label`
 
 const PostContainer = styled.div`
   background-color: #fff;
-  padding: 15px;
+  padding: 30px;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
@@ -226,15 +226,15 @@ const BoardPage = () => {
             />
             Remember me
           </CheckboxLabel>
-          <Button onClick={handleLogin}>Login as Admin</Button>
+          <Button onClick={handleLogin}>관리자 Login</Button>
         </FormSection>
       )}
 
       {/* 글 작성 UI */}
       <FormSection>
-        <Input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+        <Input placeholder="이름" value={name} onChange={(e) => setName(e.target.value)} />
         <TextArea
-          placeholder="Content"
+          placeholder="내용"
           rows="4"
           value={content}
           onChange={(e) => setContent(e.target.value)}
@@ -265,8 +265,8 @@ const BoardPage = () => {
                 value={adminComment}
                 onChange={(e) => setAdminComment(e.target.value)}
               />{" "}
-              <Button onClick={() => handleDeletePost(id, data.password)}>Delete</Button>
-              <Button onClick={() => handleAdminComment(id)}>Add Comment</Button>
+              <Button onClick={() => handleDeletePost(id, data.password)}>삭제</Button>
+              <Button onClick={() => handleAdminComment(id)}>댓글달기</Button>
             </>
           )}
         </PostContainer>

@@ -1,18 +1,20 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-// import { Link, useNavigate, useMatch } from "react-router-dom";
-// import { useRecoilValue } from "recoil";
-// import { userNameState } from "../atom";
+
 import { useState } from "react";
 import "@fontsource/cormorant-upright"; // npm install @fontsource/cormorant-upright 필요
 
 const Header = styled.header`
   display: flex;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 80px;
+  padding: 0px 40px;
   background-color: white;
   border-bottom: 1px solid #ddd;
+  position: relative; /* 추가 */
+  max-width: 1200px;
+  box-sizing: border-box;
 
   /* Media query for mobile */
   @media (max-width: 768px) {
@@ -22,16 +24,16 @@ const Header = styled.header`
 
 const Nav = styled.nav`
   color: #414040;
+  width: 80%;
   padding: 5px 20px;
   display: flex;
-  gap: 50px;
-  align-items: center;
-  justify-content: center;
 
-  /* Hide menu on mobile */
+  align-items: center;
+  justify-content: space-around;
+
   @media (max-width: 768px) {
     display: ${(props) => (props.open ? "flex" : "none")};
-    position: absolute;
+    position: fixed; /* absolute 대신 fixed 사용 */
     top: 60px;
     right: 20px;
     background-color: white;
@@ -64,6 +66,8 @@ const MenuSpan = styled.span`
   position: relative;
   z-index: 1000;
   white-space: nowrap;
+  width: auto; /* 글자 길이에 맞춘 좌우폭 */
+  flex: 0 0 auto; /* 컨텐츠에 맞게 크기 고정 */
 `;
 
 const TitleSpan = styled.span`
@@ -93,7 +97,7 @@ const NavItem = styled.div`
   align-items: center;
   justify-content: center;
   color: #333;
-  width: 80px;
+  width: auto;
   cursor: pointer;
   font-size: 16px;
   padding: 5px 10px;
@@ -102,17 +106,12 @@ const NavItem = styled.div`
 
   /* Adjust font size on mobile */
   @media (max-width: 800px) {
-    font-size: 18px;
+    font-size: 16px;
     width: auto;
   }
 `;
 
 export default function AppHeader() {
-  // const userName = useRecoilValue(userNameState);
-
-  // const navigate = useNavigate();
-  // const matchMonitor = useMatch("/mainInfo");
-  // const matchSetting = useMatch("/setting");
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Function to handle menu toggle

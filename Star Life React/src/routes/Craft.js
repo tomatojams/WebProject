@@ -1,240 +1,44 @@
-import styled from "styled-components";
+
 
 // import "leaflet/dist/leaflet.css";
 
 import AppHeader from "../components/nav";
-// from api
-//  플로팅 버튼 스타일
-const FloatingButton = styled.a`
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 110px;
-  height: 55px;
-  background-color: #ffe812;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0px 8px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-  text-decoration: none;
-  font-size: 20px;
-  gap: 10px;
+import {
+  SubFullWidthImage,
+  MainContainer,
+  ContentWrapper,
+  EdgeText,
+  EdgeTitle,
+  EdgeSub,
+  Footer,
+  FooterText,
+  Copyright,
+  FloatingButton,
+  StickyBar,
+  SixContainer,
+  Card,
+  SmallImage,
+  Title,
+  Description,
+  TwoToOneContainer,
+  LargeCard,
+  SmallCard,
+  CardImage,
+} from "../components/styles";
 
-  &:hover {
-    background-color: #ffd700;
-  }
-
-  img {
-    width: 32px;
-    height: 32px;
-  }
-`;
-const SubFullWidthImage = styled.div`
-  padding: 30px 30px;
-  display: flex;
-  justify-content: end;
-  align-items: end;
-  width: 100%;
-  height: 90vh;
-  background-image: url(${(props) => props.image});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.15) 0%,
-      rgba(0, 0, 0, 0.15) 80%,
-      rgba(0, 0, 0, 0.8) 100%
-    );
-    z-index: 1;
-  }
-
-  & > * {
-    position: relative;
-    z-index: 2;
-  }
-`;
-
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  // height: 100vh;
-
-  background-color: #f9fbfd;
-  overflow-y: auto; // 세로 스크롤 가능하게 설정
-`;
-
-const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column; // 세로 방향 정렬
-  overflow-y: visible;
-`;
-
-const EdgeText = styled.div`
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  gap: 0px;
-  padding: 20px 40px;
-
-  text-align: center;
-`;
-
-const EdgeTitle = styled.div`
-  color: white;
-
-  border-radius: 40px;
-  font-size: 20px;
-  // font-weight: bold;
-  text-align: center;
-`;
-const EdgeSub = styled.div`
-  color: white;
-
-  border-radius: 40px;
-  font-size: 40px;
-  font-weight: bold;
-  text-align: center;
-`;
-
-const StickyHeader = styled(AppHeader)`
-  position: sticky; // 스크롤 시 고정
-  top: 0;
-  z-index: 1000; // 헤더가 다른 요소 위에 나타나도록 설정
-  background-color: white; // 스크롤 시 배경색 유지
-`;
-const Footer = styled.footer`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  // background-color: #333;
-  color: #333;
-  font-size: 14px;
-  text-align: center;
-  line-height: 1.5;
-`;
-
-const FooterText = styled.div`
-  margin: 5px 0;
-`;
-
-const Copyright = styled.div`
-  margin-top: 10px;
-  font-size: 12px;
-  color: #aaa;
-`;
-// 컴포넌트
-
-const SixContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px;
-
-  /* 반응형으로 화면 크기가 줄어들면 1열 또는 2열로 정렬 */
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #fff;
-  border-radius: 8px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-  overflow: hidden;
-  text-align: center;
-  padding: 20px;
-`;
-
-const SmallImage = styled.img`
-  width: 100%;
-  height: 100%;
-  /* max-height: 200px; */
-  object-fit: cover;
-  border-radius: 8px 8px 0 0;
-`;
-
-const Title = styled.h3`
-  margin: 15px 0 10px;
-  font-size: 21px;
-  font-weight: bold;
-  color: #333;
-`;
-
-const Description = styled.p`
-  font-size: 20px;
-  color: #666;
-  line-height: 1.5;
-`;
-// 2:1 비율로 배치하는 컨테이너
-const TwoToOneContainer = styled.div`
-  display: flex;
-  gap: 20px;
-  max-width: 1200px;
-  margin: 20px auto;
-  align-items: stretch; /* 두 카드의 상단 위치를 동일하게 맞춤 */
-
-  /* 반응형 설정: 화면이 작아지면 세로 배치 */
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
-const LargeCard = styled.div`
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  text-align: center;
-  padding: 20px;
-  height: 100%; /* 높이 고정 */
-`;
-
-const SmallCard = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  text-align: center;
-  padding: 20px;
-  height: 100%; /* 높이 고정 */
-`;
-
-const CardImage = styled.img`
-  width: 100%;
-  height: auto;
-  height: 400px; /* 이미지 높이 고정 */
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
-`;
+// 상속해서 구현하면 sticky가 안됨
+// const StickyHeader = styled(AppHeader)`
+//   position: sticky; // 스크롤 시 고정
+//   top: 0;
+//   z-index: 1000; // 헤더가 다른 요소 위에 나타나도록 설정
+//   background-color: white; // 스크롤 시 배경색 유지
+// `;
 export default function MainInfo() {
   return (
     <MainContainer>
-      <StickyHeader />
+      <StickyBar>
+        <AppHeader />
+      </StickyBar>
       <ContentWrapper>
         <SubFullWidthImage image="/Craft/craft00.webp">
           <EdgeText>

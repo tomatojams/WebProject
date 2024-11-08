@@ -4,18 +4,13 @@
   "private": true,
   "dependencies": {
     "@fontsource/cormorant-upright": "^5.1.0",
-    "axios": "^1.7.3",
     "client": "file:",
+    "firebase": "^11.0.1",
     "framer-motion": "^11.5.4",
-    "leaflet": "^1.9.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.53.0",
-    "react-leaflet": "^4.2.1",
-    "react-query": "^3.39.3",
     "react-router-dom": "^6.26.2",
     "react-scripts": "^5.0.1",
-    "recoil": "^0.7.7",
     "styled-components": "^6.1.13"
   },
   "scripts": {

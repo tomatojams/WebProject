@@ -19,6 +19,7 @@ import {
   Image,
   TextContainer,
   StyledButtonLink,
+  Description,
 } from "../components/styles";
 export default function MainInfo() {
   return (
@@ -116,13 +117,13 @@ export default function MainInfo() {
           <Image src="/Paper/Paper6.jpg" alt="자격증 과정" />
           <TextContainer>
             <h2>자격증 과정</h2>
-            <p>
+            <Description>
               노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지 등을 미술 매체로
               미술 수업할 수 있는 노인종이조형 심리 미술지도사 자격증. 미술치료 이론을 배우고 실습을
               통해 심리미술치료를 알아가는 과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각
               운동 기능을 항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도 제공해줄
               수 있는 수업.
-            </p>
+            </Description>
             <StyledButtonLink to="/board" state={{ fromLecture: true }}>
               강의 신청
             </StyledButtonLink>

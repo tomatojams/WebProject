@@ -189,7 +189,7 @@ const EdgeTextBlack = styled.div`
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-
+  font-family: "NanumSquareRound", sans-serif; /* 폰트 추가 */
   /* 반응형 폰트 크기 조절 */
   @media (max-width: 768px) {
     font-size: 20px;
@@ -202,6 +202,7 @@ const EdgeTextBlack = styled.div`
 
 //  푸터
 const Footer = styled.footer`
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -276,11 +277,16 @@ const SubFullContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 60%;
   height: 60vh;
+  line-height: 1.4;
 
   position: relative;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 // 좌우 배치를 담당하는 메인 컨테이너
@@ -333,13 +339,13 @@ const TextContainer = styled.div`
   }
 
   p {
-    font-size: 16px;
+    font-size: 18px;
     color: #666;
     @media (max-width: 768px) {
-      font-size: 14px;
+      font-size: 16px;
     }
     @media (max-width: 480px) {
-      font-size: 12px;
+      font-size: 16px;
     }
   }
 `;
@@ -436,6 +442,7 @@ const LargeCard = styled.div`
 const SmallCard = styled.div`
   flex: 1;
   display: flex;
+
   flex-direction: column;
   background-color: #fff;
   border-radius: 8px;

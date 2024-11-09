@@ -80,7 +80,9 @@ const MenuSpan = styled.span`
   white-space: nowrap;
   width: auto; /* 글자 길이에 맞춘 좌우폭 */
   flex: 0 0 auto; /* 컨텐츠에 맞게 크기 고정 */
-  font-family: "NanumSquareRound", sans-serif; /* 폰트 추가 */
+  /* font-family: "NanumSquareRound", sans-serif;  */
+  font-family: "S-Core_Dream", sans-serif; /* 폰트 변경 */
+  font-weight: 300;
 `;
 
 const TitleSpan = styled.span`

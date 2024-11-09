@@ -1,3 +1,5 @@
+import AppHeader from "../components/nav";
+import React, { useState } from "react";
 import {
   SubFullWidthImage,
   MainContainer,
@@ -15,11 +17,53 @@ import {
   EdgeSubBlack,
   EdgeTextBlack,
 } from "../components/styles";
+import useBoardFunctions from "../components/forestBoardFunctions";
+import {
+  Container,
+  Header,
+  FormSection,
+  Input,
+  TextArea,
+  Button,
+  PostContainer,
+  PostHeader,
+  PostContent,
+  AdminComment,
+  PaginationContainer,
+  PageButton,
+} from "../components/board_styles";
+const ITEMS_PER_PAGE = 10; // 한 페이지에 표시할 게시글 수
 
-import AppHeader from "../components/nav";
 // from api
 //  플로팅 버튼 스타일
 export default function MainInfo() {
+  const {
+    posts,
+    name,
+    setName,
+    content,
+    setContent,
+    password,
+    setPassword,
+
+    user,
+
+    handlePostSubmit,
+    handleDeletePost,
+  } = useBoardFunctions();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(posts.length / ITEMS_PER_PAGE);
+
+  const currentPosts = posts.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" }); // 페이지 전환 시 스크롤을 상단으로 이동
+  };
   return (
     <MainContainer>
       <StickyBar>
@@ -44,16 +88,75 @@ export default function MainInfo() {
             보세요.
           </EdgeTextBlack>
         </SubFullContent>
-        <SubFullWidthImage image="/Forest/forest2.webp">
-          <EdgeText>
-            <EdgeTitle> Teacher ★'s classes</EdgeTitle>
-            <EdgeSub>산림치유</EdgeSub>
-          </EdgeText>
-        </SubFullWidthImage>
-        <SubFullWidthImage image="/Forest/forest3.webp"></SubFullWidthImage>
-        <SubFullWidthImage image="/Forest/forest4.webp"></SubFullWidthImage>
-        <SubFullWidthImage image="/Forest/forest5.webp"></SubFullWidthImage>
-        <SubFullWidthImage image="/Forest/forest6.webp"></SubFullWidthImage>
+        <Container>
+          <Header>산림치유 게시판</Header>
+
+          {/* 글 작성 UI */}
+          <FormSection>
+            <Input placeholder="이름" value={name} onChange={(e) => setName(e.target.value)} />
+            <TextArea
+              placeholder="내용"
+              rows="4"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+            <Input
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button onClick={handlePostSubmit}>Post</Button>
+          </FormSection>
+
+          {/* 게시글 리스트 (현재 페이지의 게시글만 표시) */}
+          {currentPosts.map(({ id, data }) => (
+            <PostContainer key={id}>
+              <PostHeader>{data.name}</PostHeader>
+              <PostContent>{data.content}</PostContent>
+              {data.adminComment && (
+                <AdminComment>
+                  <strong> Teacher ★:</strong> {data.adminComment}
+                </AdminComment>
+              )}
+              {user && (
+                <>
+                  <Button onClick={() => handleDeletePost(id, data.password)}>삭제</Button>
+                </>
+              )}
+            </PostContainer>
+          ))}
+
+          {/* 페이지네이션 */}
+          <PaginationContainer>
+            <PageButton onClick={() => handlePageChange(1)} disabled={currentPage === 1}>
+              {"<<"}
+            </PageButton>
+            <PageButton
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}>
+              {"<"}
+            </PageButton>
+            {[...Array(totalPages)].map((_, index) => (
+              <PageButton
+                key={index}
+                onClick={() => handlePageChange(index + 1)}
+                active={currentPage === index + 1}>
+                {index + 1}
+              </PageButton>
+            ))}
+            <PageButton
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}>
+              {">"}
+            </PageButton>
+            <PageButton
+              onClick={() => handlePageChange(totalPages)}
+              disabled={currentPage === totalPages}>
+              {">>"}
+            </PageButton>
+          </PaginationContainer>
+        </Container>
 
         <Footer>
           <FooterText>주소: 수원시 영통구 태장로 81, 501호 스타평생교육원 </FooterText>
@@ -61,13 +164,7 @@ export default function MainInfo() {
           <Copyright>© 2024 스타 평생 교육원. All rights reserved.</Copyright>
         </Footer>
       </ContentWrapper>
-      <FloatingButton
-        href="https://open.kakao.com/o/gF91oLYg"
-        target="_blank"
-        rel="noopener noreferrer">
-        <img src="/icon/kakao1.png" alt="카카오톡 오픈채팅" />
-        상담
-      </FloatingButton>
+      <FloatingButton></FloatingButton>
     </MainContainer>
   );
 }

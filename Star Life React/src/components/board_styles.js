@@ -1,9 +1,11 @@
 import styled from "styled-components";
+
 const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
 `;
+//  플로팅 버튼 스타일
 
 const Header = styled.h1`
   text-align: center;
@@ -11,7 +13,7 @@ const Header = styled.h1`
 `;
 
 const FormSection = styled.div`
-  background-color: #f9f9f9;
+  background-color: #fafafa;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -55,9 +57,43 @@ const Button = styled.button`
   }
 `;
 
+const CheckboxLabel = styled.label`
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 10px;
+
+  input[type="checkbox"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #777;
+    border-radius: 3px;
+    margin-right: 8px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+
+    &:checked {
+      background-color: #777;
+      border-color: #777;
+    }
+
+    &:checked::after {
+      content: "✓";
+      color: white;
+      font-size: 12px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+`;
+
 const PostContainer = styled.div`
   background-color: #fff;
-  padding: 15px;
+  padding: 30px;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
@@ -104,6 +140,7 @@ const PageButton = styled.button`
 `;
 
 export {
+  CheckboxLabel,
   Container,
   Header,
   FormSection,

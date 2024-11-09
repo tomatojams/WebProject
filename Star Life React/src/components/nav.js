@@ -4,21 +4,32 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import "@fontsource/cormorant-upright"; // npm install @fontsource/cormorant-upright 필요
 
+// const Header = styled.header`
+//   display: flex;
+//   width: 100%;
+//   justify-content: space-between;
+//   align-items: center;
+//   justify-content: center;
+// `;
+
 const Header = styled.header`
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 40px;
+  padding: 3px 40px;
   background-color: white;
-  border-bottom: 1px solid #ddd;
+
   position: relative; /* 추가 */
   max-width: 1200px;
   box-sizing: border-box;
-
+  /* border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd; */
   /* Media query for mobile */
   @media (max-width: 768px) {
     padding: 0px 20px;
+    border-top: 1px solid #ddd;
   }
 `;
 
@@ -34,13 +45,14 @@ const Nav = styled.nav`
   @media (max-width: 768px) {
     display: ${(props) => (props.open ? "flex" : "none")};
     position: fixed; /* absolute 대신 fixed 사용 */
-    top: 60px;
+    bottom: 65px;
     right: 20px;
     background-color: white;
     flex-direction: column;
     padding: 20px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+
     gap: 20px;
     z-index: 1000;
   }
@@ -68,6 +80,7 @@ const MenuSpan = styled.span`
   white-space: nowrap;
   width: auto; /* 글자 길이에 맞춘 좌우폭 */
   flex: 0 0 auto; /* 컨텐츠에 맞게 크기 고정 */
+  font-family: "NanumSquareRound", sans-serif; /* 폰트 추가 */
 `;
 
 const TitleSpan = styled.span`

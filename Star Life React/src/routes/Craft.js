@@ -1,7 +1,3 @@
-
-
-// import "leaflet/dist/leaflet.css";
-
 import AppHeader from "../components/nav";
 import {
   SubFullWidthImage,
@@ -180,13 +176,7 @@ export default function MainInfo() {
           <Copyright>© 2024 스타 평생 교육원. All rights reserved.</Copyright>
         </Footer>
       </ContentWrapper>
-      <FloatingButton
-        href="https://open.kakao.com/o/gF91oLYg"
-        target="_blank"
-        rel="noopener noreferrer">
-        <img src="/icon/kakao1.png" alt="카카오톡 오픈채팅" />
-        상담
-      </FloatingButton>
+      <FloatingButton></FloatingButton>
     </MainContainer>
   );
 }

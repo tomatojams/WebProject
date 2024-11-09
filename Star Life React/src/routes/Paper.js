@@ -18,7 +18,7 @@ import {
   RowContainer,
   Image,
   TextContainer,
-  StyledButton,
+  StyledButtonLink,
 } from "../components/styles";
 export default function MainInfo() {
   return (
@@ -123,7 +123,9 @@ export default function MainInfo() {
               운동 기능을 항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도 제공해줄
               수 있는 수업.
             </p>
-            <StyledButton>강의 신청</StyledButton>
+            <StyledButtonLink to="/board" state={{ fromLecture: true }}>
+              강의 신청
+            </StyledButtonLink>
           </TextContainer>
         </RowContainer>
         <Footer>
@@ -132,13 +134,7 @@ export default function MainInfo() {
           <Copyright>© 2024 스타 평생 교육원. All rights reserved.</Copyright>
         </Footer>
       </ContentWrapper>
-      <FloatingButton
-        href="https://open.kakao.com/o/gF91oLYg"
-        target="_blank"
-        rel="noopener noreferrer">
-        <img src="/icon/kakao1.png" alt="카카오톡 오픈채팅" />
-        상담
-      </FloatingButton>
+      <FloatingButton></FloatingButton>
     </MainContainer>
   );
 }

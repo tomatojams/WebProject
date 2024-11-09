@@ -15,7 +15,7 @@ const useBoardFunctions = () => {
 
   useEffect(() => {
     const unsubscribePosts = db
-      .collection("posts")
+      .collection("forestPosts")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         setPosts(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })));
@@ -36,7 +36,7 @@ const useBoardFunctions = () => {
       alert("모든 필드를 입력해주세요.");
       return;
     }
-    db.collection("posts").add({
+    db.collection("forestPosts").add({
       name,
       content,
       password,
@@ -52,12 +52,12 @@ const useBoardFunctions = () => {
     if (user) {
       const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
       if (confirmDelete) {
-        db.collection("posts").doc(id).delete();
+        db.collection("forestPosts").doc(id).delete();
       }
     } else {
       const inputPassword = prompt("삭제를 위해 비밀번호를 입력해주세요:");
       if (inputPassword === postPassword) {
-        db.collection("posts").doc(id).delete();
+        db.collection("forestPosts").doc(id).delete();
       } else {
         alert("비밀번호가 일치하지 않습니다.");
       }
@@ -67,11 +67,9 @@ const useBoardFunctions = () => {
   const handleAdminComment = (id) => {
     if (user) {
       const newComment = adminComments[id]; // 특정 게시글의 새로운 댓글
-      db.collection("posts")
-        .doc(id)
-        .update({
-          adminComments: firebase.firestore.FieldValue.arrayUnion(newComment), // 기존 배열에 새로운 댓글 추가
-        });
+      db.collection("forestPosts").doc(id).update({
+        adminComments: firebase.firestore.FieldValue.arrayUnion(newComment), // 기존 배열에 새로운 댓글 추가
+      });
       setAdminComments((prev) => ({ ...prev, [id]: "" })); // 댓글 저장 후 해당 입력 필드 초기화
     } else {
       alert("관리자만 댓글을 작성할 수 있습니다.");

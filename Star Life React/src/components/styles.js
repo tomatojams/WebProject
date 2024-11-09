@@ -22,11 +22,12 @@ const StickyBar = styled.div`
 // 메인 컨테이너 스타일
 const MainContainer = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   // height: 100vh;
   min-height: 150vh; /* 뷰포트보다 큰 높이로 설정 */
-  background-color: white;
+  /* background-color: #f9f9f9; */
   overflow: visible;
 `;
 
@@ -34,6 +35,7 @@ const ContentWrapper = styled.div`
   width: 100%;
   max-width: 1200px;
   display: flex;
+  background-color: white;
   flex-direction: column; // 세로 방향 정렬
   overflow: hidden;
   align-items: center;
@@ -42,6 +44,7 @@ const ContentWrapper = styled.div`
 //  풀이미지
 const FullWidthImage = styled.div`
   display: flex;
+
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -116,10 +119,14 @@ const CenteredText = styled.div`
   color: white;
   background-color: rgba(0, 0, 0, 0.5); // 반투명 배경
   padding: 20px 40px;
-  border-radius: 40px;
+  border-radius: 50px;
   font-size: 24px;
   font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   text-align: center;
+  font-family: "NanumSquareRound", sans-serif; /* 폰트 추가 */
 `;
 
 const EdgeText = styled.div`
@@ -136,19 +143,18 @@ const EdgeText = styled.div`
 
 const EdgeTitle = styled.div`
   color: white;
-
   border-radius: 40px;
   font-size: 20px;
-  // font-weight: bold;
   text-align: center;
+  font-family: "NanumSquareRound", sans-serif; /* 폰트 추가 */
 `;
 const EdgeSub = styled.div`
   color: white;
-
   border-radius: 40px;
   font-size: 40px;
   font-weight: bold;
   text-align: center;
+  font-family: "NanumSquareRound", sans-serif; /* 폰트 추가 */
 `;
 
 const EdgeTitleBlack = styled.div`
@@ -158,6 +164,7 @@ const EdgeTitleBlack = styled.div`
   font-size: 20px;
   // font-weight: bold;
   text-align: center;
+  font-family: "NanumSquareRound", sans-serif; /* 폰트 추가 */
 `;
 const EdgeSubBlack = styled.div`
   color: #555;
@@ -165,7 +172,7 @@ const EdgeSubBlack = styled.div`
   font-size: 40px;
   font-weight: bold;
   text-align: center;
-
+  font-family: "NanumSquareRound", sans-serif; /* 폰트 추가 */
   /* 반응형 폰트 크기 조절 */
   @media (max-width: 768px) {
     font-size: 32px;
@@ -199,16 +206,18 @@ const Footer = styled.footer`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-bottom: 50px;
   padding: 20px;
   // background-color: #333;
   color: #333;
   font-size: 14px;
   text-align: center;
   line-height: 1.5;
+  width: 100%;
 `;
 
 const FooterText = styled.div`
-  margin: 5px 0;
+  margin: 2px 0;
 `;
 
 const Copyright = styled.div`
@@ -218,10 +227,14 @@ const Copyright = styled.div`
 `;
 
 //  5. 플로팅 버튼 스타일
-const FloatingButton = styled.a`
+const FloatingButton = styled.a.attrs({
+  href: "https://open.kakao.com/o/sQCZkNYg",
+  target: "_blank",
+  rel: "noopener noreferrer",
+})`
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  right: 40px;
   width: 110px;
   height: 55px;
   background-color: #ffe812;
@@ -233,15 +246,24 @@ const FloatingButton = styled.a`
   z-index: 1000;
   text-decoration: none;
   font-size: 20px;
-  gap: 10px;
+  gap: 0px;
+  color: black;
 
   &:hover {
     background-color: #ffd700;
   }
 
-  img {
+  &::before {
+    content: "";
+    background-image: url("/icon/kakao1.png"); /* 이미지 경로 설정 */
+    background-size: cover;
     width: 32px;
     height: 32px;
+    margin-right: 10px;
+  }
+
+  &::after {
+    content: "상담"; /* 텍스트 설정 */
   }
 
   @media (max-width: 768px) {

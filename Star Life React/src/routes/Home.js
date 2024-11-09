@@ -27,9 +27,8 @@ export default function MainInfo() {
       <ContentWrapper>
         <FullWidthImage image="/Home/Home_Title.webp">
           <CenteredText>
-            Teacher ★'s classes
-            <br />
-            스타 평생 교육원
+            <EdgeTitle style={{ fontSize: "20px" }}> Teacher ★'s classes</EdgeTitle>
+            <EdgeSub style={{ fontSize: "35px" }}> 스타 평생 교육원</EdgeSub>
           </CenteredText>
         </FullWidthImage>
 
@@ -72,13 +71,7 @@ export default function MainInfo() {
           <Copyright>© 2024 스타 평생 교육원. All rights reserved.</Copyright>
         </Footer>
 
-        <FloatingButton
-          href="https://open.kakao.com/o/gF91oLYg"
-          target="_blank"
-          rel="noopener noreferrer">
-          <img src="/icon/kakao1.png" alt="카카오톡 오픈채팅" />
-          상담
-        </FloatingButton>
+        <FloatingButton></FloatingButton>
       </ContentWrapper>
     </MainContainer>
   );

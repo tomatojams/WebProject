@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import useBoardFunctions from "../components/useBoardFunctions";
+import useBoardFunctions from "../components/forestBoardFunctions";
 import {
   CheckboxLabel,
   Container,
@@ -59,7 +59,7 @@ const BoardPage = () => {
 
   return (
     <Container>
-      <Header>문의 강의신청 관리자 게시판</Header>
+      <Header>산림치유 관리자 게시판</Header>
 
       {/* 관리자 로그인/로그아웃 UI */}
       {user ? (

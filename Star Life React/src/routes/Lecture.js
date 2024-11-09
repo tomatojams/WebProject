@@ -11,11 +11,8 @@ import {
   TextContainer,
   StyledButtonLink,
 } from "../components/styles";
-// import "leaflet/dist/leaflet.css";
 
 import AppHeader from "../components/nav";
-// from api
-//  플로팅 버튼 스타일
 
 export default function MainInfo() {
   return (
@@ -29,11 +26,50 @@ export default function MainInfo() {
           <TextContainer>
             <h2>종이접기 강의소개</h2>
             <p>
-              노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지 등을 미술 매체로
-              미술 수업할 수 있는 노인종이조형 심리 미술지도사 자격증. 미술치료 이론을 배우고 실습을
-              통해 심리미술치료를 알아가는 과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각
-              운동 기능을 항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도 제공해줄
-              수 있는 수업.
+              시간: 오전 9시 ~ 오후 6시
+              <br />
+              [자격증 과정]노인종이조형 심리 미술 지도사 자격증: 색종이, 한지 ,골판지, 습자지등을
+              미술매체로 미술 수업할 수 있는 노인종이조형 심리 미술지도사 자격증,. 미술치료이론을
+              배우고 실습을 통해 심리미술치료를 알아가는 과정. 노인종이조형미술수업은 어르신들의
+              인지 및 감각 운동 기능을 향상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나
+              목적까지도 제공해줄 수 있는 수업.
+            </p>
+            <StyledButtonLink to="/board" state={{ fromLecture: true }}>
+              강의 신청
+            </StyledButtonLink>
+          </TextContainer>
+        </RowContainer>
+        <RowContainer>
+          <TextContainer>
+            <h2>토탈공예 강의소개</h2>
+            <p>
+              시간: 오전 9시 ~ 오후 6시
+              <br />
+              [강의 내용]:다양한 공예 기법과 재료를 결합해 예술 작품을 창작하는 공예. 여러가지
+              기법과 재료를 혼합해 다양한 형태와 표현 방식을 시도하여 창의적인 작품을 만들 수 있다.
+              다른 예술 분야와도 연계하기 쉬워서 회화, 조각, 건축 등과 접목가능. 토탈공예에서는
+              클레이,레진공예,냅킨공예, 캔들공예, 지끈공예, 가죽공예, 비즈공예,미니어쳐, 우드공예 등
+              배울 수 있다.
+            </p>
+            <StyledButtonLink to="/board" state={{ fromLecture: true }}>
+              강의 신청
+            </StyledButtonLink>
+          </TextContainer>
+          <Image src="/Craft/craft00.webp" alt="자격증 과정" />
+        </RowContainer>
+        <RowContainer>
+          <Image src="/Picture/Picture01.webp" alt="자격증 과정" />
+          <TextContainer>
+            <h2>미술치료 강의소개</h2>
+            <p>
+              {" "}
+              시간: 오전 9시 ~ 오후 6시
+              <br />
+              [소개문구] 저희 마인드 플러스 심리상담센터는 건강한 사회를 만들기 위해 치유와 나눔을
+              실천하고, 심신의 어려움을 겪고 있는 아동청소년, 성인, 노인, 직장인을 대상으로 상담과
+              다양한 치료기법을 통해 자기이해와 자기수용능력을 향상시켜 개인의 성장을 돕고 삶의
+              현실에서 큰 울타리가 되어 마음의 안식처와 마음치유의 공간이 되어 내담자 중심의 센터로
+              여러분과 함께 합니다.
             </p>
             <StyledButtonLink to="/board" state={{ fromLecture: true }}>
               강의 신청
@@ -44,38 +80,9 @@ export default function MainInfo() {
           <TextContainer>
             <h2>산림치유 강의소개</h2>
             <p>
-              노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지 등을 미술 매체로
-              미술 수업할 수 있는 노인종이조형 심리 미술지도사 자격증. 미술치료 이론을 배우고 실습을
-              통해 심리미술치료를 알아가는 과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각
-              운동 기능을 항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도 제공해줄
-              수 있는 수업.
-            </p>
-            <StyledButtonLink to="/board" state={{ fromLecture: true }}>
-              강의 신청
-            </StyledButtonLink>
-          </TextContainer>
-          <Image src="/Forest/forest1.webp" alt="자격증 과정" />
-        </RowContainer>
-        <RowContainer>
-          <Image src="/Paper/Paper1.webp" alt="자격증 과정" />
-          <TextContainer>
-            <h2>종이접기 강의소개</h2>
-            <p>
-              노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지 등을 미술 매체로
-              미술 수업할 수 있는 노인종이조형 심리 미술지도사 자격증. 미술치료 이론을 배우고 실습을
-              통해 심리미술치료를 알아가는 과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각
-              운동 기능을 항상 시키고, 무엇보다 자존감을 높여 주어서 삶의 의미나 목적까지도 제공해줄
-              수 있는 수업.
-            </p>
-            <StyledButtonLink to="/board" state={{ fromLecture: true }}>
-              강의 신청
-            </StyledButtonLink>
-          </TextContainer>
-        </RowContainer>
-        <RowContainer>
-          <TextContainer>
-            <h2>산림치유 강의소개</h2>
-            <p>
+              {" "}
+              시간: 오전 9시 ~ 오후 6시
+              <br />
               노인종이조형 심리 미술 지도사 자격증: 색종이, 한지, 골판지, 습자지 등을 미술 매체로
               미술 수업할 수 있는 노인종이조형 심리 미술지도사 자격증. 미술치료 이론을 배우고 실습을
               통해 심리미술치료를 알아가는 과정. 노인종이조형미술 수업은 어르신들의 인지 및 감각
@@ -94,13 +101,7 @@ export default function MainInfo() {
           <Copyright>© 2024 스타 평생 교육원. All rights reserved.</Copyright>
         </Footer>
       </ContentWrapper>
-      <FloatingButton
-        href="https://open.kakao.com/o/gF91oLYg"
-        target="_blank"
-        rel="noopener noreferrer">
-        <img src="/icon/kakao1.png" alt="카카오톡 오픈채팅" />
-        상담
-      </FloatingButton>
+      <FloatingButton></FloatingButton>
     </MainContainer>
   );
 }

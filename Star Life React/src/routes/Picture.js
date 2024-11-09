@@ -25,7 +25,7 @@ export default function MainInfo() {
         <AppHeader />
       </StickyBar>
       <ContentWrapper>
-        <SubFullWidthImage image="/Picture/Picture01.webp">
+        <SubFullWidthImage image="/Picture/picture00.webp">
           <EdgeText>
             <EdgeTitle> Teacher ★'s classes</EdgeTitle>
             <EdgeSub>미술치료</EdgeSub>
@@ -33,39 +33,36 @@ export default function MainInfo() {
         </SubFullWidthImage>
         <TwoToOneContainer>
           <SmallCard>
-            <CardImage src="/Craft/craft09.jpg" />
-            <Title>가죽공예</Title>
+            <CardImage src="/Picture/picture01.webp" />
+            <Title>미술 치료사로의 첫걸음</Title>
             <Description>
-              다양한 디자인의 가죽 소품들은 실용성과 귀여움을 겸비한 작품들입니다. 고양이 얼굴
-              모양의 카드홀더와 사랑스러운 캐릭터 키링 등은 가죽공예로 만들어진 개성 넘치는
-              아이템들로, 각자의 취향과 스타일을 표현하기에 적합합니다
+              미술치료 수업에서 자신만의 작품을 완성한 후 선생님과 함께 기념사진을 찍고 있습니다.
             </Description>
           </SmallCard>
           <LargeCard>
-            <CardImage src="/Craft/craft10.jpg" />
-            <Title>냅킨아트</Title>
+            <CardImage src="/Picture/picture02.webp" />
+            <Title>손끝으로 그려낸 마음의 이야기</Title>
             <Description>
-              딸기 일러스트가 돋보이는 냅킨아트입니다. 부드러운 색감과 감각적인 디자인으로 소품
-              수납에 유용합니다
+              아이들이 손자국과 그림으로 감정을 표현하며 서로의 마음을 느껴가는 미술치료 시간입니다.
             </Description>
           </LargeCard>
         </TwoToOneContainer>
         <TwoToOneContainer>
           <LargeCard>
-            <CardImage src="/Craft/craft08.jpg" />
-            <Title>미니어처공예 -1</Title>
+            <CardImage src="/Picture/picture03.webp" />
+            <Title>색의 향연, 창의력의 손끝에서 피어나다</Title>
             <Description>
-              "귀여운 디테일이 돋보이는 미니어처 도시락 공예 작품입니다. 알록달록한 김밥과 동물 모양
-              반찬들이 아기자기한 매력을 더해줍니다.
+              아이들이 다양한 색의 물감과 구슬을 이용해 창의력을 발휘하며 색다른 작품을 준비하고
+              있습니다. 서로 다른 색깔의 물감이 모여 하나의 조화를 이루는 모습이 인상적입니다.
             </Description>
           </LargeCard>
 
           <SmallCard>
-            <CardImage src="/Craft/craft07.jpg" />
-            <Title>미니어처 공예 -2</Title>
+            <CardImage src="/Picture/picture04.webp" />
+            <Title>조각들로 완성된 이야기</Title>
             <Description>
-              버섯 지붕과 라쿤 캐릭터가 돋보이는 아기자기한 미니어처 공예 작품입니다. 동화 속 장면을
-              연상시키는 따뜻한 색감과 디테일이 보는 이에게 즐거움을 선사합니다.
+              각기 다른 색과 모양의 캔버스가 모여 하나의 작품을 이룹니다. 아이들의 상상력과 감정이
+              담긴 조각들이 연결되어 특별한 이야기를 만들어냅니다.
             </Description>
           </SmallCard>
         </TwoToOneContainer>
@@ -76,13 +73,7 @@ export default function MainInfo() {
           <Copyright>© 2024 스타 평생 교육원. All rights reserved.</Copyright>
         </Footer>
       </ContentWrapper>
-      <FloatingButton
-        href="https://open.kakao.com/o/gF91oLYg"
-        target="_blank"
-        rel="noopener noreferrer">
-        <img src="/icon/kakao1.png" alt="카카오톡 오픈채팅" />
-        상담
-      </FloatingButton>
+      <FloatingButton></FloatingButton>
     </MainContainer>
   );
 }

@@ -78,7 +78,7 @@ const MenuSpan = styled.span`
   position: relative;
   z-index: 1000;
   white-space: nowrap;
-  width: auto; /* 글자 길이에 맞춘 좌우폭 */
+  width: 100%; /* 글자 길이에 맞춘 좌우폭 */
   flex: 0 0 auto; /* 컨텐츠에 맞게 크기 고정 */
   /* font-family: "NanumSquareRound", sans-serif;  */
   font-family: "S-Core_Dream", sans-serif; /* 폰트 변경 */
@@ -106,7 +106,6 @@ const TitleSubSpan = styled.span`
   font-family: "Cormorant Upright", serif;
   font-weight: bold;
 `;
-
 const NavItem = styled.div`
   display: flex;
   align-items: center;
@@ -123,6 +122,11 @@ const NavItem = styled.div`
   @media (max-width: 800px) {
     font-size: 16px;
     width: auto;
+  }
+
+  /* Mobile: Make clickable area full width */
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 
@@ -161,7 +165,11 @@ export default function AppHeader() {
       <Nav open={menuOpen}>
         <Link
           to="/paper"
-          style={{ textDecoration: "none", color: "#414040" }}
+          style={{
+            textDecoration: "none",
+            color: "#414040",
+            display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
+          }}
           onClick={handleNavLinkClick}>
           <NavItem>
             <MenuSpan>한국종이접기 영통지회</MenuSpan>
@@ -169,7 +177,11 @@ export default function AppHeader() {
         </Link>
         <Link
           to="/forest"
-          style={{ textDecoration: "none", color: "#414040" }}
+          style={{
+            textDecoration: "none",
+            color: "#414040",
+            display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
+          }}
           onClick={handleNavLinkClick}>
           <NavItem>
             <MenuSpan>산림치유</MenuSpan>
@@ -177,7 +189,11 @@ export default function AppHeader() {
         </Link>
         <Link
           to="/craft"
-          style={{ textDecoration: "none", color: "#414040" }}
+          style={{
+            textDecoration: "none",
+            color: "#414040",
+            display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
+          }}
           onClick={handleNavLinkClick}>
           <NavItem>
             <MenuSpan>공예</MenuSpan>
@@ -185,7 +201,11 @@ export default function AppHeader() {
         </Link>
         <Link
           to="/picture"
-          style={{ textDecoration: "none", color: "#414040" }}
+          style={{
+            textDecoration: "none",
+            color: "#414040",
+            display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
+          }}
           onClick={handleNavLinkClick}>
           <NavItem>
             <MenuSpan>미술치료</MenuSpan>
@@ -193,7 +213,11 @@ export default function AppHeader() {
         </Link>
         <Link
           to="/lecture"
-          style={{ textDecoration: "none", color: "#414040" }}
+          style={{
+            textDecoration: "none",
+            color: "#414040",
+            display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
+          }}
           onClick={handleNavLinkClick}>
           <NavItem>
             <MenuSpan>강의소개</MenuSpan>
@@ -201,7 +225,12 @@ export default function AppHeader() {
         </Link>
         <Link
           to="/board"
-          style={{ textDecoration: "none", color: "#414040" }}
+          style={{
+            textDecoration: "none",
+            color: "#414040",
+            display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
+            width: "100%",
+          }}
           onClick={handleNavLinkClick}>
           <NavItem>
             <MenuSpan>강사이력, 문의</MenuSpan>

@@ -1,14 +1,3 @@
-@import "./css/variable.css";
-@import "./css/components/button.css";
-@import "./css/components/write-form.css";
-@import "./css/screen/list.css";
-@import "./css/screen/home.css";
-@import "./css/screen/detail.css";
-@import "./css/screen/navi.css";
-@import "./css/screen/login.css";
-@import "./css/screen/join.css";
-@import "./css/screen/toDo.css";
-
 body {
   margin: 0;
   display: flex;
@@ -21,10 +10,18 @@ a {
   text-decoration: none;
   color: inherit;
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 label {
   font-family: "Arial", sans-serif;
   font-size: 16px;
   color: #555;
   margin-bottom: 5px;
+}
+body {
+  overflow-x: hidden;
 }

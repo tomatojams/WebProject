@@ -84,14 +84,14 @@ export default function MainInfo() {
             <DescriptionText>
               {" "}
               <br />
-              산림치유는 자연 속에서 몸과<strong>마음을 치유하는 특별한 경험</strong> 입니다.
-              숲에서의 산책과 다양한 프로그램을 통해 스트레스를 해소하고<strong>심신의 균</strong>{" "}
-              형을 되찾을 수 있습니다.
+              산림치유는 자연 속에서 몸과 <strong>마음을 치유하는 특별한 경험</strong> 입니다.
+              숲에서의 산책과 다양한 프로그램을 통해 스트레스를 해소하고
+              <strong> 심신의 균형</strong>을 되찾을 수 있습니다.
               <br />
               <br /> 자연의 소리와 향기, 맑은 공기 속에서 <strong>힐링을 경험</strong>하며 건강을
               증진해 보세요.
               <strong>산림치유 전문가</strong>들이 함께하며 맞춤형 프로그램을 제공합니다. 자연과
-              하나 되는 산림치유로<strong>건강한 삶</strong> 을 시작해 보세요.
+              하나 되는 산림치유로 <strong>건강한 삶</strong>을 시작해 보세요.
             </DescriptionText>
           </EdgeTextBlack>
         </SubFullContent>

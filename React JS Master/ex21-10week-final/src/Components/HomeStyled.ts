@@ -4,9 +4,16 @@ import { motion } from "framer-motion";
 import { IMovieInfo } from "../type/IMovieInfo";
 
 const Wrapper = styled.div`
+  display: flex;
+  height: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: black;
+  padding-top: 50px;
   padding-bottom: 100px;
   cursor: pointer;
+  width: 100%;
 `;
 const Loader = styled.div`
   height: 20vh;
@@ -15,16 +22,15 @@ const Loader = styled.div`
   align-items: center;
 `;
 // 두개의배경 하나는 흐린색 하나는사진 글자가잘 보이게하기위해서
-const Banner = styled.div<{ bgPhoto: string }>`
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)),
-    url(${(props) => makeImagePath(props.bgPhoto, "original")});
+const Banner = styled.div`
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1));
   background-size: cover;
-  height: 100vh;
+  height: 30vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 60px;
-  background-color: red;
+  background-color: black;
 `;
 const Title = styled.h2`
   color: #eee;
@@ -39,33 +45,29 @@ const Overview = styled.p`
   color: #eee;
 `;
 const Slider = styled.div`
-  // gap: 50px;
-  // display: flex;
-  // flex-direction: column;
-  margin: 0px 20px;
-  position: relative;
-  top: -200px;
+  margin: 50px 20px;
+  display: flex;
+  gap: 20px;
 `;
 const Row = styled(motion.div)`
   display: grid;
-  gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
-  position: absolute;
-  width: 100%;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
+  width: 80%;
   margin-bottom: 5px;
 `;
 const Box = styled(motion.div)<{ photo: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)),
     url(${(props) => makeImagePath(props.photo, "w500")});
   background-color: white;
-  // 중요***
-  background-size: cover;
-  // 중요*** 이것때문에 축소될때 가려짐
-  // relative는 z-index를 자동으로하기때문에 의도치않게 동작할수있다
-  // position: relative;
 
+  background-size: cover;
+  border-radius: 15px;
   background-position: center center;
-  height: 200px;
+  width: 250px;
+  height: 400px;
   color: #aaa;
   font-size: 28px;
   display: flex;

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Nav = styled(motion.nav)`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   position: fixed;
   width: 100%;
@@ -13,28 +13,14 @@ const Nav = styled(motion.nav)`
   color: white;
 `;
 
-const Col = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Logo = styled(motion.svg)`
-  margin-right: 50px;
-  width: 95px;
-  height: 25px;
-  fill: ${(props) => props.theme.red};
-  path {
-    stroke-width: 6px;
-    stroke: white;
-  }
-`;
-
 const Items = styled.ul`
   display: flex;
   align-items: center;
 `;
 
 const Item = styled.li`
+  margin-top: 20px;
+  font-size: 20px;
   margin-right: 20px;
   color: ${(props) => props.theme.white.darker};
   position: relative;
@@ -68,17 +54,4 @@ const Search = styled.form`
   }
 `;
 
-const SearchInput = styled(motion.input)`
-  // 변화시작점
-  transform-origin: right center;
-  position: absolute;
-  left: -160px;
-  padding: 8px 10px;
-  padding-left: 40px;
-  z-index: -1;
-  background-color: transparent;
-  color: #b6b6b6;
-  border: 1px solid #3d3d3d;
-`;
-
-export {Nav, Col, Logo, Items, Item, Circle, Search, SearchInput}
+export { Nav, Items, Item, Circle, Search };

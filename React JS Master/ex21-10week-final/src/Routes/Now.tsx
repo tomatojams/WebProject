@@ -1,5 +1,6 @@
 import { useQuery } from "react-query";
-import { getMovies, getMovieInfo } from "../api";
+// import { getMovies, getMovieInfo, getUpcomingMovies, getPopularMovies } from "../api";
+import { getMovieInfo, getNowMovies } from "../api";
 import { AnimatePresence, useScroll } from "framer-motion";
 import { useState } from "react";
 import { useNavigate, useMatch } from "react-router-dom";
@@ -8,9 +9,6 @@ import { IMovieInfo } from "../type/IMovieInfo";
 import {
   Wrapper,
   Loader,
-  Banner,
-  Title,
-  Overview,
   Slider,
   Row,
   Box,
@@ -23,21 +21,19 @@ import {
 import { findIndexById } from "../utils";
 import { rowVariants, boxVariants, infoVariants } from "../Components/AniVariants";
 
-const offset = 6;
 //home
 export default function Home() {
-  const [leaving, setLeaving] = useState(false);
   const { scrollY } = useScroll(); // Y 위치 포착 팝업용
-  const [index, setIndex] = useState(0);
+
   const navigate = useNavigate(); // 경로변경을 강제로 시킴
-  const bigMovieMatch = useMatch("/netflex/movies/:id"); // 경로일치 검사, 주소가 바뀔때마다 자동실행
+  const bigMovieMatch = useMatch("/movies/:id"); // 경로일치 검사, 주소가 바뀔때마다 자동실행
   const [movieIds, setMovieIds] = useState<number[]>([]); // 두번째 쿼리를 위한 첫번째 쿼리 결과
 
   // 코드개선
   // 1. 첫번째쿼리 - onSuccess: 로성공후 작업세팅
   const { data, isLoading } = useQuery<IMoviesNow>(
     ["movies", "nowPlaying"],
-    () => getMovies("en", 1),
+    () => getNowMovies("en", 1),
     {
       //**  onSuccess: 성공후 조건부여
       onSuccess: (data) => {
@@ -62,34 +58,17 @@ export default function Home() {
   console.log("DetailInfoMovie", detail);
 
   // 이벤트함수
-  // 가로 스크롤
-  const increseIndex = () => {
-    if (leaving) return;
-    const totalMovies = data?.results.length || 0;
-    const maxIndex = Math.floor((totalMovies - 1) / offset - 1);
-    setLeaving(true);
-    setIndex((prev) => {
-      if (prev === maxIndex) {
-        return 0;
-      }
-      return prev + 1;
-    });
-  };
 
   // 박스클릭
   const onBoxClicked = (movieId: number) => {
-    navigate(`/netflex/movies/${movieId}`);
+    navigate(`/movies/${movieId}`);
   };
   //뒤로가기
   const resetBigMatch = () => {
-    navigate("/netflex/");
+    navigate("/");
   };
 
   // find-> 조건 만족하는 첫번째 요소 반환 하므로 해당무비가 반환됨
-  const clickedMovie =
-    bigMovieMatch?.params.id &&
-    data?.results.find((movie) => movie.id === +(bigMovieMatch.params.id + ""));
-  console.log(clickedMovie);
 
   return (
     <>
@@ -98,43 +77,31 @@ export default function Home() {
           <Loader>Loading..</Loader>
         ) : (
           <>
-            {/* 데이타없으면 빈문자열 보냄 */}
-            <Banner onClick={increseIndex} bgPhoto={data?.results[0].backdrop_path || ""}>
-              <Title>{data?.results[0].title}</Title>
-              <Overview>{data?.results[0].overview}</Overview>
-            </Banner>
             <Slider>
-              {/* 새로 배운것 *** */}
-              <AnimatePresence initial={false} onExitComplete={() => setLeaving(false)}>
-                <Row
-                  variants={rowVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  key={index}
-                  transition={{ type: "linear", duration: 1 }}>
-                  {data?.results
-                    .slice(1)
-                    .slice(index * offset, index * offset + offset)
-                    .map((movie) => (
-                      <Box
-                        layoutId={movie.id + ""}
-                        onClick={() => onBoxClicked(movie.id)}
-                        variants={boxVariants}
-                        initial="normal"
-                        // transition을 각각 부여해서 모든 transitions이 같지 않게한다 **
-                        whileHover="hover"
-                        photo={movie.poster_path || ""}
-                        transition={{ type: "tween" }}
-                        key={movie.id}>
-                        {/* hover는 상속받아서자동적용됨 */}
-                        <Info variants={infoVariants}>
-                          <h5>{movie.title}</h5>
-                        </Info>
-                      </Box>
-                    ))}
-                </Row>
-              </AnimatePresence>
+              <Row
+                variants={rowVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{ type: "linear", duration: 1 }}>
+                {data?.results.slice().map((movie) => (
+                  <Box
+                    layoutId={movie.id + ""}
+                    onClick={() => onBoxClicked(movie.id)}
+                    variants={boxVariants}
+                    initial="normal"
+                    // transition을 각각 부여해서 모든 transitions이 같지 않게한다 **
+                    whileHover="hover"
+                    photo={movie.poster_path || ""}
+                    transition={{ type: "tween" }}
+                    key={movie.id}>
+                    {/* hover는 상속받아서자동적용됨 */}
+                    <Info variants={infoVariants}>
+                      <h5>{movie.title}</h5>
+                    </Info>
+                  </Box>
+                ))}
+              </Row>
             </Slider>
             <AnimatePresence>
               {bigMovieMatch ? (

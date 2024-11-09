@@ -1,9 +1,9 @@
 import ReactDOM from "react-dom/client";
 import { RecoilRoot } from "recoil";
-import App from "./App.tsx";
+import Router from "./Router.tsx";
 import "./global.css";
 import { ThemeProvider } from "styled-components";
-import { GlobalStyle } from "./css/resetGlobal.ts";
+import { GlobalStyle } from "./resetGlobal.ts";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { theme } from "./theme.tsx";
 
@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={client}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <App />
+        <Router />
       </ThemeProvider>
     </QueryClientProvider>
   </RecoilRoot>

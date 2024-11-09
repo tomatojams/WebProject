@@ -25,10 +25,16 @@ const searchMovie = async (search?: string) => {
   const response = await axios.get(`${BASE_URL}/search/movie?query=${search}&api_key=${MOVIE_API_KEY}`);
   return response.data
 }
+//popular
+//https://api.themoviedb.org/3/movie/popular?language=kr&page=1&api_key=7c0fb96643e4670141de03eaac64aed6
+
+// upcoming
+//https://api.themoviedb.org/3/movie/upcoming?language=kr&page=1&api_key=7c0fb96643e4670141de03eaac64aed6
 //  testcode
 // https://api.themoviedb.org/3/search/movie?query=Jack+Reacher&api_key=7c0fb96643e4670141de03eaac64aed6
 //   https://api.themoviedb.org/3/movie/now_playing?language=kr&page=1&api_key=7c0fb96643e4670141de03eaac64aed6
 
 // https://api.themoviedb.org/3/search/movie?api_key=api_key&language=en-US&query=hello&page=1&include_adult=false
+
 // https://developers.themoviedb.org/3/search/search-movies
 export { getMovies, getMovieInfo ,searchMovie};

@@ -46,8 +46,8 @@ export default function MainInfo() {
               <br />
               <br />
               소근육을 자극, 두뇌개발을 도와주고 평면 종이가 입체로 완성되어가는 과정에서 수학,
-              과학에 대한 이해와 기하학적 공간 개념을 알게 하여{" "}
-              <strong>논리력과 창의력, 집중력 향상</strong> 에 도움을 줍니다.
+              과학에 대한 이해와 기하학적 공간 개념을 알게 하여
+              <strong> 논리력과 창의력, 집중력 향상</strong>에 도움을 줍니다.
             </DescriptionText>
           </EdgeTextBlack>
         </SubFullContent>
@@ -67,7 +67,7 @@ export default function MainInfo() {
               놀이로 시작되는 유아에게 필요한 <strong>조형활동의 기초와 흥미유발</strong>에 중점을
               둡니다.
               <br /> <br />
-              <strong>영재성과 창의성 발달</strong> 에 도움을 주는 유아전문 교육과정으로
+              <strong>영재성과 창의성 발달</strong>에 도움을 주는 유아전문 교육과정으로
               평면구성작업과 놀이활동으로 연계되는 종이접기 교육과정
             </DescriptionText>
           </EdgeTextBlack>
@@ -85,7 +85,7 @@ export default function MainInfo() {
             <br />{" "}
             <DescriptionText>
               연령별 단계에 맞춘 교과서 중심의 교육을 접목한 것입니다. <br /> <br /> 과학적, 수학적
-              <strong>사고력 향상을 시켜주고 창의력을 길러주</strong>어 공간 지각력을 키워 논리력이
+              <strong>사고력 향상을 시켜주고 창의력</strong>을 길러주어 공간 지각력을 키워 논리력이
               자라나 어린이들에게 두뇌개발향상을 시켜주는 교육과정.
             </DescriptionText>
           </EdgeTextBlack>
@@ -105,8 +105,8 @@ export default function MainInfo() {
               청소년들의 <strong>문화적 감수성과 자아성취감 향상 및 상상력과 창의력 발달</strong>에
               도움 줍니다
               <br /> <br />
-              완성도 높은 작품 제작으로 청소년들의 흥미를 유발에{" "}
-              <strong>진로탐색과 자기계발</strong>에 도움을 주는 전문교육과정이다.
+              완성도 높은 작품 제작으로 청소년들의 흥미를 유발에
+              <strong> 진로탐색과 자기계발</strong>에 도움을 주는 전문교육과정이다.
             </DescriptionText>
           </EdgeTextBlack>
         </SubFullContent>
@@ -123,7 +123,7 @@ export default function MainInfo() {
             <br />
             <DescriptionText>
               초급, 사범, 지도사법 자격과정을 통해 유치원,학교, 문화센터,노인복지관 등
-              <strong>교육현장에서의 전문가</strong>를 양성시켜 취미활동과 봉사활동을 물론
+              <strong> 교육현장에서의 전문가</strong>를 양성시켜 취미활동과 봉사활동을 물론
               창작활동가로 활동할 수 있는 전문교육과정.
             </DescriptionText>
           </EdgeTextBlack>
@@ -139,7 +139,7 @@ export default function MainInfo() {
               과정.
               <br /> <br />
               노인종이조형미술 수업은 어르신들의 <strong>인지 및 감각 운동 기능을 향상</strong>{" "}
-              시키고, 무엇보다 <strong>자존감을 높여</strong> 주어서 삶의 의미나 목적까지도 제공해줄
+              시키고, 무엇보다 <strong>자존감</strong>을 높여 주어서 삶의 의미나 목적까지도 제공해줄
               수 있는 수업.
             </Description>
             <StyledButtonLink to="/board" state={{ fromLecture: true }}>

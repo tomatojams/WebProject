@@ -1,18 +1,22 @@
 const rowVariants = {
-  hidden: {
-    x: window.outerWidth, //아이콘사이거리띄우기
-  },
+  hidden: {},
   visible: {
-    x: 0,
+    transition: {
+      staggerChildren: 0.2, // 자식 요소마다 지연 시간 추가로 순차적 등장
+    },
   },
-  exit: {
-    x: -window.outerWidth,
-  },
+  exit: {},
 };
 
 const boxVariants = {
-  normal: {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: {
+    opacity: 1,
     scale: 1,
+    transition: {
+      duration: 0.3,
+      type: "tween",
+    },
   },
   hover: {
     zIndex: 99,
@@ -20,7 +24,7 @@ const boxVariants = {
     y: -50,
     transition: {
       delay: 0.2,
-      duaration: 0.3,
+      duration: 0.3,
       type: "tween",
     },
   },

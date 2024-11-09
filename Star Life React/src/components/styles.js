@@ -330,7 +330,7 @@ const Image = styled.img`
 // 텍스트 컨테이너
 const TextContainer = styled.div`
   max-width: 600px;
-  line-height: 1.6;
+  line-height: 1.7;
   color: #333;
 
   /* 반응형 폰트 크기 조절 */

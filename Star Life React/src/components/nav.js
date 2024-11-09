@@ -115,7 +115,7 @@ const NavItem = styled.div`
   width: auto;
   cursor: pointer;
   font-size: 16px;
-  padding: 5px 10px;
+  padding: 12px 10px;
   border-radius: 5px;
   font-weight: 500;
 
@@ -151,8 +151,8 @@ export default function AppHeader() {
           }}
           onClick={handleNavLinkClick}>
           <TitleSpan>
-            <TitleSubSpan style={{ fontSize: "22px" }}>Star</TitleSubSpan>
-            <TitleSubSpan style={{ fontSize: "18px" }}>life education</TitleSubSpan>
+            <TitleSubSpan style={{ fontSize: "20px" }}>Star life long</TitleSubSpan>
+            {/* <TitleSubSpan style={{ fontSize: "18px" }}>life education</TitleSubSpan> */}
           </TitleSpan>
         </Link>
       </NavItem>

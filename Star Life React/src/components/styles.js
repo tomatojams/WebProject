@@ -154,35 +154,40 @@ const EdgeSub = styled.div`
   font-size: 40px;
   font-weight: bold;
   text-align: center;
-  font-family: "NanumSquareRound", sans-serif; /* 폰트 추가 */
+  font-family: "NanumSquareRound", sans-serif;
 `;
 
 const EdgeTitleBlack = styled.div`
   color: #555;
 
   border-radius: 40px;
-  font-size: 20px;
+  font-size: 18px;
   // font-weight: bold;
   text-align: center;
-  font-family: "NanumSquareRound", sans-serif; /* 폰트 추가 */
+  font-family: "NanumSquareRound", sans-serif;
 `;
 const EdgeSubBlack = styled.div`
   color: #555;
   border-radius: 40px;
-  font-size: 40px;
-  font-weight: bold;
+  font-size: 24px;
+  font-weight: 700;
   text-align: center;
-  font-family: "NanumSquareRound", sans-serif; /* 폰트 추가 */
+  /* font-family: "NanumSquareRound", sans-serif; */
   /* 반응형 폰트 크기 조절 */
   @media (max-width: 768px) {
-    font-size: 32px;
+    font-size: 24px;
   }
 
   @media (max-width: 480px) {
-    font-size: 28px;
+    font-size: 24px;
   }
 `;
 const EdgeTextBlack = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   color: #777;
   padding: 20px 40px;
   border-radius: 40px;
@@ -190,7 +195,7 @@ const EdgeTextBlack = styled.div`
   font-weight: bold;
   text-align: center;
   /* font-family: "S-Core_Dream", sans-serif;  */
-  font-family: "NanumSquareRound", sans-serif;
+  /* font-family: "NanumSquareRound", sans-serif; */
   /* 반응형 폰트 크기 조절 */
   @media (max-width: 768px) {
     font-size: 20px;
@@ -279,14 +284,15 @@ const SubFullContent = styled.div`
   justify-content: center;
   align-items: center;
   width: 65%;
-  height: 70vh;
+  height: 55vh;
   line-height: 1.4;
 
   position: relative;
   overflow: hidden;
 
   @media (max-width: 768px) {
-    width: 90%;
+    width: 100%;
+    height: 60vh;
   }
 `;
 
@@ -397,10 +403,10 @@ const Card = styled.div`
 
 const SmallImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: 400px;
   /* max-height: 200px; */
   object-fit: cover;
-  border-radius: 8px 8px 0 0;
+  border-radius: 10px;
 `;
 
 const Title = styled.h3`
@@ -410,10 +416,39 @@ const Title = styled.h3`
   color: #333;
 `;
 
-const Description = styled.p`
+const Description = styled.div`
   font-size: 18px;
   color: #666;
   line-height: 1.5;
+`;
+
+const BoldTitle = styled.p`
+  font-weight: 600;
+  color: #333;
+  line-height: 1.5;
+`;
+
+const DescriptionCraft = styled.p`
+  width: 100%;
+  text-align: justify;
+  font-size: 18px;
+  color: #666;
+  /* line-height: 2; */
+  font-weight: 400;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+const DescriptionText = styled.p`
+  width: 70%;
+  text-align: justify;
+  font-size: 18px;
+  color: #666;
+  line-height: 1.7;
+  font-weight: 400;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 // 2:1 비율로 배치하는 컨테이너
 const TwoToOneContainer = styled.div`
@@ -460,7 +495,7 @@ const CardImage = styled.img`
   height: auto;
   height: 400px; /* 이미지 높이 고정 */
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
   margin-bottom: 15px;
 `;
 
@@ -469,6 +504,7 @@ const StyledButtonLink = styled(Link)`
   padding: 10px 20px;
   font-size: 14px;
   color: #333;
+  line-height: 1.5;
   background-color: #f0f0f0;
   border: none;
   border-radius: 5px;
@@ -478,10 +514,14 @@ const StyledButtonLink = styled(Link)`
   display: inline-block; /* 스타일을 버튼처럼 유지 */
 
   @media (max-width: 768px) {
-    font-size: 12px;
+    font-size: 14px;
   }
   @media (max-width: 480px) {
-    font-size: 10px;
+    font-size: 14px;
+  }
+
+  &:hover {
+    background-color: #e0e0e0;
   }
 `;
 
@@ -517,4 +557,7 @@ export {
   SmallCard,
   CardImage,
   StyledButtonLink,
+  DescriptionText,
+  BoldTitle,
+  DescriptionCraft,
 };

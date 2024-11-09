@@ -67,8 +67,8 @@ export default function MainInfo() {
 
         <Footer>
           <FooterText>주소: 수원시 영통구 태장로 81, 501호 스타평생교육원 </FooterText>
-          <FooterText>연락처: 031-202-0074 대표: 원장:김경환</FooterText>
-          <Copyright>© 2024 스타 평생 교육원. All rights reserved.</Copyright>
+          <FooterText>연락처: 031-202-0074 대표: 김경환</FooterText>
+          <Copyright>Since 2014 스타 평생 교육원. All rights reserved.</Copyright>
         </Footer>
 
         <FloatingButton></FloatingButton>

@@ -81,15 +81,11 @@ const UserBoardPage = () => {
           <TextContainer>
             <h2>Teacher ★'s 이력</h2>
             <p>
-              서울시립병원 참다울학교 점핑클레이 테라피 임상미술치료 꿈터 주간보호센터
-              <br />
-              토탈공예프로그램 강의 광교,
-              <br />
-              언남, 청명, 보라초 돌봄교실공예 강사 한빛중, 파주고, 청덕중, 어정중
-              <br />
-              단기프로그램 경기 꿈의 학교 “나도미술치료사” 경기도교육청 기흥노인복지관 특화어르신
-              미술치료 보육교사 2급 미술재활 아동미술지도사 1급 클레이조형미술 테라피스트
-              미술심리상담사 1급 생활환경지도사 1급
+              <li>한국종이접기 영통 지회장</li>
+              <li>미술치료사</li>
+              <li>산림치유 지도사</li>
+              <li>숲해설사</li>
+              <li>맞춤형 화장품 조제 관리사 임상심리사</li>
             </p>
           </TextContainer>
         </RowContainer>
@@ -160,8 +156,8 @@ const UserBoardPage = () => {
 
         <Footer>
           <FooterText>주소: 수원시 영통구 태장로 81, 501호 스타평생교육원 </FooterText>
-          <FooterText>연락처: 031-202-0074 대표: 원장:김경환</FooterText>
-          <Copyright>© 2024 스타 평생 교육원. All rights reserved.</Copyright>
+          <FooterText>연락처: 031-202-0074 대표: 김경환</FooterText>
+          <Copyright>Since 2014 스타 평생 교육원. All rights reserved.</Copyright>
         </Footer>
       </ContentWrapper>
     </MainContainer>

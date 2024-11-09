@@ -58,7 +58,7 @@ export default function MainInfo() {
           <Image src="/Craft/craft00.webp" alt="자격증 과정" />
         </RowContainer>
         <RowContainer>
-          <Image src="/Picture/Picture01.webp" alt="자격증 과정" />
+          <Image src="/Picture/picture00.webp" alt="자격증 과정" />
           <TextContainer>
             <h2>미술치료 강의소개</h2>
             <p>
@@ -76,7 +76,7 @@ export default function MainInfo() {
             </StyledButtonLink>
           </TextContainer>
         </RowContainer>
-        <RowContainer>
+        {/* <RowContainer>
           <TextContainer>
             <h2>산림치유 강의소개</h2>
             <p>
@@ -94,7 +94,7 @@ export default function MainInfo() {
             </StyledButtonLink>
           </TextContainer>
           <Image src="/Forest/forest1.webp" alt="자격증 과정" />
-        </RowContainer>
+        </RowContainer> */}
         <Footer>
           <FooterText>주소: 수원시 영통구 태장로 81, 501호 스타평생교육원 </FooterText>
           <FooterText>연락처: 031-202-0074 대표: 원장:김경환</FooterText>

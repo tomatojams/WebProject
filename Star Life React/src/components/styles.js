@@ -189,7 +189,8 @@ const EdgeTextBlack = styled.div`
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  font-family: "NanumSquareRound", sans-serif; /* 폰트 추가 */
+  /* font-family: "S-Core_Dream", sans-serif;  */
+  font-family: "NanumSquareRound", sans-serif;
   /* 반응형 폰트 크기 조절 */
   @media (max-width: 768px) {
     font-size: 20px;
@@ -236,8 +237,8 @@ const FloatingButton = styled.a.attrs({
   position: fixed;
   bottom: 20px;
   right: 40px;
-  width: 110px;
-  height: 55px;
+  width: 100px;
+  height: 50px;
   background-color: #ffe812;
   border-radius: 30px;
   display: flex;
@@ -277,8 +278,8 @@ const SubFullContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60%;
-  height: 60vh;
+  width: 65%;
+  height: 70vh;
   line-height: 1.4;
 
   position: relative;
@@ -291,12 +292,13 @@ const SubFullContent = styled.div`
 
 // 좌우 배치를 담당하는 메인 컨테이너
 const RowContainer = styled.div`
+  margin: 30px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  padding: 40px;
   max-width: 1200px;
-  margin: auto;
+  /* margin: auto; */
   gap: 20px;
 
   /* 해상도가 일정 이하로 내려가면 세로 배치로 변경 */
@@ -409,12 +411,13 @@ const Title = styled.h3`
 `;
 
 const Description = styled.p`
-  font-size: 20px;
+  font-size: 18px;
   color: #666;
   line-height: 1.5;
 `;
 // 2:1 비율로 배치하는 컨테이너
 const TwoToOneContainer = styled.div`
+  /* margin: 30px 0; */
   display: flex;
   gap: 20px;
   max-width: 1200px;

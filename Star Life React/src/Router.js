@@ -8,6 +8,7 @@ import Lecture from "./routes/Lecture";
 import LotcBoard from "./routes/AdminBoardPage";
 import UserBoard from "./routes/UserBoardPage";
 import ForestBoard from "./routes/AdminForestBoardPage";
+import NotFound from "./routes/notFound";
 export default function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/board" element={<UserBoard />} />
         <Route path="/adimin-board-938ff!@!" element={<LotcBoard />} />
         <Route path="/adimin-forest-as@@!!$$" element={<ForestBoard />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

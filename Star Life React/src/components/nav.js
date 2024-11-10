@@ -16,23 +16,23 @@ const Header = styled.header`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  align-items: center;
-  padding: 3px 40px;
+  align-items: space-between;
+  padding: 1px 40px;
   background-color: white;
 
   position: relative; /* 추가 */
   max-width: 1200px;
   box-sizing: border-box;
-  /* border-bottom: 1px solid #ddd;
-  border-right: 1px solid #ddd;
-  border-left: 1px solid #ddd; */
-  /* Media query for mobile */
+
   @media (max-width: 768px) {
-    padding: 0px 20px;
+    padding: 0px 0px;
     border-top: 1px solid #ddd;
   }
 `;
-
+const Row = styled.div`
+  display: flex;
+  width: 70%;
+`;
 const Nav = styled.nav`
   color: #414040;
   width: 80%;
@@ -60,6 +60,7 @@ const Nav = styled.nav`
 
 const MenuButton = styled.button`
   display: none;
+  margin-right: 30px;
 
   /* Show menu button on mobile */
   @media (max-width: 768px) {
@@ -80,9 +81,9 @@ const MenuSpan = styled.span`
   white-space: nowrap;
   width: 100%; /* 글자 길이에 맞춘 좌우폭 */
   flex: 0 0 auto; /* 컨텐츠에 맞게 크기 고정 */
-  /* font-family: "NanumSquareRound", sans-serif;  */
-  font-family: "S-Core_Dream", sans-serif; /* 폰트 변경 */
-  font-weight: 300;
+  /* font-family: "NanumSquareRound", sans-serif; */
+  font-family: "S-Core_Dream", sans-serif;
+  font-weight: 500;
 `;
 
 const TitleSpan = styled.span`
@@ -145,6 +146,7 @@ export default function AppHeader() {
 
   return (
     <Header>
+      {" "}
       <NavItem>
         <Link
           to="/"
@@ -155,90 +157,98 @@ export default function AppHeader() {
           }}
           onClick={handleNavLinkClick}>
           <TitleSpan>
-            <TitleSubSpan style={{ fontSize: "20px" }}>Star life long</TitleSubSpan>
-            {/* <TitleSubSpan style={{ fontSize: "18px" }}>life education</TitleSubSpan> */}
+            <TitleSubSpan style={{ fontSize: "22px" }}>Star</TitleSubSpan>
+            <TitleSubSpan style={{ fontSize: "16px" }}>life long education</TitleSubSpan>
+            {/* <TitleSubSpan style={{ fontSize: "22px" }}>Star</TitleSubSpan>
+            <TitleSubSpan style={{ fontSize: "18px" }}>life long</TitleSubSpan> */}
           </TitleSpan>
         </Link>
       </NavItem>
+      <Row>
+        {/* Desktop Navigation */}
+        <Nav open={menuOpen}>
+          <Link
+            to="/paper"
+            style={{
+              textDecoration: "none",
+              color: "#414040",
+              display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
+              width: "100%",
+            }}
+            onClick={handleNavLinkClick}>
+            <NavItem>
+              <MenuSpan>한국종이접기 영통지회</MenuSpan>
+            </NavItem>
+          </Link>
+          <Link
+            to="/forest"
+            style={{
+              textDecoration: "none",
+              color: "#414040",
+              display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
+              width: "100%",
+            }}
+            onClick={handleNavLinkClick}>
+            <NavItem>
+              <MenuSpan>산림치유</MenuSpan>
+            </NavItem>
+          </Link>
+          <Link
+            to="/craft"
+            style={{
+              textDecoration: "none",
+              color: "#414040",
+              display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
+              width: "100%",
+            }}
+            onClick={handleNavLinkClick}>
+            <NavItem>
+              <MenuSpan>공예</MenuSpan>
+            </NavItem>
+          </Link>
+          <Link
+            to="/picture"
+            style={{
+              textDecoration: "none",
+              color: "#414040",
+              display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
+              width: "100%",
+            }}
+            onClick={handleNavLinkClick}>
+            <NavItem>
+              <MenuSpan>미술치료</MenuSpan>
+            </NavItem>
+          </Link>
+          <Link
+            to="/lecture"
+            style={{
+              textDecoration: "none",
+              color: "#414040",
+              display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
+              width: "100%",
+            }}
+            onClick={handleNavLinkClick}>
+            <NavItem>
+              <MenuSpan>강의소개</MenuSpan>
+            </NavItem>
+          </Link>
+          <Link
+            to="/board"
+            style={{
+              textDecoration: "none",
+              color: "#414040",
+              display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
+              width: "100%",
+            }}
+            onClick={handleNavLinkClick}>
+            <NavItem>
+              <MenuSpan>강사이력, 문의</MenuSpan>
+            </NavItem>
+          </Link>
+        </Nav>
 
-      {/* Desktop Navigation */}
-      <Nav open={menuOpen}>
-        <Link
-          to="/paper"
-          style={{
-            textDecoration: "none",
-            color: "#414040",
-            display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
-          }}
-          onClick={handleNavLinkClick}>
-          <NavItem>
-            <MenuSpan>한국종이접기 영통지회</MenuSpan>
-          </NavItem>
-        </Link>
-        <Link
-          to="/forest"
-          style={{
-            textDecoration: "none",
-            color: "#414040",
-            display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
-          }}
-          onClick={handleNavLinkClick}>
-          <NavItem>
-            <MenuSpan>산림치유</MenuSpan>
-          </NavItem>
-        </Link>
-        <Link
-          to="/craft"
-          style={{
-            textDecoration: "none",
-            color: "#414040",
-            display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
-          }}
-          onClick={handleNavLinkClick}>
-          <NavItem>
-            <MenuSpan>공예</MenuSpan>
-          </NavItem>
-        </Link>
-        <Link
-          to="/picture"
-          style={{
-            textDecoration: "none",
-            color: "#414040",
-            display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
-          }}
-          onClick={handleNavLinkClick}>
-          <NavItem>
-            <MenuSpan>미술치료</MenuSpan>
-          </NavItem>
-        </Link>
-        <Link
-          to="/lecture"
-          style={{
-            textDecoration: "none",
-            color: "#414040",
-            display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
-          }}
-          onClick={handleNavLinkClick}>
-          <NavItem>
-            <MenuSpan>강의소개</MenuSpan>
-          </NavItem>
-        </Link>
-        <Link
-          to="/board"
-          style={{
-            textDecoration: "none",
-            color: "#414040",
-            display: "block", // 모바일에서 클릭 범위를 넓히기 위해 추가
-            width: "100%",
-          }}
-          onClick={handleNavLinkClick}>
-          <NavItem>
-            <MenuSpan>강사이력, 문의</MenuSpan>
-          </NavItem>
-        </Link>
-      </Nav>
-
-      {/* Mobile Menu Button */}
+        {/* Mobile Menu Button */}
+      </Row>{" "}
       <MenuButton onClick={toggleMenu}>{menuOpen ? "✖" : "☰"}</MenuButton>
     </Header>
   );

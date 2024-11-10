@@ -3,7 +3,7 @@ import { makeImagePath, findImageById } from "../utils";
 import { motion } from "framer-motion";
 import { IMovieInfo } from "../type/IMovieInfo";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   display: flex;
   height: auto;
   flex-direction: column;
@@ -14,6 +14,32 @@ const Wrapper = styled.div`
   padding-bottom: 100px;
   cursor: pointer;
   width: 100%;
+`;
+const Box2 = styled(motion.div)`
+  width: 200px;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 40px;
+  box-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.1),
+    0 10px 20px rgba(0, 0, 0, 0.06);
+  /* display: flex;
+flex-wrap: wrap;
+justify-content: space-around;
+align-items: center; */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+`;
+const Circle = styled(motion.div)`
+  align-self: center;
+  justify-self: center;
+  width: 70px;
+  height: 70px;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 35px;
+  box-shadow:
+    0 2px 3px rgba(0, 0, 0, 0.1),
+    0 10px 20px rgba(0, 0, 0, 0.06);
 `;
 const Loader = styled.div`
   height: 20vh;
@@ -44,7 +70,7 @@ const Overview = styled.p`
   width: 50%;
   color: #eee;
 `;
-const Slider = styled.div`
+const Slider = styled(motion.div)`
   margin: 50px 20px;
   display: flex;
   gap: 20px;
@@ -135,6 +161,23 @@ const BigMovie = styled(motion.div)<{ id: string | undefined; detail: IMovieInfo
   overflow: hidden;
   background-color: ${(props) => props.theme.black.lighter};
 `;
+
+const ScrollTopButton = styled.button`
+  position: fixed;
+  bottom: 100px;
+  right: 150px;
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 30%;
+  cursor: pointer;
+  z-index: 1000;
+  &:hover {
+    background-color: #777;
+  }
+`;
 export {
   Wrapper,
   Loader,
@@ -149,4 +192,7 @@ export {
   MovieInfo,
   Block,
   BigMovie,
+  Box2,
+  Circle,
+  ScrollTopButton,
 };

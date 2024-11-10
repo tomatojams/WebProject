@@ -39,14 +39,14 @@ export default function App() {
       0 10px 20px rgba(0, 0, 0, 0.06);
   `;
 
-  const myVars: Variants = {
-    start: { scale: 0 },
-    end: {
-      scale: 1,
-      rotateZ: 360,
-      transition: { type: "spring", damping: 10, duration: 3, bounce: 0.5 },
-    },
-  };
+  // const myVars: Variants = {
+  //   start: { scale: 0 },
+  //   end: {
+  //     scale: 1,
+  //     rotateZ: 360,
+  //     transition: { type: "spring", damping: 10, duration: 3, bounce: 0.5 },
+  //   },
+  // };
 
   const boxVariants: Variants = {
     start: { opacity: 0, scale: 0.5 },

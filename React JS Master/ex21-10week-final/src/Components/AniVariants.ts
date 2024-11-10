@@ -1,30 +1,34 @@
 const rowVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.2, // 자식 요소마다 지연 시간 추가로 순차적 등장
-    },
-  },
-  exit: {},
-};
-
-const boxVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: {
+  start: { opacity: 0, scale: 0.5 },
+  end: {
     opacity: 1,
     scale: 1,
     transition: {
-      duration: 0.3,
-      type: "tween",
+      // type: "spring",
+      duration: 0.5,
+      bounce: 0.5,
+      // 하위 컴포넌트에 적용
+      delayChildren: 0.2,
+      // 하위컴포넌트 텀
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const boxVariants = {
+  start: { opacity: 0, y: -10 },
+  end: {
+    opacity: 1,
+    // framer motion에만 있는 특성 x, y
+    y: 0,
+    transition: {
+      duration: 0.5,
     },
   },
   hover: {
-    zIndex: 99,
     scale: 1.3,
-    y: -50,
     transition: {
-      delay: 0.2,
-      duration: 0.3,
+      duration: 0.1,
       type: "tween",
     },
   },

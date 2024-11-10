@@ -14,3 +14,9 @@ html {
   overflow: visible;
   margin: 0;
 }
+@font-face {
+  font-family: "S-Core_Dream";
+  src: url("/public/font/SCDream4.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}

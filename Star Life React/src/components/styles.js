@@ -291,8 +291,9 @@ const SubFullContent = styled.div`
   overflow: hidden;
 
   @media (max-width: 768px) {
+    padding-top: 20px;
     width: 100%;
-    height: 60vh;
+    height: 65vh;
   }
 `;
 

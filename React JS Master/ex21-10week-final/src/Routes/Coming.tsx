@@ -1,8 +1,9 @@
 import { useQuery } from "react-query";
-// import { getMovies, getMovieInfo, getUpcomingMovies, getPopularMovies } from "../api";
+// import { getNowMovies, getMovieInfo, getUpcomingMovies, getPopularMovies } from "../api";
 import { getMovieInfo, getUpcomingMovies } from "../api";
 import { AnimatePresence, useScroll } from "framer-motion";
 import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useMatch } from "react-router-dom";
 import { IMoviesNow } from "../type/IMoviesNow";
 import { IMovieInfo } from "../type/IMovieInfo";
@@ -17,6 +18,7 @@ import {
   MovieInfo,
   Block,
   BigMovie,
+  ScrollTopButton,
 } from "../Components/HomeStyled";
 import { findIndexById } from "../utils";
 import { rowVariants, boxVariants, infoVariants } from "../Components/AniVariants";
@@ -32,7 +34,7 @@ export default function Home() {
   // 코드개선
   // 1. 첫번째쿼리 - onSuccess: 로성공후 작업세팅
   const { data, isLoading } = useQuery<IMoviesNow>(
-    ["movies", "nowPlaying"],
+    ["movies", "coming"],
     () => getUpcomingMovies("en", 1),
     {
       //**  onSuccess: 성공후 조건부여
@@ -54,6 +56,10 @@ export default function Home() {
       enabled: movieIds.length > 0, // 조건부 실행: movieIds가 존재할 때만 실행
     }
   );
+  useEffect(() => {
+    // 페이지 로드 시 스크롤을 최상단으로 이동
+    window.scrollTo(0, 0);
+  }, []);
 
   console.log("DetailInfoMovie", detail);
 
@@ -67,9 +73,9 @@ export default function Home() {
   const resetBigMatch = () => {
     navigate("/");
   };
-
-  // find-> 조건 만족하는 첫번째 요소 반환 하므로 해당무비가 반환됨
-
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
     <>
       <Wrapper>
@@ -78,24 +84,14 @@ export default function Home() {
         ) : (
           <>
             <Slider>
-              <Row
-                variants={rowVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                transition={{ type: "linear", duration: 1 }}>
+              <Row variants={rowVariants} initial="start" animate="end">
                 {data?.results.slice().map((movie) => (
                   <Box
                     layoutId={movie.id + ""}
                     onClick={() => onBoxClicked(movie.id)}
                     variants={boxVariants}
-                    initial="normal"
-                    // transition을 각각 부여해서 모든 transitions이 같지 않게한다 **
-                    whileHover="hover"
                     photo={movie.poster_path || ""}
-                    transition={{ type: "tween" }}
                     key={movie.id}>
-                    {/* hover는 상속받아서자동적용됨 */}
                     <Info variants={infoVariants}>
                       <h5>{movie.title}</h5>
                     </Info>
@@ -166,7 +162,8 @@ export default function Home() {
               ) : null}
             </AnimatePresence>
           </>
-        )}
+        )}{" "}
+        <ScrollTopButton onClick={scrollToTop}>Top</ScrollTopButton>
       </Wrapper>
     </>
   );

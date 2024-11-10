@@ -13,7 +13,6 @@ export default function App() {
         <Route path="/" element={<Popular />} />
         <Route path="/coming-soon" element={<Coming />} />
         <Route path="/now-playing" element={<Now />} />
-
         <Route path="/movies/:movieId" element={<Popular />} />
       </Routes>
     </BrowserRouter>

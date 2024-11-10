@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 
 import { useMatch } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Nav, Items, Item, Circle } from "./HeaderStyled";
 // useForm
 

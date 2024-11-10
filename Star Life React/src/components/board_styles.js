@@ -7,7 +7,8 @@ const Container = styled.div`
 `;
 //  플로팅 버튼 스타일
 
-const Header = styled.h1`
+const Header = styled.h2`
+  font-family: "S-Core_Dream", sans-serif;
   text-align: center;
   color: #333;
 `;

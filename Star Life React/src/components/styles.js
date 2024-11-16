@@ -213,7 +213,7 @@ const Footer = styled.footer`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
   padding: 20px;
   // background-color: #333;
   color: #333;

@@ -72,10 +72,10 @@ const UserBoardPage = () => {
 
   return (
     <MainContainer>
+      <StickyBar>
+        <AppHeader />
+      </StickyBar>
       <ContentWrapper>
-        <StickyBar>
-          <AppHeader />
-        </StickyBar>
         <RowContainer>
           <Image src="/profile/profile.jpg" />
           <TextContainer>

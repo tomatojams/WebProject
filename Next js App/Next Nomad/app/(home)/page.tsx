@@ -8,11 +8,11 @@ export const metadata = {
   title: "Home",
 };
 
-const API_URL = "https://nomad-movies.nomadcoders.workers.dev/movies";
+export const API_URL = "https://nomad-movies.nomadcoders.workers.dev/movies";
 
 async function getMovies() {
   // 서버에서 작업을 하고있으면 메뉴조차 볼수없게 된다.
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const res = await axios(API_URL);
   return res.data;

@@ -2,13 +2,6 @@
 @import "./css/components/button.css";
 @import "./css/components/input.css";
 @import "./css/components/write-form.css";
-@import "./css/screen/list.css";
-@import "./css/screen/home.css";
-@import "./css/screen/detail.css";
-@import "./css/screen/navi.css";
-@import "./css/screen/login.css";
-@import "./css/screen/join.css";
-@import "./css/screen/loading.css";
 
 body {
   margin: 0;

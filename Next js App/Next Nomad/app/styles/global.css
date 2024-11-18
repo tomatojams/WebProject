@@ -4,16 +4,22 @@
 @import "./css/components/write-form.css";
 
 body {
+  padding-top: 150px;
   margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #333; /* 상속해주는 텍스트 색상*/
+  background-color: black;
+  color: #ccc; /* 상속해주는 텍스트 색상*/
 }
 
 a {
   text-decoration: none;
   color: inherit;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 label {

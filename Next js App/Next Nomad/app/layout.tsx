@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 import Navigation from "../components/navigation";
+import "./styles/global.css";
 
-export const metadata :Metadata = {
+export const metadata: Metadata = {
   title: {
     default: "Next", // 페이지를 못찾을때도 default값이 표시된다.
     template: "%s | Next",
@@ -12,7 +13,11 @@ export const metadata :Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>

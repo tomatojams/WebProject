@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, Marker, useLoadScript, OverlayViewF } from "@react-google-maps/api";
 import styled from "styled-components";
 
 const mapContainerStyle = {
@@ -111,6 +111,22 @@ const SubmitButton = styled.button`
   }
 `;
 
+const Balloon = styled.div`
+  position: relative;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  transform: translate(-50%, calc(-100% - 60px));
+  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); */
+  width: 200px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 export default function App() {
   const { VITE_GOOGLE_MAPS_API_KEY } = import.meta.env;
 
@@ -122,10 +138,10 @@ export default function App() {
   const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [activeMarkerIndex, setActiveMarkerIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
-  const [showMessage, setShowMessage] = useState(false); // 메시지 표시 상태
+  const [showMessage, setShowMessage] = useState(false);
   const [mapOptions, setMapOptions] = useState({
     draggable: true,
-    disableDefaultUI: true, // 기본 UI 비활성화
+    disableDefaultUI: true,
   });
 
   const handleMapClick = (event) => {
@@ -136,39 +152,35 @@ export default function App() {
           lng: event.latLng.lng(),
         },
         emoji: selectedEmoji,
-        text: "", // 말풍선 텍스트 초기값
+        text: "",
       };
       setMarkers((current) => [...current, newMarker]);
       setSelectedEmoji(null);
-      setActiveMarkerIndex(markers.length); // 새로 추가된 마커 활성화
-      setShowMessage(false); // 메시지 숨기기
+      setActiveMarkerIndex(markers.length);
+      setShowMessage(false);
       setMapOptions((prev) => ({
         ...prev,
         draggable: true,
-        draggableCursor: "grab", // 기본 커서로 복구
+        draggableCursor: "grab",
       }));
-      document.body.style.cursor = "default"; // 브라우저 커서 복구
+      document.body.style.cursor = "default";
     }
   };
 
   const handleEmojiClick = (emoji) => {
     setSelectedEmoji(emoji);
-    setShowMessage(true); // 메시지 표시
+    setShowMessage(true);
     setMapOptions((prev) => ({
       ...prev,
       draggable: false,
-      draggableCursor: `url(${createEmojiCursor(emoji)}) 32 32, auto`, // Google Maps 커서 변경
+      draggableCursor: `url(${createEmojiCursor(emoji)}) 32 32, auto`,
     }));
-    document.body.style.cursor = `url(${createEmojiCursor(emoji)}) 32 32, auto`; // 브라우저 커서 변경
+    document.body.style.cursor = `url(${createEmojiCursor(emoji)}) 32 32, auto`;
   };
 
   const handleSubmit = () => {
-    const updatedMarkers = markers.map((marker, index) =>
-      index === activeMarkerIndex ? { ...marker, text: inputValue } : marker
-    );
-    setMarkers(updatedMarkers);
-    setInputValue(""); // 입력 필드 초기화
-    setActiveMarkerIndex(null); // 활성화된 마커 해제
+    setActiveMarkerIndex(null);
+    setInputValue("");
   };
 
   const createEmojiCursor = (emoji) => {
@@ -193,7 +205,7 @@ export default function App() {
         mapContainerStyle={mapContainerStyle}
         center={center}
         zoom={18}
-        options={mapOptions} // 지도 옵션 설정
+        options={mapOptions}
         onClick={handleMapClick}>
         {markers.map((marker, index) => (
           <Marker
@@ -201,26 +213,19 @@ export default function App() {
             position={marker.position}
             icon={{
               url: createEmojiCursor(marker.emoji),
-              scaledSize: new window.google.maps.Size(32, 32), // 마커 크기 설정
+              scaledSize: new window.google.maps.Size(50, 50),
             }}
-            onClick={() => setActiveMarkerIndex(index)} // 마커 클릭 시 활성화
-          >
-            {activeMarkerIndex === index && marker.text && (
-              <div
-                style={{
-                  position: "absolute",
-                  transform: "translate(-50%, -100%)",
-                  background: "white",
-                  border: "1px solid #ccc",
-                  borderRadius: "10px",
-                  padding: "5px",
-                  maxWidth: "150px",
-                  textAlign: "center",
-                }}>
-                {marker.text}
-              </div>
-            )}
-          </Marker>
+            onClick={() => setActiveMarkerIndex(index)}
+          />
+        ))}
+
+        {markers.map((marker, index) => (
+          <OverlayViewF
+            key={`overlay-${index}`}
+            position={marker.position}
+            mapPaneName="overlayMouseTarget">
+            <Balloon>{marker.text || "여기에 입력된 텍스트가 표시됩니다."}</Balloon>
+          </OverlayViewF>
         ))}
       </GoogleMap>
 
@@ -239,10 +244,22 @@ export default function App() {
       {activeMarkerIndex !== null && (
         <InputContainer>
           <InputField
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            value={markers[activeMarkerIndex]?.text || ""}
+            onChange={(e) => {
+              const updatedMarkers = markers.map((marker, index) =>
+                index === activeMarkerIndex ? { ...marker, text: e.target.value } : marker
+              );
+              setMarkers(updatedMarkers);
+            }}
             placeholder="내용을 입력하세요..."
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault(); // 엔터 시 새 줄 입력 방지
+                handleSubmit();
+              }
+            }}
           />
+
           <SubmitButton onClick={handleSubmit}>완료</SubmitButton>
         </InputContainer>
       )}

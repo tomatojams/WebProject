@@ -155,17 +155,20 @@ export default function App() {
             />
           ))}
 
-          {markers.map((marker, index) => (
-            <OverlayViewF
-              key={`overlay-${index}`}
-              position={marker.position}
-              mapPaneName="overlayMouseTarget">
-              <Balloon>
-                {marker.photo && <PhotoPreview src={marker.photo} />}
-                {marker.text || "텍스트를 입력해주세요."}
-              </Balloon>
-            </OverlayViewF>
-          ))}
+          {markers.map(
+            (marker, index) =>
+              marker.text && ( // 말풍선은 텍스트가 있을 때만 렌더링
+                <OverlayViewF
+                  key={`overlay-${index}`}
+                  position={marker.position}
+                  mapPaneName="overlayMouseTarget">
+                  <Balloon>
+                    {marker.photo && <PhotoPreview src={marker.photo} />}
+                    {marker.text}
+                  </Balloon>
+                </OverlayViewF>
+              )
+          )}
         </GoogleMap>
       </div>
 

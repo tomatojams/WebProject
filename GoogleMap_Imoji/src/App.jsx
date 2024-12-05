@@ -1,6 +1,18 @@
 import { useState, useRef, useEffect } from "react";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
-import { Container, EmojiSelector, EmojiButton } from "./component/styled.js";
+import { GoogleMap, Marker, useLoadScript, OverlayViewF } from "@react-google-maps/api";
+import {
+  Container,
+  EmojiSelector,
+  InputContainer,
+  PhotoSelectionContainer,
+  EmojiButton,
+  InputField,
+  PhotoUploadButton,
+  CancelButton,
+  PhotoPreview,
+  SubmitButton,
+  Balloon,
+} from "./component/styled.js";
 
 const mapContainerStyle = {
   width: "100%",
@@ -23,8 +35,30 @@ export default function App() {
 
   const [markers, setMarkers] = useState([]);
   const [draggingEmoji, setDraggingEmoji] = useState(null); // 드래그 중인 이모지 저장
+  const [activeMarkerIndex, setActiveMarkerIndex] = useState(null);
+  const [isPhotoSelectionVisible, setIsPhotoSelectionVisible] = useState(false);
+
   const mapContainerRef = useRef(null); // Google Map 컨테이너
   const mapRef = useRef(null); // Google Map 객체
+  const overlayRef = useRef(null); // OverlayView 객체
+  const inputRef = useRef(null); // 텍스트 입력창 참조
+
+  useEffect(() => {
+    if (mapRef.current) {
+      // Google Maps와 동기화된 OverlayView 생성
+      const overlay = new window.google.maps.OverlayView();
+      overlay.onAdd = () => {};
+      overlay.draw = () => {};
+      overlay.setMap(mapRef.current);
+      overlayRef.current = overlay;
+    }
+  }, [mapRef.current]);
+
+  useEffect(() => {
+    if (activeMarkerIndex !== null && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [activeMarkerIndex]);
 
   const handleDragStart = (emoji) => () => {
     setDraggingEmoji(emoji); // 드래그 시작 시 선택된 이모지 저장
@@ -37,31 +71,52 @@ export default function App() {
   const handleDrop = (event) => {
     event.preventDefault();
 
-    if (!draggingEmoji || !mapRef.current) return;
+    if (!draggingEmoji || !overlayRef.current) return;
 
     const mapBounds = mapContainerRef.current.getBoundingClientRect();
-    const mapInstance = mapRef.current;
-
-    // 드롭된 위치의 픽셀 좌표 계산
     const pixelPosition = {
       x: event.clientX - mapBounds.left,
       y: event.clientY - mapBounds.top,
     };
 
-    // Google Maps API를 사용하여 픽셀 좌표를 위도/경도로 변환
-    const overlayProjection = new window.google.maps.OverlayView();
-    overlayProjection.onAdd = () => {}; // 비어 있는 onAdd 함수 필요
-    overlayProjection.draw = () => {}; // 비어 있는 draw 함수 필요
-    overlayProjection.setMap(mapInstance);
+    const latLng = overlayRef.current.getProjection().fromContainerPixelToLatLng(pixelPosition);
 
-    const latLng = overlayProjection.getProjection().fromContainerPixelToLatLng(pixelPosition);
+    const newMarker = {
+      position: { lat: latLng.lat(), lng: latLng.lng() },
+      emoji: draggingEmoji,
+      text: "",
+      photo: null,
+    };
 
-    setMarkers((prevMarkers) => [
-      ...prevMarkers,
-      { position: { lat: latLng.lat(), lng: latLng.lng() }, emoji: draggingEmoji },
-    ]);
-
+    setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
+    setActiveMarkerIndex(markers.length); // 새로 추가된 마커를 활성 상태로 설정
     setDraggingEmoji(null); // 드래그 상태 초기화
+  };
+
+  const handleTextChange = (event) => {
+    const updatedMarkers = markers.map((marker, index) =>
+      index === activeMarkerIndex ? { ...marker, text: event.target.value } : marker
+    );
+    setMarkers(updatedMarkers);
+  };
+
+  const handlePhotoUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const updatedMarkers = markers.map((marker, index) =>
+          index === activeMarkerIndex ? { ...marker, photo: reader.result } : marker
+        );
+        setMarkers(updatedMarkers);
+      };
+      reader.readAsDataURL(file);
+    }
+    setIsPhotoSelectionVisible(false);
+  };
+
+  const handleSubmit = () => {
+    setActiveMarkerIndex(null); // 텍스트 입력 완료 시 비활성화
   };
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -87,7 +142,20 @@ export default function App() {
                 url: createEmojiCursor(marker.emoji),
                 scaledSize: new window.google.maps.Size(50, 50),
               }}
+              onClick={() => setActiveMarkerIndex(index)}
             />
+          ))}
+
+          {markers.map((marker, index) => (
+            <OverlayViewF
+              key={`overlay-${index}`}
+              position={marker.position}
+              mapPaneName="overlayMouseTarget">
+              <Balloon>
+                {marker.photo && <PhotoPreview src={marker.photo} />}
+                {marker.text || "텍스트를 입력해주세요."}
+              </Balloon>
+            </OverlayViewF>
           ))}
         </GoogleMap>
       </div>
@@ -99,6 +167,45 @@ export default function App() {
           </EmojiButton>
         ))}
       </EmojiSelector>
+
+      {activeMarkerIndex !== null && (
+        <InputContainer>
+          <InputField
+            ref={inputRef}
+            value={markers[activeMarkerIndex]?.text || ""}
+            onChange={handleTextChange}
+            placeholder="내용을 입력하세요..."
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleSubmit();
+              }
+            }}
+          />
+          <div style={{ display: "flex", gap: "10px" }}>
+            <PhotoUploadButton onClick={() => setIsPhotoSelectionVisible(true)}>
+              사진 선택
+            </PhotoUploadButton>
+            <SubmitButton onClick={handleSubmit}>완료</SubmitButton>
+          </div>
+        </InputContainer>
+      )}
+
+      {isPhotoSelectionVisible && (
+        <PhotoSelectionContainer>
+          <label htmlFor="photo-upload">
+            <PhotoUploadButton>사진 선택</PhotoUploadButton>
+          </label>
+          <CancelButton onClick={() => setIsPhotoSelectionVisible(false)}>취소</CancelButton>
+          <input
+            id="photo-upload"
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handlePhotoUpload}
+          />
+        </PhotoSelectionContainer>
+      )}
     </Container>
   );
 }

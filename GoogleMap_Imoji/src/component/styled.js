@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 const Container = styled.div`
   width: 400px;
   height: 900px;
@@ -9,7 +8,6 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
 `;
-
 
 const EmojiSelector = styled.div`
   position: absolute;
@@ -158,11 +156,26 @@ const Balloon = styled.div`
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.7);
   transform: translate(-50%, calc(-100% - 60px));
-  width: 200px;
+  max-width: 200px; /* 최대 폭 */
+  min-width: 50px; /* 최소 폭 */
+  display: inline-block; /* 내용에 따라 크기 조정 */
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-export { Container, EmojiSelector, Message, InputContainer, PhotoSelectionContainer, EmojiButton, InputField, PhotoUploadButton, CancelButton, PhotoPreview, SubmitButton, Balloon };
+export {
+  Container,
+  EmojiSelector,
+  Message,
+  InputContainer,
+  PhotoSelectionContainer,
+  EmojiButton,
+  InputField,
+  PhotoUploadButton,
+  CancelButton,
+  PhotoPreview,
+  SubmitButton,
+  Balloon,
+};

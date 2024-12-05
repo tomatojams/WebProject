@@ -12,6 +12,7 @@ import {
   PhotoPreview,
   SubmitButton,
   Balloon,
+  Message, // 스타일 추가
 } from "./component/styled.js";
 
 const mapContainerStyle = {
@@ -37,6 +38,7 @@ export default function App() {
   const [draggingEmoji, setDraggingEmoji] = useState(null); // 드래그 중인 이모지 저장
   const [activeMarkerIndex, setActiveMarkerIndex] = useState(null);
   const [isPhotoSelectionVisible, setIsPhotoSelectionVisible] = useState(false);
+  const [isDragging, setIsDragging] = useState(false); // 드래그 상태 저장
 
   const mapContainerRef = useRef(null); // Google Map 컨테이너
   const mapRef = useRef(null); // Google Map 객체
@@ -45,7 +47,6 @@ export default function App() {
 
   useEffect(() => {
     if (mapRef.current) {
-      // Google Maps와 동기화된 OverlayView 생성
       const overlay = new window.google.maps.OverlayView();
       overlay.onAdd = () => {};
       overlay.draw = () => {};
@@ -61,7 +62,8 @@ export default function App() {
   }, [activeMarkerIndex]);
 
   const handleDragStart = (emoji) => () => {
-    setDraggingEmoji(emoji); // 드래그 시작 시 선택된 이모지 저장
+    setDraggingEmoji(emoji);
+    setIsDragging(true); // 드래그 상태 활성화
   };
 
   const handleDragOver = (event) => {
@@ -91,6 +93,13 @@ export default function App() {
     setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
     setActiveMarkerIndex(markers.length); // 새로 추가된 마커를 활성 상태로 설정
     setDraggingEmoji(null); // 드래그 상태 초기화
+    setIsDragging(false); // 드래그 상태 비활성화
+  };
+
+  const handleMapClick = (event) => {
+    if (event.placeId) {
+      event.stop(); // Google Maps에서 클릭 이벤트 중지
+    }
   };
 
   const handleTextChange = (event) => {
@@ -116,7 +125,7 @@ export default function App() {
   };
 
   const handleSubmit = () => {
-    setActiveMarkerIndex(null); // 텍스트 입력 완료 시 비활성화
+    setActiveMarkerIndex(null);
   };
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -132,8 +141,8 @@ export default function App() {
           mapContainerStyle={mapContainerStyle}
           center={center}
           zoom={18}
-          onLoad={(map) => (mapRef.current = map)} // Google Maps 객체 저장
-        >
+          onLoad={(map) => (mapRef.current = map)}
+          onClick={handleMapClick}>
           {markers.map((marker, index) => (
             <Marker
               key={index}
@@ -167,6 +176,12 @@ export default function App() {
           </EmojiButton>
         ))}
       </EmojiSelector>
+
+      {isDragging && (
+        <Message style={{ pointerEvents: "none" }}>
+          이모지를 드래그하여 원하는 위치에 놓아주세요.
+        </Message>
+      )}
 
       {activeMarkerIndex !== null && (
         <InputContainer>
@@ -210,7 +225,6 @@ export default function App() {
   );
 }
 
-// 이모지를 커서로 변환
 function createEmojiCursor(emoji) {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");

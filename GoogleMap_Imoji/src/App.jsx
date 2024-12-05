@@ -1,7 +1,6 @@
-import { useState, useRef } from "react";
+import React, { useState, useCallback } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import styled from "styled-components";
-import Draggable from "react-draggable";
 
 const mapContainerStyle = {
   width: "100%",
@@ -52,53 +51,51 @@ export default function App() {
   const { VITE_GOOGLE_MAPS_API_KEY } = import.meta.env;
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: VITE_GOOGLE_MAPS_API_KEY, // .env 파일에서 불러온 키
+    googleMapsApiKey: VITE_GOOGLE_MAPS_API_KEY,
   });
 
-  const mapRef = useRef(null);
-  const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [markers, setMarkers] = useState([]);
+  const [selectedEmoji, setSelectedEmoji] = useState(null);
+  const [mapRef, setMapRef] = useState(null);
 
-  const onMapLoad = (map) => {
-    mapRef.current = map;
-  };
+  const onMapLoad = useCallback((map) => {
+    setMapRef(map);
+  }, []);
 
-  const handleDrop = (event) => {
-    if (selectedEmoji && mapRef.current) {
-      const mapBounds = mapRef.current.getBounds();
-      const topRight = mapBounds.getNorthEast(); // 우상단 좌표
-      const bottomLeft = mapBounds.getSouthWest(); // 좌하단 좌표
-
-      const mapWidth = mapRef.current.getDiv().offsetWidth;
-      const mapHeight = mapRef.current.getDiv().offsetHeight;
-
-      const x = event.clientX - mapRef.current.getDiv().getBoundingClientRect().left;
-      const y = event.clientY - mapRef.current.getDiv().getBoundingClientRect().top;
-
-      const lat = bottomLeft.lat() + (1 - y / mapHeight) * (topRight.lat() - bottomLeft.lat());
-      const lng = bottomLeft.lng() + (x / mapWidth) * (topRight.lng() - bottomLeft.lng());
-
-      setMarkers((current) => [
-        ...current,
-        {
-          lat,
-          lng,
+  const handleMapClick = useCallback(
+    (event) => {
+      if (selectedEmoji && mapRef) {
+        const newMarker = {
+          lat: event.latLng.lat(),
+          lng: event.latLng.lng(),
           emoji: selectedEmoji,
-        },
-      ]);
+          id: Date.now(), // 고유 ID 추가
+        };
 
-      setSelectedEmoji(null);
-    }
+        setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
+        setSelectedEmoji(null);
+      }
+    },
+    [selectedEmoji, mapRef]
+  );
+
+  const handleDragStart = (emoji) => {
+    setSelectedEmoji(emoji);
   };
 
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <Container onDragOver={(e) => e.preventDefault()} onDrop={handleDrop}>
-      <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={18} onLoad={onMapLoad}>
-        {markers.map((marker, index) => (
+    <Container>
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        center={center}
+        zoom={18}
+        onLoad={onMapLoad}
+        onClick={handleMapClick}>
+        {markers.map((marker) => (
           <Marker
-            key={index}
+            key={marker.id} // 고유 키 사용
             position={{ lat: marker.lat, lng: marker.lng }}
             label={{
               text: marker.emoji,
@@ -110,9 +107,9 @@ export default function App() {
 
       <EmojiSelector>
         {emojis.map((emoji, index) => (
-          <Draggable key={index}>
-            <EmojiButton onMouseDown={() => setSelectedEmoji(emoji)}>{emoji}</EmojiButton>
-          </Draggable>
+          <EmojiButton key={index} onMouseDown={() => handleDragStart(emoji)}>
+            {emoji}
+          </EmojiButton>
         ))}
       </EmojiSelector>
     </Container>

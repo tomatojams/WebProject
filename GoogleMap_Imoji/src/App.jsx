@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { GoogleMap, OverlayView, useLoadScript } from "@react-google-maps/api";
 import styled from "styled-components";
 
@@ -62,29 +62,57 @@ export default function App() {
   });
 
   const [markers, setMarkers] = useState([]);
-  const [draggingEmoji, setDraggingEmoji] = useState(null);
+  const [selectedEmoji, setSelectedEmoji] = useState(null);
+  const [mapOptions, setMapOptions] = useState({
+    draggable: true,
+    disableDefaultUI: true, // 기본 UI 비활성화
+  });
 
-  const handleMapClick = useCallback(
-    (event) => {
-      if (draggingEmoji) {
-        setMarkers((current) => [
-          ...current,
-          {
-            position: {
-              lat: event.latLng.lat(),
-              lng: event.latLng.lng(),
-            },
-            emoji: draggingEmoji,
+  const handleMapClick = (event) => {
+    if (selectedEmoji) {
+      setMarkers((current) => [
+        ...current,
+        {
+          position: {
+            lat: event.latLng.lat(),
+            lng: event.latLng.lng(),
           },
-        ]);
-        setDraggingEmoji(null);
-      }
-    },
-    [draggingEmoji]
-  );
+          emoji: selectedEmoji,
+        },
+      ]);
+      // 선택된 이모지 상태 초기화 및 커서 복구
+      setSelectedEmoji(null);
+      setMapOptions((prev) => ({
+        ...prev,
+        draggable: true,
+        draggableCursor: "grab", // 기본 커서로 복구
+      }));
+      document.body.style.cursor = "default"; // 브라우저 커서 복구
+    }
+  };
 
-  const handleDragStart = (emoji) => {
-    setDraggingEmoji(emoji);
+  const handleEmojiClick = (emoji) => {
+    setSelectedEmoji(emoji);
+    setMapOptions((prev) => ({
+      ...prev,
+      draggable: false,
+      draggableCursor: `url(${createEmojiCursor(emoji)}), auto`, // Google Maps 커서 변경
+    }));
+    document.body.style.cursor = `url(${createEmojiCursor(emoji)}), auto`; // 브라우저 커서 변경
+  };
+
+  const createEmojiCursor = (emoji) => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = 64;
+    canvas.height = 64;
+
+    ctx.font = "48px serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(emoji, 32, 32);
+
+    return canvas.toDataURL();
   };
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -95,6 +123,7 @@ export default function App() {
         mapContainerStyle={mapContainerStyle}
         center={center}
         zoom={18}
+        options={mapOptions} // 지도 옵션 설정
         onClick={handleMapClick}>
         {markers.map((marker, index) => (
           <OverlayView
@@ -108,7 +137,7 @@ export default function App() {
 
       <EmojiSelector>
         {emojis.map((emoji, index) => (
-          <EmojiButton key={index} draggable onDragStart={() => handleDragStart(emoji)}>
+          <EmojiButton key={index} onClick={() => handleEmojiClick(emoji)}>
             {emoji}
           </EmojiButton>
         ))}

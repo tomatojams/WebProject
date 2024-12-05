@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { GoogleMap, Marker, useLoadScript, OverlayViewF } from "@react-google-maps/api";
 import styled from "styled-components";
 
@@ -76,8 +76,25 @@ const InputContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10px;
   gap: 10px;
+`;
+
+const PhotoSelectionContainer = styled.div`
+  position: absolute;
+  width: 98%;
+  height: 200px;
+  box-sizing: border-box;
+  bottom: 0px;
+  background: rgba(255, 255, 255, 0.95);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around; /* 버튼을 양옆으로 배치 */
+  align-items: center;
+  z-index: 100;
 `;
 
 const EmojiButton = styled.div`
@@ -96,6 +113,40 @@ const InputField = styled.textarea`
   border: 1px solid #ccc;
   border-radius: 10px;
   resize: none;
+`;
+
+const PhotoUploadButton = styled.button`
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    background: #1e88e5;
+  }
+`;
+
+const CancelButton = styled.button`
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    background: #e53935;
+  }
+`;
+
+const PhotoPreview = styled.img`
+  width: 100%;
+  max-height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 10px;
 `;
 
 const SubmitButton = styled.button`
@@ -119,7 +170,6 @@ const Balloon = styled.div`
   padding: 10px;
   background-color: rgba(255, 255, 255, 0.7);
   transform: translate(-50%, calc(-100% - 60px));
-  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); */
   width: 200px;
   text-align: center;
   white-space: nowrap;
@@ -137,12 +187,20 @@ export default function App() {
   const [markers, setMarkers] = useState([]);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
   const [activeMarkerIndex, setActiveMarkerIndex] = useState(null);
-  const [inputValue, setInputValue] = useState("");
   const [showMessage, setShowMessage] = useState(false);
   const [mapOptions, setMapOptions] = useState({
     draggable: true,
     disableDefaultUI: true,
   });
+  const [isPhotoSelectionVisible, setIsPhotoSelectionVisible] = useState(false);
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (activeMarkerIndex !== null && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [activeMarkerIndex]);
 
   const handleMapClick = (event) => {
     if (selectedEmoji) {
@@ -153,6 +211,7 @@ export default function App() {
         },
         emoji: selectedEmoji,
         text: "",
+        photo: null,
       };
       setMarkers((current) => [...current, newMarker]);
       setSelectedEmoji(null);
@@ -178,9 +237,23 @@ export default function App() {
     document.body.style.cursor = `url(${createEmojiCursor(emoji)}) 32 32, auto`;
   };
 
+  const handlePhotoUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const updatedMarkers = markers.map((marker, index) =>
+          index === activeMarkerIndex ? { ...marker, photo: reader.result } : marker
+        );
+        setMarkers(updatedMarkers);
+      };
+      reader.readAsDataURL(file);
+    }
+    setIsPhotoSelectionVisible(false);
+  };
+
   const handleSubmit = () => {
     setActiveMarkerIndex(null);
-    setInputValue("");
   };
 
   const createEmojiCursor = (emoji) => {
@@ -213,7 +286,7 @@ export default function App() {
             position={marker.position}
             icon={{
               url: createEmojiCursor(marker.emoji),
-              scaledSize: new window.google.maps.Size(50, 50),
+              scaledSize: new window.google.maps.Size(60, 60),
             }}
             onClick={() => setActiveMarkerIndex(index)}
           />
@@ -224,14 +297,33 @@ export default function App() {
             key={`overlay-${index}`}
             position={marker.position}
             mapPaneName="overlayMouseTarget">
-            <Balloon>{marker.text || "여기에 입력된 텍스트가 표시됩니다."}</Balloon>
+            <Balloon>
+              {marker.photo && <PhotoPreview src={marker.photo} />}
+              {marker.text || "여기에 입력된 텍스트가 표시됩니다."}
+            </Balloon>
           </OverlayViewF>
         ))}
       </GoogleMap>
 
       {showMessage && <Message>이모지를 원하는 위치에 꽂아주세요.</Message>}
 
-      {activeMarkerIndex === null && (
+      {isPhotoSelectionVisible && (
+        <PhotoSelectionContainer>
+          <label htmlFor="photo-upload">
+            <PhotoUploadButton>사진 선택</PhotoUploadButton>
+          </label>
+          <CancelButton onClick={() => setIsPhotoSelectionVisible(false)}>취소</CancelButton>
+          <input
+            id="photo-upload"
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handlePhotoUpload}
+          />
+        </PhotoSelectionContainer>
+      )}
+
+      {activeMarkerIndex === null && !isPhotoSelectionVisible && (
         <EmojiSelector>
           {emojis.map((emoji, index) => (
             <EmojiButton key={index} onClick={() => handleEmojiClick(emoji)}>
@@ -241,9 +333,10 @@ export default function App() {
         </EmojiSelector>
       )}
 
-      {activeMarkerIndex !== null && (
+      {activeMarkerIndex !== null && !isPhotoSelectionVisible && (
         <InputContainer>
           <InputField
+            ref={inputRef}
             value={markers[activeMarkerIndex]?.text || ""}
             onChange={(e) => {
               const updatedMarkers = markers.map((marker, index) =>
@@ -254,13 +347,17 @@ export default function App() {
             placeholder="내용을 입력하세요..."
             onKeyPress={(e) => {
               if (e.key === "Enter") {
-                e.preventDefault(); // 엔터 시 새 줄 입력 방지
+                e.preventDefault();
                 handleSubmit();
               }
             }}
           />
-
-          <SubmitButton onClick={handleSubmit}>완료</SubmitButton>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <PhotoUploadButton onClick={() => setIsPhotoSelectionVisible(true)}>
+              사진 선택
+            </PhotoUploadButton>
+            <SubmitButton onClick={handleSubmit}>완료</SubmitButton>
+          </div>
         </InputContainer>
       )}
     </Container>

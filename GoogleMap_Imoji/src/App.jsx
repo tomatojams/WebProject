@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, OverlayView, useLoadScript } from "@react-google-maps/api";
 import styled from "styled-components";
 
 const mapContainerStyle = {
@@ -47,6 +47,13 @@ const EmojiButton = styled.div`
   }
 `;
 
+const EmojiMarker = styled.div`
+  position: absolute;
+  font-size: 24px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+`;
+
 export default function App() {
   const { VITE_GOOGLE_MAPS_API_KEY } = import.meta.env;
 
@@ -55,32 +62,29 @@ export default function App() {
   });
 
   const [markers, setMarkers] = useState([]);
-  const [selectedEmoji, setSelectedEmoji] = useState(null);
-  const [mapRef, setMapRef] = useState(null);
-
-  const onMapLoad = useCallback((map) => {
-    setMapRef(map);
-  }, []);
+  const [draggingEmoji, setDraggingEmoji] = useState(null);
 
   const handleMapClick = useCallback(
     (event) => {
-      if (selectedEmoji && mapRef) {
-        const newMarker = {
-          lat: event.latLng.lat(),
-          lng: event.latLng.lng(),
-          emoji: selectedEmoji,
-          id: Date.now(), // 고유 ID 추가
-        };
-
-        setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
-        setSelectedEmoji(null);
+      if (draggingEmoji) {
+        setMarkers((current) => [
+          ...current,
+          {
+            position: {
+              lat: event.latLng.lat(),
+              lng: event.latLng.lng(),
+            },
+            emoji: draggingEmoji,
+          },
+        ]);
+        setDraggingEmoji(null);
       }
     },
-    [selectedEmoji, mapRef]
+    [draggingEmoji]
   );
 
   const handleDragStart = (emoji) => {
-    setSelectedEmoji(emoji);
+    setDraggingEmoji(emoji);
   };
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -91,23 +95,20 @@ export default function App() {
         mapContainerStyle={mapContainerStyle}
         center={center}
         zoom={18}
-        onLoad={onMapLoad}
         onClick={handleMapClick}>
-        {markers.map((marker) => (
-          <Marker
-            key={marker.id} // 고유 키 사용
-            position={{ lat: marker.lat, lng: marker.lng }}
-            label={{
-              text: marker.emoji,
-              fontSize: "24px",
-            }}
-          />
+        {markers.map((marker, index) => (
+          <OverlayView
+            key={index}
+            position={marker.position}
+            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}>
+            <EmojiMarker>{marker.emoji}</EmojiMarker>
+          </OverlayView>
         ))}
       </GoogleMap>
 
       <EmojiSelector>
         {emojis.map((emoji, index) => (
-          <EmojiButton key={index} onMouseDown={() => handleDragStart(emoji)}>
+          <EmojiButton key={index} draggable onDragStart={() => handleDragStart(emoji)}>
             {emoji}
           </EmojiButton>
         ))}

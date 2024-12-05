@@ -1,20 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { GoogleMap, Marker, useLoadScript, OverlayViewF } from "@react-google-maps/api";
-
-import {
-  Container,
-  EmojiSelector,
-  Message,
-  InputContainer,
-  PhotoSelectionContainer,
-  EmojiButton,
-  InputField,
-  PhotoUploadButton,
-  CancelButton,
-  PhotoPreview,
-  SubmitButton,
-  Balloon,
-} from "./component/styled.js";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { Container, EmojiSelector, EmojiButton } from "./component/styled.js";
 
 const mapContainerStyle = {
   width: "100%",
@@ -36,181 +22,98 @@ export default function App() {
   });
 
   const [markers, setMarkers] = useState([]);
-  const [selectedEmoji, setSelectedEmoji] = useState(null);
-  const [activeMarkerIndex, setActiveMarkerIndex] = useState(null);
-  const [showMessage, setShowMessage] = useState(false);
-  const [mapOptions, setMapOptions] = useState({
-    draggable: true,
-    disableDefaultUI: true,
-  });
-  const [isPhotoSelectionVisible, setIsPhotoSelectionVisible] = useState(false);
+  const [draggingEmoji, setDraggingEmoji] = useState(null); // 드래그 중인 이모지 저장
+  const mapContainerRef = useRef(null); // Google Map 컨테이너
+  const mapRef = useRef(null); // Google Map 객체
 
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (activeMarkerIndex !== null && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [activeMarkerIndex]);
-
-  const handleMapClick = (event) => {
-    if (selectedEmoji) {
-      const newMarker = {
-        position: {
-          lat: event.latLng.lat(),
-          lng: event.latLng.lng(),
-        },
-        emoji: selectedEmoji,
-        text: "",
-        photo: null,
-      };
-      setMarkers((current) => [...current, newMarker]);
-      setSelectedEmoji(null);
-      setActiveMarkerIndex(markers.length);
-      setShowMessage(false);
-      setMapOptions((prev) => ({
-        ...prev,
-        draggable: true,
-        draggableCursor: "grab",
-      }));
-      document.body.style.cursor = "default";
-    }
+  const handleDragStart = (emoji) => () => {
+    setDraggingEmoji(emoji); // 드래그 시작 시 선택된 이모지 저장
   };
 
-  const handleEmojiClick = (emoji) => {
-    setSelectedEmoji(emoji);
-    setShowMessage(true);
-    setMapOptions((prev) => ({
-      ...prev,
-      draggable: false,
-      draggableCursor: `url(${createEmojiCursor(emoji)}) 32 32, auto`,
-    }));
-    document.body.style.cursor = `url(${createEmojiCursor(emoji)}) 32 32, auto`;
+  const handleDragOver = (event) => {
+    event.preventDefault(); // 드롭 가능하도록 설정
   };
 
-  const handlePhotoUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const updatedMarkers = markers.map((marker, index) =>
-          index === activeMarkerIndex ? { ...marker, photo: reader.result } : marker
-        );
-        setMarkers(updatedMarkers);
-      };
-      reader.readAsDataURL(file);
-    }
-    setIsPhotoSelectionVisible(false);
-  };
+  const handleDrop = (event) => {
+    event.preventDefault();
 
-  const handleSubmit = () => {
-    setActiveMarkerIndex(null);
-  };
+    if (!draggingEmoji || !mapRef.current) return;
 
-  const createEmojiCursor = (emoji) => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = 64;
-    canvas.height = 64;
+    const mapBounds = mapContainerRef.current.getBoundingClientRect();
+    const mapInstance = mapRef.current;
 
-    ctx.font = "48px serif";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(emoji, 32, 32);
+    // 드롭된 위치의 픽셀 좌표 계산
+    const pixelPosition = {
+      x: event.clientX - mapBounds.left,
+      y: event.clientY - mapBounds.top,
+    };
 
-    return canvas.toDataURL();
+    // Google Maps API를 사용하여 픽셀 좌표를 위도/경도로 변환
+    const overlayProjection = new window.google.maps.OverlayView();
+    overlayProjection.onAdd = () => {}; // 비어 있는 onAdd 함수 필요
+    overlayProjection.draw = () => {}; // 비어 있는 draw 함수 필요
+    overlayProjection.setMap(mapInstance);
+
+    const latLng = overlayProjection.getProjection().fromContainerPixelToLatLng(pixelPosition);
+
+    setMarkers((prevMarkers) => [
+      ...prevMarkers,
+      { position: { lat: latLng.lat(), lng: latLng.lng() }, emoji: draggingEmoji },
+    ]);
+
+    setDraggingEmoji(null); // 드래그 상태 초기화
   };
 
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
     <Container>
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        center={center}
-        zoom={18}
-        options={mapOptions}
-        onClick={handleMapClick}>
-        {markers.map((marker, index) => (
-          <Marker
-            key={index}
-            position={marker.position}
-            icon={{
-              url: createEmojiCursor(marker.emoji),
-              scaledSize: new window.google.maps.Size(60, 60),
-            }}
-            onClick={() => setActiveMarkerIndex(index)}
-          />
-        ))}
-
-        {markers.map((marker, index) => (
-          <OverlayViewF
-            key={`overlay-${index}`}
-            position={marker.position}
-            mapPaneName="overlayMouseTarget">
-            <Balloon>
-              {marker.photo && <PhotoPreview src={marker.photo} />}
-              {marker.text || "여기에 입력된 텍스트가 표시됩니다."}
-            </Balloon>
-          </OverlayViewF>
-        ))}
-      </GoogleMap>
-
-      {showMessage && <Message>이모지를 원하는 위치에 꽂아주세요.</Message>}
-
-      {isPhotoSelectionVisible && (
-        <PhotoSelectionContainer>
-          <label htmlFor="photo-upload">
-            <PhotoUploadButton>사진 선택</PhotoUploadButton>
-          </label>
-          <CancelButton onClick={() => setIsPhotoSelectionVisible(false)}>취소</CancelButton>
-          <input
-            id="photo-upload"
-            type="file"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={handlePhotoUpload}
-          />
-        </PhotoSelectionContainer>
-      )}
-
-      {activeMarkerIndex === null && !isPhotoSelectionVisible && (
-        <EmojiSelector>
-          {emojis.map((emoji, index) => (
-            <EmojiButton key={index} onClick={() => handleEmojiClick(emoji)}>
-              {emoji}
-            </EmojiButton>
+      <div
+        ref={mapContainerRef}
+        style={{ position: "relative", width: "100%", height: "100%" }}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}>
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          center={center}
+          zoom={18}
+          onLoad={(map) => (mapRef.current = map)} // Google Maps 객체 저장
+        >
+          {markers.map((marker, index) => (
+            <Marker
+              key={index}
+              position={marker.position}
+              icon={{
+                url: createEmojiCursor(marker.emoji),
+                scaledSize: new window.google.maps.Size(50, 50),
+              }}
+            />
           ))}
-        </EmojiSelector>
-      )}
+        </GoogleMap>
+      </div>
 
-      {activeMarkerIndex !== null && !isPhotoSelectionVisible && (
-        <InputContainer>
-          <InputField
-            ref={inputRef}
-            value={markers[activeMarkerIndex]?.text || ""}
-            onChange={(e) => {
-              const updatedMarkers = markers.map((marker, index) =>
-                index === activeMarkerIndex ? { ...marker, text: e.target.value } : marker
-              );
-              setMarkers(updatedMarkers);
-            }}
-            placeholder="내용을 입력하세요..."
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                handleSubmit();
-              }
-            }}
-          />
-          <div style={{ display: "flex", gap: "10px" }}>
-            <PhotoUploadButton onClick={() => setIsPhotoSelectionVisible(true)}>
-              사진 선택
-            </PhotoUploadButton>
-            <SubmitButton onClick={handleSubmit}>완료</SubmitButton>
-          </div>
-        </InputContainer>
-      )}
+      <EmojiSelector>
+        {emojis.map((emoji, index) => (
+          <EmojiButton key={index} draggable onDragStart={handleDragStart(emoji)}>
+            {emoji}
+          </EmojiButton>
+        ))}
+      </EmojiSelector>
     </Container>
   );
+}
+
+// 이모지를 커서로 변환
+function createEmojiCursor(emoji) {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  canvas.width = 64;
+  canvas.height = 64;
+
+  ctx.font = "48px serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(emoji, 32, 32);
+
+  return canvas.toDataURL();
 }

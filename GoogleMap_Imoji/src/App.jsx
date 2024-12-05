@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { GoogleMap, OverlayView, useLoadScript } from "@react-google-maps/api";
+import { useState } from "react";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import styled from "styled-components";
 
 const mapContainerStyle = {
@@ -26,6 +26,8 @@ const emojis = ["😊", "📍", "🏠", "🌟", "❤️", "⭐", "🐤"];
 const EmojiSelector = styled.div`
   position: absolute;
   width: 98%;
+  height: 200px;
+  box-sizing: border-box;
   flex-wrap: wrap;
   bottom: 0px;
   display: flex;
@@ -39,6 +41,45 @@ const EmojiSelector = styled.div`
   padding: 10px;
 `;
 
+const Message = styled.div`
+  position: absolute;
+  height: 200px;
+  box-sizing: border-box;
+  z-index: 99;
+  width: 98%;
+  bottom: 0px;
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 80px;
+`;
+
+const InputContainer = styled.div`
+  position: absolute;
+  width: 98%;
+  height: 200px;
+  box-sizing: border-box;
+  bottom: 0px;
+  background: rgba(255, 255, 255, 0.9);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+`;
+
 const EmojiButton = styled.div`
   font-size: 45px;
   cursor: pointer;
@@ -47,11 +88,27 @@ const EmojiButton = styled.div`
   }
 `;
 
-const EmojiMarker = styled.div`
-  position: absolute;
-  font-size: 24px;
-  transform: translate(-50%, -50%);
+const InputField = styled.textarea`
+  width: 90%;
+  height: 60px;
+  font-size: 16px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  resize: none;
+`;
+
+const SubmitButton = styled.button`
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
+  &:hover {
+    background: #45a049;
+  }
 `;
 
 export default function App() {
@@ -63,6 +120,9 @@ export default function App() {
 
   const [markers, setMarkers] = useState([]);
   const [selectedEmoji, setSelectedEmoji] = useState(null);
+  const [activeMarkerIndex, setActiveMarkerIndex] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+  const [showMessage, setShowMessage] = useState(false); // 메시지 표시 상태
   const [mapOptions, setMapOptions] = useState({
     draggable: true,
     disableDefaultUI: true, // 기본 UI 비활성화
@@ -70,18 +130,18 @@ export default function App() {
 
   const handleMapClick = (event) => {
     if (selectedEmoji) {
-      setMarkers((current) => [
-        ...current,
-        {
-          position: {
-            lat: event.latLng.lat(),
-            lng: event.latLng.lng(),
-          },
-          emoji: selectedEmoji,
+      const newMarker = {
+        position: {
+          lat: event.latLng.lat(),
+          lng: event.latLng.lng(),
         },
-      ]);
-      // 선택된 이모지 상태 초기화 및 커서 복구
+        emoji: selectedEmoji,
+        text: "", // 말풍선 텍스트 초기값
+      };
+      setMarkers((current) => [...current, newMarker]);
       setSelectedEmoji(null);
+      setActiveMarkerIndex(markers.length); // 새로 추가된 마커 활성화
+      setShowMessage(false); // 메시지 숨기기
       setMapOptions((prev) => ({
         ...prev,
         draggable: true,
@@ -93,12 +153,22 @@ export default function App() {
 
   const handleEmojiClick = (emoji) => {
     setSelectedEmoji(emoji);
+    setShowMessage(true); // 메시지 표시
     setMapOptions((prev) => ({
       ...prev,
       draggable: false,
-      draggableCursor: `url(${createEmojiCursor(emoji)}), auto`, // Google Maps 커서 변경
+      draggableCursor: `url(${createEmojiCursor(emoji)}) 32 32, auto`, // Google Maps 커서 변경
     }));
-    document.body.style.cursor = `url(${createEmojiCursor(emoji)}), auto`; // 브라우저 커서 변경
+    document.body.style.cursor = `url(${createEmojiCursor(emoji)}) 32 32, auto`; // 브라우저 커서 변경
+  };
+
+  const handleSubmit = () => {
+    const updatedMarkers = markers.map((marker, index) =>
+      index === activeMarkerIndex ? { ...marker, text: inputValue } : marker
+    );
+    setMarkers(updatedMarkers);
+    setInputValue(""); // 입력 필드 초기화
+    setActiveMarkerIndex(null); // 활성화된 마커 해제
   };
 
   const createEmojiCursor = (emoji) => {
@@ -126,22 +196,56 @@ export default function App() {
         options={mapOptions} // 지도 옵션 설정
         onClick={handleMapClick}>
         {markers.map((marker, index) => (
-          <OverlayView
+          <Marker
             key={index}
             position={marker.position}
-            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}>
-            <EmojiMarker>{marker.emoji}</EmojiMarker>
-          </OverlayView>
+            icon={{
+              url: createEmojiCursor(marker.emoji),
+              scaledSize: new window.google.maps.Size(32, 32), // 마커 크기 설정
+            }}
+            onClick={() => setActiveMarkerIndex(index)} // 마커 클릭 시 활성화
+          >
+            {activeMarkerIndex === index && marker.text && (
+              <div
+                style={{
+                  position: "absolute",
+                  transform: "translate(-50%, -100%)",
+                  background: "white",
+                  border: "1px solid #ccc",
+                  borderRadius: "10px",
+                  padding: "5px",
+                  maxWidth: "150px",
+                  textAlign: "center",
+                }}>
+                {marker.text}
+              </div>
+            )}
+          </Marker>
         ))}
       </GoogleMap>
 
-      <EmojiSelector>
-        {emojis.map((emoji, index) => (
-          <EmojiButton key={index} onClick={() => handleEmojiClick(emoji)}>
-            {emoji}
-          </EmojiButton>
-        ))}
-      </EmojiSelector>
+      {showMessage && <Message>이모지를 원하는 위치에 꽂아주세요.</Message>}
+
+      {activeMarkerIndex === null && (
+        <EmojiSelector>
+          {emojis.map((emoji, index) => (
+            <EmojiButton key={index} onClick={() => handleEmojiClick(emoji)}>
+              {emoji}
+            </EmojiButton>
+          ))}
+        </EmojiSelector>
+      )}
+
+      {activeMarkerIndex !== null && (
+        <InputContainer>
+          <InputField
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="내용을 입력하세요..."
+          />
+          <SubmitButton onClick={handleSubmit}>완료</SubmitButton>
+        </InputContainer>
+      )}
     </Container>
   );
 }

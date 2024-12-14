@@ -6,7 +6,8 @@ dotenv.config();
 const amqp_url = process.env.AMQP_URL;
 
 
-import { droneStateMessageBuffer } from "../consume func/funcNew.js";
+// import { droneStateMessageBuffer } from "../consume func/funcNew.js";
+import { droneStateMessageBuffer } from "../consume func/funcNew_ver2.js";
 import { MarkModel, SensorListModel, UserModel, DroneHistory, OneTimeSentMessage } from "../schema/schema.js";
 
 // import로 받아와도 되지만 매개변수로 받아도 됨
@@ -67,6 +68,8 @@ const droneRouter = (droneCommands) => {
       res.status(500).json({ error: "Internal Server Error" });
     }
   });
+
+  
 
   // 마크 데이터 가져오기
   router.get("/api/marks", async (req, res) => {

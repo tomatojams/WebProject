@@ -30,10 +30,12 @@ export default function MapBox({
   const [selectedDroneId, setSelectedDroneId] = useRecoilState(selectedDroneState);
   const [autoCenter, setAutoCenter] = useState(true);
 
+  // 전역변수 수정 함수
   const handleMarkerClick = async (droneId) => {
     setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
   };
 
+  // 맵 중앙 자동 이동 함수
   const handleToggleAutoCenter = () => {
     setAutoCenter((prev) => !prev);
   };
@@ -93,7 +95,7 @@ export default function MapBox({
         {autoCenter ? "Auto-Center ON" : "Auto-Center OFF"}
       </button>
 
-      <MapContainer className="h-full w-full" center={[37.5665, 126.978]} zoom={18}>
+      <MapContainer className="w-full h-full" center={[37.5665, 126.978]} zoom={18}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
@@ -114,6 +116,7 @@ export default function MapBox({
             );
           })}
         <MapController customMarkers={customMarkers} autoCenter={autoCenter} />
+        
         {customMarkers.map((marker) => (
           <React.Fragment key={marker.id}>
             <Marker

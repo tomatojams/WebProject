@@ -8,7 +8,6 @@ import styled from "styled-components";
 
 const Card = styled.div`
   width: 100%;
-
   margin-top: 20px;
   margin-left: 20px;
   margin-bottom: 20px;
@@ -30,12 +29,10 @@ export default function MapBox({
   const [selectedDroneId, setSelectedDroneId] = useRecoilState(selectedDroneState);
   const [autoCenter, setAutoCenter] = useState(true);
 
-  // 전역변수 수정 함수
   const handleMarkerClick = async (droneId) => {
     setSelectedDroneId((prevId) => (prevId === droneId ? null : droneId));
   };
 
-  // 맵 중앙 자동 이동 함수
   const handleToggleAutoCenter = () => {
     setAutoCenter((prev) => !prev);
   };
@@ -46,7 +43,6 @@ export default function MapBox({
     useEffect(() => {
       if (!map) return;
 
-      // autoCenter가 켜져 있고 센서가 존재할 경우 센서들의 중앙 좌표로 이동
       if (autoCenter && customMarkers.length > 0) {
         const latitudes = customMarkers.map((marker) => marker.lat);
         const longitudes = customMarkers.map((marker) => marker.lon);
@@ -95,10 +91,15 @@ export default function MapBox({
         {autoCenter ? "Auto-Center ON" : "Auto-Center OFF"}
       </button>
 
-      <MapContainer className="w-full h-full" center={[37.5665, 126.978]} zoom={18}>
+      <MapContainer className="w-full h-full" center={[37.5665, 126.978]} zoom={15}>
         <TileLayer
+          // 기존 OpenStreetMap 타일 레이어
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+
+          // Maptiler 타일 레이어
+          // url="https://api.maptiler.com/maps/basic/{z}/{x}/{y}.png?key=ACWt2bJwWxloAC5IuAuv"
+          // attribution='&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a> &copy; OpenStreetMap contributors'
         />
         {latestPositions
           .filter((position) => !filteredDrons.includes(position.droneId))
@@ -116,7 +117,7 @@ export default function MapBox({
             );
           })}
         <MapController customMarkers={customMarkers} autoCenter={autoCenter} />
-        
+
         {customMarkers.map((marker) => (
           <React.Fragment key={marker.id}>
             <Marker

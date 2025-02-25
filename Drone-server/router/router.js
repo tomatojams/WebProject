@@ -5,15 +5,11 @@ dotenv.config();
 
 const amqp_url = process.env.AMQP_URL;
 
-
-// import { droneStateMessageBuffer } from "../consume func/funcNew.js";
 import { droneStateMessageBuffer } from "../consume func/funcNew_ver2.js";
 import { MarkModel, SensorListModel, UserModel, DroneHistory, OneTimeSentMessage } from "../schema/schema.js";
 
-// import로 받아와도 되지만 매개변수로 받아도 됨
-// import { droneCommands } from "../server.js";
 
-const droneRouter = (droneCommands) => {
+const droneRouter = () => {
   const router = express.Router();
 
   // 최근 드론 위치 가져오기
@@ -50,8 +46,6 @@ const droneRouter = (droneCommands) => {
   });
 
 
-  
-
   router.get("/api/drone/:droneId", (req, res) => {
     const { droneId } = req.params;
 
@@ -70,7 +64,6 @@ const droneRouter = (droneCommands) => {
   });
 
   
-
   // 마크 데이터 가져오기
   router.get("/api/marks", async (req, res) => {
     try {
@@ -93,27 +86,6 @@ const droneRouter = (droneCommands) => {
   });
 
   // 송신명령
-  router.post("/api/drone/control", (req, res) => {
-    const { droneId, enum: enumType, command } = req.body;
-
-    if (!droneId || !enumType || !command) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
-
-    // 드론 명령을 처리
-    if (command === "start") {
-      if (!droneCommands[droneId]) {
-        droneCommands[droneId] = {}; // 드론이 처음 등록되었을 때 객체 생성
-      }
-      droneCommands[droneId][enumType] = true; // 해당 enum을 활성화
-    } else if (command === "stop") {
-      if (droneCommands[droneId]) {
-        droneCommands[droneId][enumType] = false; // 해당 enum을 비활성화
-      }
-    }
-
-    return res.status(200).json({ message: "Command processed successfully" });
-  });
 
   router.post("/api/drone/control2", async (req, res) => {
     const { droneId, enum: enumType, command } = req.body;

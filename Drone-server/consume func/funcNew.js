@@ -72,6 +72,7 @@ const consumeDroneStateMessage = async (droneCommands) => {
 
             // 새로운 기능: 클라이언트에서 활성화된 enum에 따라 메시지 수정 및 전송
             if (droneCommands[droneId]) {
+
               const activeEnums = Object.keys(droneCommands[droneId]).filter(
                 (enumType) => droneCommands[droneId][enumType]
               );
@@ -97,6 +98,7 @@ const consumeDroneStateMessage = async (droneCommands) => {
                   console.log(`Sent modified message with type ${enumType}:`);
                 }
               }
+              
             }
 
             channel.ack(msg);

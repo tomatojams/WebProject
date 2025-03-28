@@ -7,10 +7,10 @@ Q. 그럼 setTimeout을 이용해서 1초 후에 this.innerHTML을 콘솔창에 
 
 1초 후에 '버튼이에요'라는 글자가 콘솔창에 등장하면 성공입니다.  -->
 
-
 <button id="버튼">버튼</button>
 
 <script>
+  // **arrow function을 사용해서 this를 재설정하지 않게 함
   document.getElementById("버튼").addEventListener("click", function () {
     setTimeout(() => console.log(this.innerHTML), 1000);
   });

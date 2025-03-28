@@ -1,0 +1,33 @@
+<div></div>
+<button id="버튼">버튼</button>
+
+<script>
+  // 선언, 할당, 범위
+  // 1. var 재선언 ok, 재할당 ok, 범위 function scope
+  var a = 10;
+  var a = 20; // 재선언 ok
+
+  // 2. let 재선언 x, 재할당 ok, 범위 block scope <- var보다 좁음(if 블락등{})
+
+  let name = "tomato";
+  //let name = "apple"; // 재선언 x
+
+  // 3. const 재선언 x, 재할당 x, 범위 block scope
+  const name2 = "apple";
+
+  // 4. obj는 일반변수랑 다르게 주소값(참조)을 가지고있으므로 변경불가능하게 하면 주소가 변경불가능일뿐
+  //    오브젝트 내의 변수는 변경가능하다. (주소값은 변경불가능)
+  const person = { name: "tomato" };
+  person.name = "apple"; // 오브젝트 내의 변수 변경가능
+  console.log(person);
+  // 불변의 Object
+  Object.freeze(person);
+  person.name = "banana"; // 오브젝트 내의 변수는 변경불가능
+
+  console.log(person);
+
+  // 3. 범위 for문 안에서만 유효
+  for (let i = 0; i < 5; i++) {
+    console.log(i); // 0, 1, 2, 3, 4
+  }
+</script>

@@ -1,0 +1,26 @@
+<div></div>
+<button id="btn">Click</button>
+<script>
+  function name() {}
+  // 장점
+  // 1. 보기 쉬움
+  // 2. 패러미터 하나일때 소괄호 생략가능
+  // 3. return 과 {} 생략가능 => 리턴이 하나일때만 가능 a=> a+1
+
+  // 4. 반복문 간략하게 표현현
+  var machine = () => {};
+  [1, 2, 3].forEach((a) => console.log(a));
+
+  // 5. 콜백함수 this값을 재설정하지 않음
+  document.getElementById("btn").addEventListener(
+    "click",
+    (e) => console.log(this) // this 는 이벤트를 발생시킨 DOM 엘리먼트
+  );
+  // 6. 화살표 함수는 상위 스코프의 this를 가리킴(재설정하지 않음)
+  let obj = {
+    name: () => {
+      console.log(this); // this 는 이벤트를 발생시킨 DOM 엘리먼트
+    },
+  };
+  obj.name(); // this 는 이벤트를 발생시킨 DOM 엘리먼트
+</script>

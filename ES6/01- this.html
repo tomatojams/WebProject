@@ -1,0 +1,34 @@
+<div></div>
+<script>
+  //   "use strict";
+  // 1. this 는 클래스 자체를 가르킴
+  console.log(this); // window -> global window 오브젝트 내에 있기때문.
+
+  function name() {
+    console.log(this); // window or undefined
+  }
+  name();
+  window.name();
+
+  var obj = {
+    data: {
+      name: "tomato",
+      getName: function () {
+        console.log(this); // 자신을 포함한 오브젝트
+      },
+    },
+    // 2. 화살표 함수는 상위 스코프의 this를 가리킨다.
+    data2: {
+      name: "apple",
+      getName: () => {
+        console.log(this); // window , 즉 상위요소의 this
+      },
+    },
+    name: function () {
+      console.log(this); // 자신을 포함한 오브젝트
+    },
+  };
+  obj.name();
+  obj.data.getName();
+  obj.data2.getName();
+</script>
